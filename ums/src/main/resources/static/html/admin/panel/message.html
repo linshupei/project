@@ -31,12 +31,12 @@
                         <div class="layui-card-header">系统消息中心</div>
                         <div class="layui-card-body">
                             <div class="layui-btn-container">
-                                <button class="layui-btn layui-btn-sm layui-btn-normal"  data-type="reading" data-url="" data-id="message" ><i class="larry-icon larry-biaoji1"></i>标记已读</button>
-                                <button class="layui-btn layui-btn-sm  layui-btn-danger"  data-type="del" data-url="" data-id="message"><i class="larry-icon larry-shanchu"></i>清空消息</button>
+                                <button class="layui-btn layui-btn-sm layui-btn-normal"  data-type="reading" data-url="/api/batch/systemMsgReadStatus" data-id="message" ><i class="larry-icon larry-biaoji1"></i>标记已读</button>
+                                <button class="layui-btn layui-btn-sm  layui-btn-danger"  data-type="del" data-url="/api/clear/systemMsgReadStatus" data-id="message"><i class="larry-icon larry-shanchu"></i>清空消息</button>
                             </div>
-                            <table id="message"  data-url="../../../larryms/data/admin/message.json"></table>
+                            <table id="message" lay-filter="message" data-url="/api/systemMsgInfos"></table>
 	                        <script type="text/html" id=systemMsgInfoTepl>
-                           		 <input type="checkbox" name="readStatus" value="{{d.readStatus}}" lay-skin="switch" lay-text="已读|未读"  lay-filter="systemMsgInfoC" {{ d.readStatus=='1' ? 'checked' : '' }}>
+                           		 <input type="checkbox" name="readStatus" value="{{d.id}}" lay-skin="switch" lay-text="已读|未读"  lay-filter="systemMsgInfoC" {{ d.readStatus=='1' ? 'checked' : '' }} >
                        		 </script>                            
                             
                         </div>

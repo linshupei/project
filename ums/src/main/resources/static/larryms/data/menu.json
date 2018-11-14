@@ -24,7 +24,7 @@
 			},{
 				"id": 12,
 				"pid": 110,
-				"title": "消息中心",
+				"title": "贷款消息中心",
 				"font": "larry-icon",
 				"icon": "larry-xiaoxi",
 				"url": "admin/panel/message.html",

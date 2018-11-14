@@ -8,14 +8,21 @@ layui.define(["jquery", "table", "larryms","laytpl"], function(t) {
 			i = c(this).children("cite").text();
 		l[t] ? l[t].call(this) : ""
 	});
-layui.use(["table", "laytpl", "form"], function() {
-  	var t = layui.form;
-	t.on("switch(systemMsgInfoC)", function(e) {
-		layer.tips(this.value + " " + this.name + "：" + e.elem.checked, e.othis)
-	});  	
-	
-		
-});
+	layui.use(["table", "laytpl", "form"], function() {
+	  	var t = layui.form;
+		t.on("switch(systemMsgInfoC)", function(e) {
+			//layer.tips(this.value + " " + this.name + "：" + e.elem.checked, e.othis)
+			c.ajax({ 
+		        type: "post", 
+		        url: "/api/systemMsgReadStatus", 
+		        async:false, 
+		        data:{"id":e.elem.value,"value":e.elem.checked?"1":"0"},
+		        dataType: "json",
+		        success: function(jsonData){ 
+		        } 
+			});		
+		});  	
+	});
 
 	
 	var l = {
@@ -30,13 +37,19 @@ layui.use(["table", "laytpl", "form"], function() {
 					l.push(i[n].id)
 				}
 				if (l.length > 0) {
-					var r = {
-						id: l
-					};
 					if (a == "") {
-						u.alert("实际项目中请设置data-url参数为后端处理程序路径,查看源码注释")
+						 
 					} else {
-						c.post(a, r, function(t) {})
+						c.ajax({ 
+					        type: "post", 
+					        url: a, 
+					        async:false, 
+					        data:{"ids":JSON.stringify(l)},
+					        dataType: "json",
+					        success: function(jsonData){ 
+					        	s.reload("lay-filter");
+					        } 
+						});
 					}
 				}
 			} else {
@@ -54,17 +67,23 @@ layui.use(["table", "laytpl", "form"], function() {
 					l.push(i[n].id)
 				}
 				if (l.length > 0) {
-					var r = {
-						id: l
-					};
 					u.confirm("你确定要执行批量删除吗？", {
 						icon: 3,
 						title: "批量删除提示！"
 					}, function() {
 						if (a == "") {
-							u.alert("实际项目中请设置data-url参数为后端处理程序路径,具体方法已写在源码注释中")
+							
 						} else {
-							c.post(a, r, function(t) {})
+							c.ajax({ 
+						        type: "post", 
+						        url: a, 
+						        async:false, 
+						        data:{"ids":JSON.stringify(l)},
+						        dataType: "json",
+						        success: function(jsonData){ 
+						        	s.reload("message");
+						        } 
+							});	
 						}
 					})
 				}
@@ -81,9 +100,7 @@ layui.use(["table", "laytpl", "form"], function() {
 				cellMinWidth: 95,
 				url: e,
 				method: "get",
-				height: "full-155",
 				page: true,
-				limits: [15, 30, 45, 60, 75, 90, 105, 120],
 				limit: 10,
 				cols: [
 					[{
@@ -91,19 +108,19 @@ layui.use(["table", "laytpl", "form"], function() {
 						fixed: "left",
 						width: 40
 					}, {
-						field: "title",
+						field: "msgContent",
 						title: "标题内容",
 						minWidth: 260,
 						align: "left"
 					}, {
-						field: "type",
+						field: "msgType",
 						title: "消息类别",
 						width: 180,
 						align: "center",
 						templet: function(t) {
-							if (t.type == "1") {
+							if (t.msgType == "1") {
 								return '<cite style="color:#01AAED;">申请贷款消息</cite>'
-							} else if (t.type == "2") {
+							} else if (t.msgType == "2") {
 								return '<cite style="color:#FF5722">贷款逾期未还消息</cite>'
 							}
 						}
