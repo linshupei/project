@@ -8,7 +8,7 @@ public class TableData {
     
     private String msg;
     
-    private Integer count;
+    private Long count;
     
     private List data;
 
@@ -28,11 +28,11 @@ public class TableData {
 		this.msg = msg;
 	}
 
-	public Integer getCount() {
+	public Long getCount() {
 		return count;
 	}
 
-	public void setCount(Integer count) {
+	public void setCount(Long count) {
 		this.count = count;
 	}
 

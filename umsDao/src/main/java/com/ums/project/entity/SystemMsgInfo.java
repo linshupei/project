@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  *
  */
 @Entity
-@Table(name="user_loan_info")
+@Table(name="system_msg_info")
 public class SystemMsgInfo  implements Serializable{
 
 	/**

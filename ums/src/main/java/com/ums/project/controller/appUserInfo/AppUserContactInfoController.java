@@ -47,7 +47,7 @@ public class AppUserContactInfoController {
 		
 		TableData td = new TableData();
 		td.setCode("0");
-		td.setCount(userInfoPageData.getNumber());
+		td.setCount(userInfoPageData.getTotalElements());
 		td.setMsg("");
 		td.setData(userInfos);
 		

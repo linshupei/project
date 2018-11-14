@@ -63,7 +63,7 @@ public class AppUserInfoController {
 		
 		TableData td = new TableData();
 		td.setCode("0");
-		td.setCount(resutlPage.getNumber());
+		td.setCount(resutlPage.getTotalElements());
 		td.setMsg("");
 		td.setData(vos);
 		

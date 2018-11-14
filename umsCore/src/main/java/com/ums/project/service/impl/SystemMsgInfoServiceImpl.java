@@ -36,5 +36,15 @@ public class SystemMsgInfoServiceImpl implements SystemMsgInfoService {
 		return userInfoPageData;
 	}
 
+	@Override
+	public void updateSystemMsgReadStatus(String id, String value) {
+		systemMsgInfoRepository.updateSystemMsgReadStatus(id,value);
+	}
+
+	@Override
+	public void batchDeleteSystemMsgReadStatus(String[] idStr) {
+		systemMsgInfoRepository.batchDeleteSystemMsgReadStatus(idStr);
+	}
+
 
 }

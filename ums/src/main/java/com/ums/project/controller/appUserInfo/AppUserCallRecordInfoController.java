@@ -50,7 +50,7 @@ public class AppUserCallRecordInfoController {
 		
 		TableData td = new TableData();
 		td.setCode("0");
-		td.setCount(1);
+		td.setCount(userInfoPageData.getTotalElements());
 		td.setMsg("");
 		td.setData(userInfos);
 		
