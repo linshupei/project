@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>用户负债信息</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <!-- load css -->
+	<link rel="stylesheet" type="text/css" href="../../../larryms/layui/css/layui.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../../../larryms/css/admin/base.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../../../larryms/css/admin/admin.css" media="all">
+</head>
+
+<body  class="larryms-system">
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+    <div class="layui-row larryms-panel">
+		<div class="larryms-panel-heading layui-col-lg12 layui-col-md12 layui-col-sm12 layui-col-xs12">
+			<span class="panel-tit">工作单位</span>
+		</div>
+		<div class="larryms-panel-body layui-col-lg12 layui-col-md12 layui-col-sm12 layui-col-xs12">
+            <div class="user-list layui-col-lg12 layui-col-md12 layui-col-sm12 layui-col-xs12">
+            	  <table class="layui-hide" id="userWorkUnitInfoTable" lay-filter="userWorkUnitInfoTable" data-url="/api/userWorkUnitInfos"></table>
+            </div>
+		</div>
+	</div>
+    <!-- 加载js文件-->
+    <script type="text/javascript" src="../../../larryms/layui/layui.js"></script>
+    <script type="text/javascript">
+	    function getReloadOptions(){
+			var options = new Object();
+			var dataObj = new Object();
+			//dataObj.keyword=document.getElementById("keywords").value;
+			options.where=dataObj;
+			 
+			var str = location.search; 
+			var num = str.indexOf("?")
+			str = str.substr(num + 1); 
+			str = str.split("&");
+			for(var inx=0;inx<str.length;inx++){
+				var requestData= str[inx].split("=");
+				dataObj[requestData[0]]=requestData[1];
+			}		 
+			 
+			 return options;
+		}    
+    layui.config({
+        version: "2.0.8",
+        base: '../../../larryms/',
+        page: 'userWorkUnitInfo',
+        identified: 'tables'
+    }).extend({
+        larry: 'js/base'
+    }).use('larry');
+    </script>
+</body>
+
+</html>
