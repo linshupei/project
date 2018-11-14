@@ -1,6 +1,8 @@
 package com.ums.project.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +24,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.ums.project.entity.UserLoanInfo;
+import com.ums.project.entity.SystemMsgInfo;
 import com.ums.project.entity.UserInfo;
 import com.ums.project.queryBean.UserLoanInfoQueryBean;
+import com.ums.project.repository.SystemMsgInfoRepository;
 import com.ums.project.repository.UserLoanInfoRepository;
 import com.ums.project.result.DataPage;
 import com.ums.project.service.UserLoanInfoService;
@@ -38,8 +42,11 @@ import com.ums.project.service.UserLoanInfoService;
 @Transactional
 public class UserLoanInfoServiceImpl implements UserLoanInfoService {
 
+	@Resource(name="systemMsgInfoRepository")
+	private SystemMsgInfoRepository systemMsgInfoRepository;
+	
 	@Resource(name="userLoanInfoRepository")
-	private UserLoanInfoRepository userLoanInfoRepository;
+	private UserLoanInfoRepository userLoanInfoRepository;	
 	
 	public Page<UserLoanInfo> userInfoPageData(UserLoanInfoQueryBean queryBean, DataPage page){
 		
@@ -112,5 +119,27 @@ public class UserLoanInfoServiceImpl implements UserLoanInfoService {
 	@Override
 	public void updateUserLoanInfo(String id, String makeLoansLimit, String payDate) {
 		userLoanInfoRepository.updateUserLoanInfo(id,makeLoansLimit,payDate);
+	}
+
+	@Override
+	public List<UserLoanInfo> findOutDateUserLoanInfos() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String date = sdf.format(new Date());
+		List<UserLoanInfo> findOutDateUserLoanInfos = userLoanInfoRepository.findOutDateUserLoanInfos(date);
+		userLoanInfoRepository.updateOutDateUserLoanInfos(date);
+		
+		SimpleDateFormat msgTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String msgTimeFormat = msgTime.format(new Date());
+		for(UserLoanInfo info:findOutDateUserLoanInfos){
+			SystemMsgInfo msgInfo = new SystemMsgInfo();
+			msgInfo.setMsgContent("有一笔逾期未还的贷款待处理；姓名："+info.getUserInfo().getName());
+			msgInfo.setMsgTime(msgTimeFormat);
+			msgInfo.setMsgType("2");
+			msgInfo.setReadStatus("0");
+			msgInfo.setTipStatus("0");
+			systemMsgInfoRepository.save(msgInfo);
+		}
+		
+		return findOutDateUserLoanInfos;
 	}
 }

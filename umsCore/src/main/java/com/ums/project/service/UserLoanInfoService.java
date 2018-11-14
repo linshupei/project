@@ -1,5 +1,7 @@
 package com.ums.project.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 
 import com.ums.project.entity.UserLoanInfo;
@@ -41,5 +43,7 @@ public interface UserLoanInfoService {
 	 * @return
 	 */
 	public void updateUserLoanInfo(String id, String makeLoansLimit, String payDate);
+
+	public List<UserLoanInfo> findOutDateUserLoanInfos();
 
 }

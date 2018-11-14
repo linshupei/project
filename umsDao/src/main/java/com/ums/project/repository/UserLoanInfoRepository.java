@@ -1,6 +1,8 @@
 package com.ums.project.repository;
 
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -37,4 +39,11 @@ public interface UserLoanInfoRepository  extends JpaRepository<UserLoanInfo,Stri
 	 @Modifying
 	 @Query("update UserLoanInfo set makeLoansLimit=:makeLoansLimit,payDate=:payDate where id = :id")
 	public void updateUserLoanInfo(String id, String makeLoansLimit, String payDate);
+	 
+	@Query("select u from UserLoanInfo u where u.status='2' and u.payDate<:date")
+	public List<UserLoanInfo> findOutDateUserLoanInfos(String date);
+
+	@Modifying
+	@Query("update UserLoanInfo set status='3' where  status='2' and payDate<:date")	
+	public void updateOutDateUserLoanInfos(String date);
 }
