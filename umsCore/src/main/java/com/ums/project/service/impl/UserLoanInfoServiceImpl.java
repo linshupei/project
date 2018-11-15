@@ -137,6 +137,7 @@ public class UserLoanInfoServiceImpl implements UserLoanInfoService {
 			msgInfo.setMsgType("2");
 			msgInfo.setReadStatus("0");
 			msgInfo.setTipStatus("0");
+			msgInfo.setUserLoanInfo(info);
 			systemMsgInfoRepository.save(msgInfo);
 		}
 		

@@ -29,7 +29,6 @@ public class SystemMsgInfo  implements Serializable{
 
 	@Id
 	@Column(name = "id") 
-	//@GenericGenerator(name = "system-uuid", strategy = "uuid") 
 	@GenericGenerator(name = "system-uuid", strategy = "com.ums.project.util.UUIDGenerator") 
 	@GeneratedValue(generator = "system-uuid")     
 	private String id;
@@ -66,6 +65,18 @@ public class SystemMsgInfo  implements Serializable{
     @Column(name = "tip_status") 
     private String tipStatus;    
     
+    @OneToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name = "loan_info_id", referencedColumnName = "id")//people中的addr    
+    private UserLoanInfo userLoanInfo;
+    
+	public UserLoanInfo getUserLoanInfo() {
+		return userLoanInfo;
+	}
+
+	public void setUserLoanInfo(UserLoanInfo userLoanInfo) {
+		this.userLoanInfo = userLoanInfo;
+	}
+
 	public String getId() {
 		return id;
 	}

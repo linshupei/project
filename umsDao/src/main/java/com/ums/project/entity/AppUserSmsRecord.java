@@ -24,8 +24,8 @@ public class AppUserSmsRecord  implements Serializable{
 
 	@Id
 	@Column(name = "id") 
-	@GeneratedValue(generator = "system-uuid")     
-	@GenericGenerator(name = "system-uuid", strategy = "uuid") 
+	@GenericGenerator(name = "system-uuid", strategy = "com.ums.project.util.UUIDGenerator") 
+	@GeneratedValue(generator = "system-uuid")    
 	private String id;
 	
     @Column(name = "sms_content") 

@@ -1,5 +1,10 @@
 package com.ums.project.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.data.domain.Page;
@@ -8,16 +13,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ums.project.entity.SystemMsgInfo;
+import com.ums.project.entity.UserLoanInfo;
 import com.ums.project.result.BaseResult;
 import com.ums.project.result.DataPage;
 import com.ums.project.result.TableData;
 import com.ums.project.service.SystemMsgInfoService;
+import com.ums.project.service.UserLoanInfoService;
+import com.ums.project.vo.SystemMsgInfoVo;
 
 @RestController
 public class SystemMsgInfoController {
 	
 	@Resource(name="systemMsgInfoService")
 	private SystemMsgInfoService systemMsgInfoService;
+	
 	
 	@RequestMapping("/api/systemMsgReadStatus")
 	public BaseResult updateSystemMsgReadStatus(@RequestParam String id,@RequestParam String value){
@@ -71,14 +80,68 @@ public class SystemMsgInfoController {
 		DataPage datapage = new DataPage();
 		datapage.setLimit(limit);
 		datapage.setPage(page);
+		
+		List<SystemMsgInfoVo> infos = new ArrayList<SystemMsgInfoVo>(0);
 		Page<SystemMsgInfo> userInfoPageData = systemMsgInfoService.userInfoPageData(datapage);
+		
+		for(SystemMsgInfo data: userInfoPageData) {
+			SystemMsgInfoVo vo = new SystemMsgInfoVo();
+			vo.setId(data.getId());
+			vo.setMsgContent(data.getMsgContent());
+			vo.setMsgTime(data.getMsgTime());
+			vo.setMsgType(data.getMsgType());
+			vo.setReadStatus(data.getReadStatus());
+			vo.setTipStatus(data.getTipStatus());
+			
+			infos.add(vo);
+		}
 		TableData td = new TableData();
 		td.setCode("0");
 		td.setCount(userInfoPageData.getTotalElements());
 		td.setMsg("");
-		td.setData(userInfoPageData.getContent());
+		td.setData(infos);
 		
 		return td;		
 	}	
+	
+	/**
+	 * 查询申请贷款消息接口
+	 * @param page
+	 * @param limit
+	 * @return
+	 */
+	@RequestMapping("/api/query/applyLoanInfo")
+	public Map<String,Object> applyLoanInfo() {
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("code","0");
+		resultMap.put("data","");
+		SystemMsgInfo systemMsgInfo = systemMsgInfoService.queryApplyLoanMsg();
+		if(systemMsgInfo==null) {
+			resultMap.put("code","1");
+		}else {
+			resultMap.put("data", systemMsgInfo);
+		}
+		return resultMap;
+	}		
+	
+	/**
+	 * 查询申请贷款消息接口
+	 * @param page
+	 * @param limit
+	 * @return
+	 */
+	@RequestMapping("/api/query/outDateLoanInfo")
+	public Map<String,Object> outDateLoanInfo() {
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("code","0");
+		resultMap.put("data","");
+		Page<SystemMsgInfo> infos = systemMsgInfoService.queryOutDateLoanInfoMsg();
+		if(infos==null || infos.getTotalElements()<=0) {
+			resultMap.put("code","1");
+		}else {
+			resultMap.put("data", infos.getTotalElements());
+		}
+		return resultMap;
+	}		
 
 }

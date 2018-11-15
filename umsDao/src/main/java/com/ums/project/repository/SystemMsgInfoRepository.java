@@ -20,7 +20,11 @@ import com.ums.project.entity.SystemMsgInfo;
 public interface SystemMsgInfoRepository  extends JpaRepository<SystemMsgInfo,String>{
 	
 
+	public Page<SystemMsgInfo> findAll(Specification<SystemMsgInfo> spec,Pageable pageable);
+	
 	public Page<SystemMsgInfo> findAll(Pageable pageable);
+	
+	//public Page<SystemMsgInfo> findAll(Specification<SystemMsgInfo> spec);
 
 	@Modifying
 	@Query("update SystemMsgInfo set readStatus=:value where id = :id")
@@ -29,6 +33,6 @@ public interface SystemMsgInfoRepository  extends JpaRepository<SystemMsgInfo,St
 	@Modifying
 	@Query("delete from SystemMsgInfo where id in (:idStr)")	
 	public void batchDeleteSystemMsgReadStatus(String[] idStr);
-
+	
 
 }

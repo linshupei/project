@@ -13,7 +13,7 @@ import com.ums.project.result.TableData;
 
 public class UmsInterceptor extends HandlerInterceptorAdapter{
 	
-	private static String[] IGNORE_URI = {"/api/login","/api/loginOutTime"};
+	private static String[] IGNORE_URI = {"/api/login","/api/loginOutTime","/api/query/applyLoanInfo","/api/query/outDateLoanInfo"};
 	
 	public UmsInterceptor() {
 	}
@@ -51,6 +51,9 @@ public class UmsInterceptor extends HandlerInterceptorAdapter{
 		        			return false;
 		        		}
 		        	}else{
+		        		if(url.contains("index.html")) {
+		        			response.sendRedirect("/html/login.html");
+		        		}
 		        		return false;
 		        	}
 		        }

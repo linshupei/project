@@ -23,8 +23,8 @@ public class LiabilitiesPlatformInfo  implements Serializable{
 
 	@Id
 	@Column(name = "id") 
-	@GeneratedValue(generator = "system-uuid")     
-	@GenericGenerator(name = "system-uuid", strategy = "uuid") 
+	@GenericGenerator(name = "system-uuid", strategy = "com.ums.project.util.UUIDGenerator") 
+	@GeneratedValue(generator = "system-uuid")    
 	private Integer id;
 
     @Column(name = "liabilities_platform_name") 

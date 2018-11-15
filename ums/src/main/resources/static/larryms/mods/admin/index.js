@@ -18,17 +18,58 @@ layui.define(["jquery", "configure", "larryTab"], function(e) {
 		l.ajax({ 
 	        type: "get", 
 	        url: "/api/loginOutTime", 
-	        async:false, 
 	        dataType: "json",
 	        success: function(jsonData){ 
-	        	//if(jsonData.code=="1"){
-	        		location.href="/html/index.html";
-	        	//}
+	        	if(jsonData.code=="1"){
+	        		location.href="/html/login.html";
+	        	}
 	        } 
 		});		
 	},1000*60);
 	
 	
+	setInterval(function(){
+		l.ajax({ 
+	        type: "get", 
+	        url: "/api/query/applyLoanInfo", 
+	        dataType: "json",
+	        async:false, 
+	        success: function(jsonData){ 
+				if(jsonData.code=="0"){
+					s.notice({
+						msg: jsonData.data.msgContent,
+						url: "",
+						msgtype: "info"
+					}, {
+						action: 4,
+						hide: "click"
+					})					
+				}
+	        } 
+		});		
+	},1000*60);	
+
+	setInterval(function(){
+		l.ajax({ 
+	        type: "get", 
+	        url: "/api/query/outDateLoanInfo", 
+	        dataType: "json",
+	        async:false, 
+	        success: function(jsonData){ 
+				if(jsonData.code=="0"){
+					s.notice({
+						msg: "您今天有"+jsonData.data+"笔逾期贷款未处理",
+						url: "",
+						msgtype: "warning"
+					}, {
+						action: 4,
+						hide: "click"
+					})					
+				}
+	        } 
+		});		
+	},1000*60);	
+		
 	larryTab = layui.larryTab({
 		tab_elem: "#larry_tab",
 		tabMax: 30,
@@ -529,95 +570,10 @@ layui.define(["jquery", "configure", "larryTab"], function(e) {
 			M()
 		}, 500)
 	}
-	l(top.document.body).one("click", function() {
-		if (!l(this).hasClass("notice-trigger")) {
-			R();
-			l(this).addClass("notice-trigger")
-		}
-	});
 
-	function R() {
-		setTimeout(function() {
-			s.notice({
-				msg: "消息通知：点我在选项卡中打开百度Echarts页面！",
-				url: "library/charts/echarts.html"
-			}, {
-				action: 3,
-				navid: 75,
-				navgroup: 1,
-				navtitle: "百度Echarts",
-				navfont: "larry-icon",
-				navicon: "larry-moxing",
-				hide: "click"
-			})
-		}, 7e3);
-		setTimeout(function() {
-			s.notice({
-				msg: "我没有声音，我可以自动隐藏！",
-				msgtype: "success"
-			}, {
-				audio: false
-			})
-		}, 9e3);
-		setTimeout(function() {
-			s.notice({
-				msg: "重要消息：点我在新窗口查看，也可以右上角点X无视！",
-				url: "https://www.larryms.com/cates/5.html",
-				msgtype: "danger"
-			}, {
-				action: 4,
-				hide: "click"
-			})
-		}, 13e3);
-		setTimeout(function() {
-			s.notice({
-				msg: "您收到1条测试消息，请点击查看!",
-				url: "use/notice.html",
-				msgtype: "custom",
-				color: "#fff",
-				bgcolor: "#1E9FFF"
-			}, {
-				action: 3,
-				navid: 89,
-				navgroup: 0,
-				navtitle: "消息推送功能",
-				navfont: "larry-icon",
-				navicon: "larry-info",
-				hide: "click",
-				font: "fa",
-				icon: "fa-flag-checkered"
-			})
-		}, 18e3);
-		setTimeout(function() {
-			s.notice({
-				msg: "您收到一条 error测试消息!",
-				msgtype: "error"
-			}, {
-				audio: false,
-				time: 6e3
-			})
-		}, 24e3);
-		setTimeout(function() {
-			s.notice({
-				msg: "您收到一条 waring消息!",
-				msgtype: "warning"
-			}, {
-				audio: false
-			})
-		}, 27e3);
-		setTimeout(function() {
-			s.notice({
-				msg: "LarryMS框架演示中默认关闭了Tab选项卡的加载动画，Tab选项卡切换刷新等功能，可在浏览一遍之后，通过主题设置中开启默认关闭的设置，对比效果。本月2.0.9版本将是重量级更新【如tree组件、模板系列等】！",
-				msgtype: "custom",
-				color: "#fff",
-				bgcolor: "#01CED1"
-			}, {
-				hide: "click",
-				font: "fa",
-				icon: "fa-universal-access"
-			})
-		}, 32e3)
-	}
+
+
+	
 	function U() {
 		var e = '<iframe src="' + layui.cache.homeUrl + '" id="ifr-0" data-group="0" data-id="ifr0" lay-id="" name="ifr_0" class="larryms-iframe"></iframe>';
 		l("#homePage").append(e)

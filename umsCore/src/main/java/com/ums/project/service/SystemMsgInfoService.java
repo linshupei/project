@@ -18,4 +18,16 @@ public interface SystemMsgInfoService {
 
 	public void batchDeleteSystemMsgReadStatus(String[] idStr);
 
+	/**
+	 * 查询贷款申请消息
+	 * @return
+	 */
+	public SystemMsgInfo queryApplyLoanMsg();
+
+	/**
+	 * 查询贷款逾期消息
+	 * @return
+	 */
+	public Page<SystemMsgInfo> queryOutDateLoanInfoMsg();
+
 }
