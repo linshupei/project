@@ -3,6 +3,7 @@ package com.ums.project.quartz;
 
 import javax.annotation.Resource;
 
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ import com.ums.project.service.UserLoanInfoService;
  *
  */
 @Component
+@EnableScheduling
 public class UserLoanStatusQuartz {
 
 	@Resource(name="userLoanInfoService")

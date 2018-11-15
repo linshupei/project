@@ -12,6 +12,23 @@ layui.define(["jquery", "configure", "larryTab"], function(e) {
 		d = l("#larry_layout"),
 		y = r.basePath + "lib/templets/style/theme.css",
 		f = "lib/templets/theme";
+	
+	
+	setInterval(function(){
+		l.ajax({ 
+	        type: "get", 
+	        url: "/api/loginOutTime", 
+	        async:false, 
+	        dataType: "json",
+	        success: function(jsonData){ 
+	        	//if(jsonData.code=="1"){
+	        		location.href="/html/index.html";
+	        	//}
+	        } 
+		});		
+	},1000*60);
+	
+	
 	larryTab = layui.larryTab({
 		tab_elem: "#larry_tab",
 		tabMax: 30,

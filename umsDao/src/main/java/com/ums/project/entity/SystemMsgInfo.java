@@ -29,8 +29,9 @@ public class SystemMsgInfo  implements Serializable{
 
 	@Id
 	@Column(name = "id") 
+	//@GenericGenerator(name = "system-uuid", strategy = "uuid") 
+	@GenericGenerator(name = "system-uuid", strategy = "com.ums.project.util.UUIDGenerator") 
 	@GeneratedValue(generator = "system-uuid")     
-	@GenericGenerator(name = "system-uuid", strategy = "uuid") 
 	private String id;
 
 	/**
