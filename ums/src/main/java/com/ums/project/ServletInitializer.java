@@ -11,11 +11,11 @@ public class ServletInitializer extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(UmsApplication.class);
+		return application.sources(ServletInitializer.class);
 	}
 	
 	public static void main(String[] args) {
-		SpringApplication.run(UmsApplication.class, args);
+		SpringApplication.run(ServletInitializer.class, args);
 	}
 
 }
