@@ -12,8 +12,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.ums.project.entity.AppUserInfo;
 import com.ums.project.repository.AppUserInfoRepository;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class UmsDaoApplicationTests {
 
 	@Resource(name="appUserInfoRepository")
