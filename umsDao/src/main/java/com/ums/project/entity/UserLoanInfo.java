@@ -52,6 +52,9 @@ public class UserLoanInfo  implements Serializable{
     @JoinColumn(name = "user_id", referencedColumnName = "id")//people中的addr
 	private UserInfo userInfo;
 
+    @Column(name = "user_account") 
+    private String userAccount;
+    
 	public String getId() {
 		return id;
 	}
@@ -117,6 +120,18 @@ public class UserLoanInfo  implements Serializable{
 		this.makeLoansLimit = makeLoansLimit;
 	}
 
+	public String getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(String userAccount) {
+		this.userAccount = userAccount;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -146,8 +161,10 @@ public class UserLoanInfo  implements Serializable{
 	public String toString() {
 		return "UserLoanInfo [id=" + id + ", loanLimit=" + loanLimit + ", makeLoansLimit=" + makeLoansLimit
 				+ ", allInstalment=" + allInstalment + ", status=" + status + ", payDate=" + payDate + ", applyTime="
-				+ applyTime + ", userInfo=" + userInfo + "]";
+				+ applyTime + ", userAccount=" + userAccount + "]";
 	}
+
+
 
 
 	

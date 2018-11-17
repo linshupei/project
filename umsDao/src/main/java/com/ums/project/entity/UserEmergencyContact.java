@@ -37,6 +37,17 @@ public class UserEmergencyContact  implements Serializable{
     @JoinColumn(name = "user_id", referencedColumnName = "id")//people中的addr
 	private UserInfo userInfo;
     
+    @Column(name = "user_account") 
+    private String userAccount;
+    
+	public String getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(String userAccount) {
+		this.userAccount = userAccount;
+	}
+
 	public String getMobile() {
 		return mobile;
 	}
@@ -100,9 +111,10 @@ public class UserEmergencyContact  implements Serializable{
 
 	@Override
 	public String toString() {
-		return "UserEmergencyContact [id=" + id + ", mobile=" + mobile + ", name=" + name + ", userInfo=" + userInfo
-				+ "]";
+		return "UserEmergencyContact [id=" + id + ", mobile=" + mobile + ", name=" + name + ", userAccount="
+				+ userAccount + "]";
 	}
+
 
 
 }

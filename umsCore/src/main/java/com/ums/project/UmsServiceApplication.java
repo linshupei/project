@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 
-//@SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
-//@ComponentScan("com.ums.project")
+@SpringBootApplication
+@ComponentScan("com.ums.project")
 public class UmsServiceApplication {
 
 	public static void main(String[] args) {

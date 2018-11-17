@@ -30,4 +30,6 @@ public interface SystemMsgInfoService {
 	 */
 	public Page<SystemMsgInfo> queryOutDateLoanInfoMsg();
 
+	public void save(SystemMsgInfo msg);
+
 }

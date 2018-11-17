@@ -143,4 +143,34 @@ public class UserLoanInfoServiceImpl implements UserLoanInfoService {
 		
 		return findOutDateUserLoanInfos;
 	}
+
+	@Override
+	public UserLoanInfo findRecentLoanInfo(String userAccount) {
+	      //规格定义
+      Specification<UserLoanInfo> specification = new Specification<UserLoanInfo>() {
+          @Override
+          public Predicate toPredicate(Root<UserLoanInfo> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+              Predicate equal = cb.equal(root.get("userAccount").as(String.class),userAccount);
+              return cb.and(equal);
+          }
+      };			
+		Sort sort = new Sort(Sort.Direction.DESC, "id");
+		Pageable pageable = PageRequest.of(0,1,sort); //页码：前端从1开始，jpa从0开始，做个转换
+		Page<UserLoanInfo> userInfoPageData = userLoanInfoRepository.findAll(specification,pageable );
+		
+		if(userInfoPageData.getTotalElements()>0) {
+			return userInfoPageData.getContent().get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public void save(UserLoanInfo userLoanInfo) {
+		userLoanInfoRepository.save(userLoanInfo);
+	}
+
+	@Override
+	public UserLoanInfo getById(String loanInfoId) {
+		return userLoanInfoRepository.getOne(loanInfoId);
+	}
 }

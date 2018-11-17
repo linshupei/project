@@ -46,4 +46,10 @@ public interface UserLoanInfoService {
 
 	public List<UserLoanInfo> findOutDateUserLoanInfos();
 
+	public UserLoanInfo findRecentLoanInfo(String userAccount);
+
+	public void save(UserLoanInfo userLoanInfo);
+
+	public UserLoanInfo getById(String loanInfoId);
+
 }

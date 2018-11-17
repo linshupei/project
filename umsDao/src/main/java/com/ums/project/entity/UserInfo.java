@@ -213,12 +213,13 @@ public class UserInfo  implements Serializable{
 		this.appUserInfo = appUserInfo;
 	}
 
-	public String getBankCardImage() {
-		return bankCardImage;
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
-	public void setBankCard_image(String bankCardImage) {
-		this.bankCardImage = bankCardImage;
+	public String getBankCardImage() {
+		return bankCardImage;
 	}
 
 	public String getName() {

@@ -23,13 +23,13 @@ public class LoginController {
 	@RequestMapping("/api/loginOutTime")
 	public BaseResult loginOutTime(){
 		 ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		 HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		 
 		 BaseResult result = new BaseResult();
 		 result.setCode("0");
 		 result.setReason("");
 		 result.setTime(System.currentTimeMillis());
 		 
-		 HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		 Object attribute = request.getSession().getAttribute("session_user");
 		 if(attribute==null){
 			 result.setCode("1");
@@ -61,7 +61,7 @@ public class LoginController {
 		LoginResult result = new LoginResult();
 		result.setTime(System.currentTimeMillis());
 		result.setReason("");
-		result.setTicket("");
+		result.setToken("");
 		
 		 AdminUser user = adminUserService.findAccountAndPassword(userName, password);
 		 if(user==null){
@@ -70,7 +70,7 @@ public class LoginController {
 		 }else{
 				result.setCode(ResultCode.SUCCESS);
 				result.setReason("");
-				result.setTicket(""+System.currentTimeMillis());
+				result.setToken(""+System.currentTimeMillis());
 				result.setTime(System.currentTimeMillis());
 				
 				request.getSession().setAttribute("session_user",user.getAccount());

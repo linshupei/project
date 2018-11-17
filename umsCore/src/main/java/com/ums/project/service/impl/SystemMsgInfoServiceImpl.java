@@ -106,4 +106,9 @@ public class SystemMsgInfoServiceImpl implements SystemMsgInfoService {
 		Page<SystemMsgInfo> findAll = systemMsgInfoRepository.findAll(specification,pageable);
 		return findAll;
 	}
+
+	@Override
+	public void save(SystemMsgInfo msg) {
+		systemMsgInfoRepository.save(msg);
+	}
 }

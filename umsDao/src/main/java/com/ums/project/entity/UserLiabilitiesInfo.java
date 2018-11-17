@@ -39,6 +39,9 @@ public class UserLiabilitiesInfo  implements Serializable{
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")//people中的addr
 	private UserInfo userInfo;
+
+    @Column(name = "user_account") 
+    private String userAccount;
     
     @OneToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "liabilities_platform", referencedColumnName = "liabilities_platform")//people中的addr
@@ -60,8 +63,6 @@ public class UserLiabilitiesInfo  implements Serializable{
 		this.liabilitiesAmount = liabilitiesAmount;
 	}
 
-
-
 	public LiabilitiesPlatformInfo getLiabilitiesPlatformInfo() {
 		return liabilitiesPlatformInfo;
 	}
@@ -76,6 +77,18 @@ public class UserLiabilitiesInfo  implements Serializable{
 
 	public void setUserInfo(UserInfo userInfo) {
 		this.userInfo = userInfo;
+	}
+
+	public String getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(String userAccount) {
+		this.userAccount = userAccount;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
@@ -105,8 +118,8 @@ public class UserLiabilitiesInfo  implements Serializable{
 
 	@Override
 	public String toString() {
-		return "userLiabilitiesInfo [id=" + id + ", liabilitiesAmount=" + liabilitiesAmount + ", userInfo=" + userInfo
-				+ ", liabilitiesPlatformInfo=" + liabilitiesPlatformInfo + "]";
+		return "UserLiabilitiesInfo [id=" + id + ", liabilitiesAmount=" + liabilitiesAmount + ", userAccount="
+				+ userAccount + ", liabilitiesPlatformInfo=" + liabilitiesPlatformInfo + "]";
 	}
 
 }

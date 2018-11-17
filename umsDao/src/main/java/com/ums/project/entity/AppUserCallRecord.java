@@ -36,6 +36,9 @@ public class AppUserCallRecord implements Serializable{
 	
     @Column(name = "call_time") 
 	private String callTime;
+    
+    @Column(name = "call_times") 
+	private String callTimes;    
 
     @Column(name = "user_account") 
 	private String userAccount;
@@ -100,6 +103,18 @@ public class AppUserCallRecord implements Serializable{
 		this.appUserInfo = appUserInfo;
 	}
 
+	public String getCallTimes() {
+		return callTimes;
+	}
+
+	public void setCallTimes(String callTimes) {
+		this.callTimes = callTimes;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -128,9 +143,11 @@ public class AppUserCallRecord implements Serializable{
 	@Override
 	public String toString() {
 		return "AppUserCallRecord [id=" + id + ", callName=" + callName + ", callPhone=" + callPhone + ", calledPhone="
-				+ calledPhone + ", callTime=" + callTime + ", userAccount=" + userAccount + ", appUserInfo="
-				+ appUserInfo + "]";
+				+ calledPhone + ", callTime=" + callTime + ", callTimes=" + callTimes + ", userAccount=" + userAccount
+				+ "]";
 	}
+
+
 	
 	
 }

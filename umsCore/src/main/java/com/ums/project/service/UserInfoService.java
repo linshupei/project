@@ -9,4 +9,6 @@ import com.ums.project.result.DataPage;
 public interface UserInfoService {
 	
 	public Page<UserInfo> userInfoPageData(UserInfoQueryBean queryBean, DataPage page);
+
+	public void save(UserInfo userInfo);
 }

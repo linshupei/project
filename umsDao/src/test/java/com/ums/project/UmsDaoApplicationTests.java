@@ -16,10 +16,10 @@ import com.ums.project.repository.AppUserInfoRepository;
 //@SpringBootTest
 public class UmsDaoApplicationTests {
 
-	@Resource(name="appUserInfoRepository")
-	private AppUserInfoRepository appUserInfoRepository;
+	//@Resource(name="appUserInfoRepository")
+   private AppUserInfoRepository appUserInfoRepository;
 	
-	@Test
+	//@Test
 	public void contextLoads() {
 		List<AppUserInfo> findAll = appUserInfoRepository.findAll();
 		System.out.println(findAll.size());

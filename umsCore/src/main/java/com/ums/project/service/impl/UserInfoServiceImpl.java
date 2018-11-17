@@ -81,4 +81,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 		
 		return userInfoPageData;
 	}
+
+	@Override
+	public void save(UserInfo userInfo) {
+		userInfoRepository.save(userInfo);
+	}
 }

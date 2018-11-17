@@ -11,4 +11,8 @@ public interface AppUserInfoService {
 	public Page<AppUserInfo> userInfoPageData(AppUserInfoQueryBean queryBean, DataPage page);
 
 	public String resetPassword(String id);
+
+	public AppUserInfo findByUserAccount(String userAccount);
+
+	public void save(AppUserInfo info);
 }

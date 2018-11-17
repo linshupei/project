@@ -125,7 +125,7 @@ public class SystemMsgInfoController {
 	}		
 	
 	/**
-	 * 查询申请贷款消息接口
+	 * 逾期贷款接口
 	 * @param page
 	 * @param limit
 	 * @return

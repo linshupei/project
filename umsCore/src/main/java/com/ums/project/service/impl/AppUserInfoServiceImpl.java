@@ -81,4 +81,14 @@ public class AppUserInfoServiceImpl implements AppUserInfoService {
 		
 		return password.toString();
 	}
+
+	@Override
+	public AppUserInfo findByUserAccount(String userAccount) {
+		return appUserInfoRepository.findByUserAccount(userAccount);
+	}
+	
+	@Override
+	public void save(AppUserInfo info) {
+		appUserInfoRepository.save(info);
+	}
 }

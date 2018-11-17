@@ -23,4 +23,6 @@ public interface AppUserInfoRepository  extends JpaRepository<AppUserInfo,String
 	 @Modifying //update或delete时必须使用@Modifying对方法进行注解，才能使得ORM知道现在要执行的是写操作
 	 @Query("update AppUserInfo set loginPassword=:password where id = :appUserId")
 	public void resetPassword(String appUserId, String password);
+
+	public AppUserInfo findByUserAccount(String userAccount);
 }

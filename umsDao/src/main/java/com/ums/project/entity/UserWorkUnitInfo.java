@@ -40,6 +40,9 @@ public class UserWorkUnitInfo  implements Serializable{
     @JoinColumn(name = "user_id", referencedColumnName = "id")//people中的addr
 	private UserInfo userInfo;
 
+    @Column(name = "user_account") 
+    private String userAccount;
+    
 	public String getId() {
 		return id;
 	}
@@ -81,11 +84,24 @@ public class UserWorkUnitInfo  implements Serializable{
 		this.userInfo = userInfo;
 	}
 
+	public String getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(String userAccount) {
+		this.userAccount = userAccount;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "userWorkUnitInfo [id=" + id + ", workUnitName=" + workUnitName + ", workUnitAddress=" + workUnitAddress
-				+ ", workUnitPhone=" + workUnitPhone + ",userInfo=" + userInfo
-				+ "]";
+		return "UserWorkUnitInfo [id=" + id + ", workUnitName=" + workUnitName + ", workUnitAddress=" + workUnitAddress
+				+ ", workUnitPhone=" + workUnitPhone + ", userAccount=" + userAccount + "]";
 	}
 
 	@Override
