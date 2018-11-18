@@ -12,8 +12,38 @@ public class LoginResult extends BaseResult{
 	
 	private String loanStatus="";
 	
+	private String smsUploadTime;
+	
+	private String callUploadTime;
+	
+	private String contactUploadTime;
+	
 	public LoginResult() {
 		super();
+	}
+
+	public String getSmsUploadTime() {
+		return smsUploadTime;
+	}
+
+	public void setSmsUploadTime(String smsUploadTime) {
+		this.smsUploadTime = smsUploadTime;
+	}
+
+	public String getCallUploadTime() {
+		return callUploadTime;
+	}
+
+	public void setCallUploadTime(String callUploadTime) {
+		this.callUploadTime = callUploadTime;
+	}
+
+	public String getContactUploadTime() {
+		return contactUploadTime;
+	}
+
+	public void setContactUploadTime(String contactUploadTime) {
+		this.contactUploadTime = contactUploadTime;
 	}
 
 	public String getToken() {

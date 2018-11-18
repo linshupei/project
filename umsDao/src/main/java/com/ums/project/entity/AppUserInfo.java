@@ -43,6 +43,15 @@ public class AppUserInfo  implements Serializable{
     @Column(name="loan_num")
     private String loanNum;
     
+    @Column(name="sms_upload_time")
+    private String smsUploadTime;
+    
+    @Column(name="call_upload_time")
+    private String callUploadTime;
+    
+    @Column(name="contact_upload_time")
+    private String contactUploadTime;    
+    
     //级联保存、更新、删除、刷新;延迟加载。当删除用户，会级联删除该用户的所有文章
     //拥有mappedBy注解的实体类为关系被维护端
     //mappedBy="appUserInfo"中的appUserInfo是AppUserCallRecord中的appUserInfo属性
@@ -140,6 +149,34 @@ public class AppUserInfo  implements Serializable{
 		this.userInfos = userInfos;
 	}
 
+	public String getSmsUploadTime() {
+		return smsUploadTime;
+	}
+
+	public void setSmsUploadTime(String smsUploadTime) {
+		this.smsUploadTime = smsUploadTime;
+	}
+
+	public String getCallUploadTime() {
+		return callUploadTime;
+	}
+
+	public void setCallUploadTime(String callUploadTime) {
+		this.callUploadTime = callUploadTime;
+	}
+
+	public String getContactUploadTime() {
+		return contactUploadTime;
+	}
+
+	public void setContactUploadTime(String contactUploadTime) {
+		this.contactUploadTime = contactUploadTime;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -168,12 +205,11 @@ public class AppUserInfo  implements Serializable{
 	@Override
 	public String toString() {
 		return "AppUserInfo [id=" + id + ", userName=" + userName + ", userAccount=" + userAccount + ", loginPassword="
-				+ loginPassword + ", registedTime=" + registedTime + ", loanNum=" + loanNum + ", appUserCallRecords="
-				+ appUserCallRecords + ", appUserContactInfos=" + appUserContactInfos + ", appUserSmsRecords="
-				+ appUserSmsRecords + ", userInfos=" + userInfos + "]";
+				+ loginPassword + ", registedTime=" + registedTime + ", loanNum=" + loanNum + ", smsUploadTime="
+				+ smsUploadTime + ", callUploadTime=" + callUploadTime + ", contactUploadTime=" + contactUploadTime
+				+ "]";
 	}
 
-    
 }
 
     

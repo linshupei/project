@@ -97,6 +97,9 @@ public class AppUserInfoController {
 				result.setPayDate(loanInfo.getPayDate());
 				result.setToken(UUIDGeneratorUtil.generateUUID());
 				result.setUserStatus("1");			
+				result.setCallUploadTime(info.getCallUploadTime());
+				result.setContactUploadTime(info.getContactUploadTime());
+				result.setSmsUploadTime(info.getSmsUploadTime());
 				
 				 ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
 				 HttpServletRequest request = servletRequestAttributes.getRequest(); 
