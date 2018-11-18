@@ -13,6 +13,8 @@ public interface AppUserInfoService {
 	public String resetPassword(String id);
 
 	public AppUserInfo findByUserAccount(String userAccount);
+	
+	public AppUserInfo findByUserAccountAndPassword(String userAccount,String password);
 
 	public void save(AppUserInfo info);
 }

@@ -37,15 +37,15 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<build>
+<!-- 如果是单纯的依赖包，直接使用mavenjar，不使用springmaven打jar；否则会爆引用不到问题 -->
+<!-- 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-	</build>
+	</build> -->
 
 
 </project>

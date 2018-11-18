@@ -91,4 +91,9 @@ public class AppUserInfoServiceImpl implements AppUserInfoService {
 	public void save(AppUserInfo info) {
 		appUserInfoRepository.save(info);
 	}
+
+	@Override
+	public AppUserInfo findByUserAccountAndPassword(String userAccount, String password) {
+		return appUserInfoRepository.findByUserAccountAndLoginPassword(userAccount,password);
+	}
 }

@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.DigestUtils;
 
 import com.ums.project.util.Base64Utils;
 
@@ -17,7 +18,7 @@ public class UmsApplicationTests {
 	
 	public static void main(String[] args) {
 		
-		System.out.println(Base64Utils.ImageToBase64ByLocal("H:\\老婆手机照片\\1.JPG"));
+		System.out.println(DigestUtils.md5DigestAsHex("123455".getBytes()).toUpperCase());
 	}
 
 }

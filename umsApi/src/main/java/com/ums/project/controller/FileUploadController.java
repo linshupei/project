@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,22 +26,31 @@ import com.ums.project.vo.FileUploadResult;
 @RestController
 public class FileUploadController {
 
+	 @Autowired
+	 private Environment env;
+	 
 	@RequestMapping("/api/imageUpload")
 	public BaseResult uploadImage(@RequestBody Map<String,Object> params) {
 		String base64Data = (String) params.get("base64Data");
+		String fileType = (String) params.get("fileType");
 		 ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
 		 HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		 
-		 String strDirPath = request.getSession().getServletContext().getRealPath("/"); 
+		 String strDirPath = request.getSession().getServletContext().getRealPath(""); 
 		 
-		 strDirPath = strDirPath.substring(0, strDirPath.lastIndexOf(File.separator));
-		 
-		 String fileName =System.currentTimeMillis()+".jpg"; 
-		 strDirPath = strDirPath+File.separator+"upload"+File.separator+"image"+fileName;
-		 //strDirPath = "G:\\"+fileName;
+		 String fileName =System.currentTimeMillis()+"."+fileType; 
+		 File file = new File(strDirPath);
+		 file = file.getParentFile();
+		 strDirPath = file.getAbsolutePath();
+		 strDirPath = strDirPath+File.separator+"upload"+File.separator+"image";
+		  file = new File(strDirPath);
+		  if(!file.exists()) {
+			  file.mkdirs();
+		  }
+		 strDirPath = strDirPath+File.separator+fileName;
 		 Base64Utils.Base64ToImage(base64Data, strDirPath);
 		 
-		 String imageUrl = "http://127.0.0.1:8080/upload/image/"+fileName;
+		 String imageUrl = env.getProperty("serverDomain")+"/upload/image/"+fileName;
 		 FileUploadResult result = new FileUploadResult();
 		 result.setCode("");
 		 result.setReason("");

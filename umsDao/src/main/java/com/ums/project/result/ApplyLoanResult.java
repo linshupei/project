@@ -2,7 +2,7 @@ package com.ums.project.result;
 
 public class ApplyLoanResult extends BaseResult{
 	
-	private String loanInfoId;
+	private String loanInfoId="";
 
 	
 	public ApplyLoanResult() {

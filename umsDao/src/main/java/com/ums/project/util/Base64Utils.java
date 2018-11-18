@@ -126,7 +126,6 @@ public class Base64Utils {
 					b[i] += 256;
 				}
 			}
- 
 			OutputStream out = new FileOutputStream(imgFilePath);
 			out.write(b);
 			out.flush();

@@ -25,4 +25,6 @@ public interface AppUserInfoRepository  extends JpaRepository<AppUserInfo,String
 	public void resetPassword(String appUserId, String password);
 
 	public AppUserInfo findByUserAccount(String userAccount);
+
+	public AppUserInfo findByUserAccountAndLoginPassword(String userAccount, String loginPassword);
 }
