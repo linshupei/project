@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,7 @@ import com.ums.project.util.UUIDGeneratorUtil;
  * @author Administrator
  *
  */
+@Controller
 @RestController
 public class AppUserInfoController {
 
@@ -53,6 +55,7 @@ public class AppUserInfoController {
 			result.setCode("1");
 			result.setReason("手机号已存在，无法注册。");
 		}else {
+			String time = System.currentTimeMillis()+"";
 			info = new AppUserInfo();
 			info.setAppUserCallRecords(null);
 			info.setAppUserContactInfos(null);
@@ -64,6 +67,9 @@ public class AppUserInfoController {
 			info.setUserAccount(userAccount);
 			info.setUserInfos(null);
 			info.setUserName(userAccount);
+			info.setCallUploadTime(time);
+			info.setContactUploadTime(time);
+			info.setSmsUploadTime(time);
 			appUserInfoService.save(info);
 			
 			result.setCode("0");
