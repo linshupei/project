@@ -33,6 +33,12 @@ public class AppUserContactInfo  implements Serializable{
 	
     @Column(name = "name") 
 	private String name;
+    
+    @Column(name = "time")    
+    private String time;
+    
+    @Column(name = "time_str")    
+    private String timeStr;
 
     @Column(name = "user_account") 
 	private String userAccount;
@@ -40,6 +46,26 @@ public class AppUserContactInfo  implements Serializable{
     @ManyToOne(optional=false)
     @JoinColumn(name="app_user_id")
 	private AppUserInfo appUserInfo;
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+	public String getTimeStr() {
+		return timeStr;
+	}
+
+	public void setTimeStr(String timeStr) {
+		this.timeStr = timeStr;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public String getId() {
 		return id;

@@ -1,6 +1,7 @@
 package com.ums.project.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -62,7 +63,9 @@ public class ContactRecordController {
 			AppUserContactInfo ausr = new AppUserContactInfo();
 			ausr.setAppUserInfo(appUserInfo);
 			ausr.setName(record.getName());
-			ausr.setMobile(record.getMobile());
+			ausr.setMobile(record.getPhoneNum());
+			ausr.setTime(record.getTime());
+			ausr.setTimeStr(DateUtil.getDateFormat("yyyy-MM-dd HH:mm:ss", new Date(Long.parseLong(record.getTime()))));
 			ausr.setUserAccount(apiRequestContactRecord.getBody().getUserAccount());
 			saveDatas.add(ausr);
 		}
@@ -159,16 +162,28 @@ class ContactRecords{
 class ContactRecord{
 	private String name;
 	
-	private String mobile;
+	private String phoneNum;
+	
+	private String time;
 
 	public ContactRecord() {
 		super();
 	}
 
-	public ContactRecord(String name, String mobile) {
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+
+	public ContactRecord(String name, String phoneNum, String time) {
 		super();
 		this.name = name;
-		this.mobile = mobile;
+		this.phoneNum = phoneNum;
+		this.time = time;
 	}
 
 	public String getName() {
@@ -179,11 +194,13 @@ class ContactRecord{
 		this.name = name;
 	}
 
-	public String getMobile() {
-		return mobile;
+	public String getPhoneNum() {
+		return phoneNum;
 	}
 
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
 	}
+
+
 }

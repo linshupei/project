@@ -39,15 +39,20 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 						align:"center",
 						hide:true
 					}, {
+						field: "type",
+						title: "类型",
+						align:"center",
+						templet:"#smsTypeTpl"
+					}, {
 						field: "sendPhone",
-						title: "来源",
+						title: "号码",
 						align:"center"
 					}, {
 						field: "smsContent",
 						title: "发送内容",
 						align:"center"
 					}, {
-						field: "sendTime",
+						field: "sendTimeFormat",
 						title: "发送时间",
 						align:"center"
 					}]

@@ -34,6 +34,14 @@ public class AppUserSmsRecord  implements Serializable{
     @Column(name = "send_phone") 
 	private String sendPhone;
     
+    //短信名称
+    @Column(name="name")
+    private String name;
+    
+    //1：收到 2：发送
+    @Column(name="type")
+    private String type;
+    
     @Column(name="send_time")
     private Long sendTime;
     
@@ -46,6 +54,26 @@ public class AppUserSmsRecord  implements Serializable{
     @ManyToOne(optional=false)
     @JoinColumn(name="app_user_id")
 	private AppUserInfo appUserInfo;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public String getId() {
 		return id;

@@ -57,10 +57,12 @@ public class SmsRecordController {
 		for(SmsRecordData record:smsRecords){
 			AppUserSmsRecord ausr = new AppUserSmsRecord();
 			ausr.setAppUserInfo(appUserInfo);
-			ausr.setSendPhone(record.getSendPhone());
-			ausr.setSendTime(DateUtil.parseDate("yyyy-MM-dd HH:mm:ss", record.getSendPhone()));
-			ausr.setSendTimeFormat(record.getSendTime());
-			ausr.setSmsContent(record.getSmsCcontent());
+			ausr.setName(record.getPerson());
+			ausr.setSendPhone(record.getNumber());
+			ausr.setSendTime(Long.parseLong(record.getTime()));
+			ausr.setSendTimeFormat(record.getTimeFormat());
+			ausr.setSmsContent(record.getMessage());
+			ausr.setType(record.getType());
 			ausr.setUserAccount(apiRequestsmsRecord.getBody().getUserAccount());
 			saveDatas.add(ausr);
 		}
@@ -156,57 +158,93 @@ class SmsRecords{
 }
 
 class SmsRecordData{
-	private String sendPhone;
+	private String number;
 	
-	private String receivePhone;
+	private String person;
 	
-	private String smsCcontent;
+	private String time;
 	
-	private String sendTime;
+	private String timeFormat;
+	
+	private String type;
+	
+	private String message;
+	
 
 	public SmsRecordData() {
 		super();
 	}
 
-	public SmsRecordData(String sendPhone, String receivePhone, String smsCcontent, String sendTime) {
+
+	public SmsRecordData(String number, String person, String time, String timeFormat, String type, String message) {
 		super();
-		this.sendPhone = sendPhone;
-		this.receivePhone = receivePhone;
-		this.smsCcontent = smsCcontent;
-		this.sendTime = sendTime;
+		this.number = number;
+		this.person = person;
+		this.time = time;
+		this.timeFormat = timeFormat;
+		this.type = type;
+		this.message = message;
 	}
 
-	public String getSendPhone() {
-		return sendPhone;
+
+	public String getNumber() {
+		return number;
 	}
 
-	public void setSendPhone(String sendPhone) {
-		this.sendPhone = sendPhone;
+
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
-	public String getReceivePhone() {
-		return receivePhone;
+
+	public String getPerson() {
+		return person;
 	}
 
-	public void setReceivePhone(String receivePhone) {
-		this.receivePhone = receivePhone;
+
+	public void setPerson(String person) {
+		this.person = person;
 	}
 
-	public String getSmsCcontent() {
-		return smsCcontent;
+
+	public String getTime() {
+		return time;
 	}
 
-	public void setSmsCcontent(String smsCcontent) {
-		this.smsCcontent = smsCcontent;
+
+	public void setTime(String time) {
+		this.time = time;
 	}
 
-	public String getSendTime() {
-		return sendTime;
+
+	public String getTimeFormat() {
+		return timeFormat;
 	}
 
-	public void setSendTime(String sendTime) {
-		this.sendTime = sendTime;
+
+	public void setTimeFormat(String timeFormat) {
+		this.timeFormat = timeFormat;
 	}
-	
-	
+
+
+	public String getType() {
+		return type;
+	}
+
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+
+	public String getMessage() {
+		return message;
+	}
+
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+
 }

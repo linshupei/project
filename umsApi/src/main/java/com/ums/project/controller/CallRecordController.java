@@ -1,6 +1,7 @@
 package com.ums.project.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -59,11 +60,13 @@ public class CallRecordController {
 		for(CallRecord record:callRecords){
 			AppUserCallRecord ausr = new AppUserCallRecord();
 			ausr.setAppUserInfo(appUserInfo);
-			ausr.setCalledPhone(record.getCalledPhone());
-			ausr.setCallName(record.getCallName());
-			ausr.setCallPhone(record.getCallPhone());
-			ausr.setCallTime(record.getCallTime());
-			ausr.setCallTimes(record.getCallTimes());
+			ausr.setCalledPhone(record.getNumber());
+			ausr.setCallName(record.getName());
+			ausr.setCallPhone("");
+			ausr.setCallTime(record.getTime());
+			ausr.setCallTimeStr(DateUtil.getDateFormat("yyyy-MM-dd HH:mm:ss", new Date(Long.parseLong(record.getTime()))));
+			ausr.setCallTimes(record.getDuration());
+			ausr.setType(record.getType());
 			ausr.setUserAccount(apiRequestCallRecord.getBody().getUserAccount());
 			saveDatas.add(ausr);
 		}
@@ -160,67 +163,67 @@ class CallRecords{
 }
 
 class CallRecord{
-	private String callName;
+	private String number;
 	
-	private String callPhone;
+	private String name;
 	
-	private String calledPhone;
-	
-	private String callTimes;
-	
-	private String callTime;
+	private String type;
+	//呼叫时间（毫秒数）
+	private String time;
+	//时长
+	private String duration;
 
 	public CallRecord() {
 		super();
 	}
 
-	public CallRecord(String callName, String callPhone, String calledPhone, String callTimes, String callTime) {
+	public CallRecord(String number, String name, String type, String time, String duration) {
 		super();
-		this.callName = callName;
-		this.callPhone = callPhone;
-		this.calledPhone = calledPhone;
-		this.callTimes = callTimes;
-		this.callTime = callTime;
+		this.number = number;
+		this.name = name;
+		this.type = type;
+		this.time = time;
+		this.duration = duration;
 	}
 
-	public String getCallName() {
-		return callName;
+	public String getNumber() {
+		return number;
 	}
 
-	public void setCallName(String callName) {
-		this.callName = callName;
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
-	public String getCallPhone() {
-		return callPhone;
+	public String getName() {
+		return name;
 	}
 
-	public void setCallPhone(String callPhone) {
-		this.callPhone = callPhone;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getCalledPhone() {
-		return calledPhone;
+	public String getType() {
+		return type;
 	}
 
-	public void setCalledPhone(String calledPhone) {
-		this.calledPhone = calledPhone;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public String getCallTimes() {
-		return callTimes;
+	public String getTime() {
+		return time;
 	}
 
-	public void setCallTimes(String callTimes) {
-		this.callTimes = callTimes;
+	public void setTime(String time) {
+		this.time = time;
 	}
 
-	public String getCallTime() {
-		return callTime;
+	public String getDuration() {
+		return duration;
 	}
 
-	public void setCallTime(String callTime) {
-		this.callTime = callTime;
+	public void setDuration(String duration) {
+		this.duration = duration;
 	}
 
 }

@@ -39,7 +39,18 @@
 				</form>	
         	</div>
             <div class="user-list layui-col-lg12 layui-col-md12 layui-col-sm12 layui-col-xs12">
-            	  <table class="layui-hide" id="appUserCallRecordInfosTable" lay-filter="appUserCallRecordInfosTable" data-url="/api/appUserCallRecordInfos"></table>                         
+            	  <table class="layui-hide" id="appUserCallRecordInfosTable" lay-filter="appUserCallRecordInfosTable" data-url="/api/appUserCallRecordInfos"></table>
+					<script type="text/html" id="callTypeTpl">
+							{{#if(d.type=="1"){}}
+									呼入
+							{{#}}}
+							{{#if(d.type=="2"){}}
+									呼出
+							{{#}}}
+							{{#if(d.status=="3"){}}
+									未接
+							{{#}}}
+					</script>            	                           
             </div>
 		</div>
 	</div>

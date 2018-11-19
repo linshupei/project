@@ -39,7 +39,15 @@
 				</form>	
         	</div>
             <div class="user-list layui-col-lg12 layui-col-md12 layui-col-sm12 layui-col-xs12">
-            	  <table class="layui-hide" id="appUserSmsRecordInfosTable" lay-filter="appUserSmsRecordInfosTable" data-url="/api/appUserSmsRecordInfos"></table>                         
+            	  <table class="layui-hide" id="appUserSmsRecordInfosTable" lay-filter="appUserSmsRecordInfosTable" data-url="/api/appUserSmsRecordInfos"></table>
+            	    <script type="text/html" id="smsTypeTpl">
+							{{#if(d.type=="1"){}}
+									收到
+							{{#}}}
+							{{#if(d.type=="2"){}}
+									发送
+							{{#}}}
+					</script>  
             </div>
 		</div>
 	</div>

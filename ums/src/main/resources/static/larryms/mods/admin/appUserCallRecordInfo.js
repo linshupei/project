@@ -43,19 +43,20 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 						title: "APP用户账号",
 						align:"center"
 					}, {
-						field: "callPhone",
-						title: "主叫",
-						align:"center"
+						field: "callType",
+						title: "呼叫类型",
+						align:"center",
+						templet:"#callTypeTpl"
 					}, {
 						field: "calledPhone",
-						title: "被叫",
+						title: "号码",
 						align:"center"
 					}, {
 						field: "callName",
 						title: "备注",
 						align:"center"
 					}, {
-						field: "callTime",
+						field: "callTimeStr",
 						title: "呼叫时间",
 						align:"center"
 					}]

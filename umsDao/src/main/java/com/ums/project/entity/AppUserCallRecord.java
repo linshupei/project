@@ -34,18 +34,44 @@ public class AppUserCallRecord implements Serializable{
     @Column(name = "called_phone") 
 	private String calledPhone;
 	
+    //呼叫时间
     @Column(name = "call_time") 
 	private String callTime;
     
+    //呼叫时间（yyyy-MM-dd HH:mm:ss）
+    @Column(name = "call_time_str") 
+	private String callTimeStr;
+    
+    //通话时长
     @Column(name = "call_times") 
 	private String callTimes;    
 
     @Column(name = "user_account") 
 	private String userAccount;
+    
+    //1：呼入  2：呼出 3：未接 
+    @Column(name = "type") 
+	private String type;    
 
     @ManyToOne(optional=false)
     @JoinColumn(name="app_user_id")
 	private AppUserInfo appUserInfo;
+
+	public String getCallTimeStr() {
+		return callTimeStr;
+	}
+
+	public void setCallTimeStr(String callTimeStr) {
+		this.callTimeStr = callTimeStr;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	public String getId() {
 		return id;
