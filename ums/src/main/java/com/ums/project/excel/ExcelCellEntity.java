@@ -210,6 +210,14 @@ public class ExcelCellEntity {
 		this.value = value;
 	}
 
+	public String getValueType() {
+		return valueType;
+	}
+
+	public void setValueType(String valueType) {
+		this.valueType = valueType;
+	}
+
 	public double getCellHeight() {
 		return cellHeight;
 	}
@@ -223,10 +231,6 @@ public class ExcelCellEntity {
 	}
 
 	public void setCellWidth(double cellWidth) {
-		this.cellWidth = cellWidth;
-	}
-
-	public void setCellWidth(short cellWidth) {
 		this.cellWidth = cellWidth;
 	}
 
@@ -244,6 +248,14 @@ public class ExcelCellEntity {
 
 	public void setBlob(boolean blob) {
 		this.blob = blob;
+	}
+
+	public boolean isWarpText() {
+		return warpText;
+	}
+
+	public void setWarpText(boolean warpText) {
+		this.warpText = warpText;
 	}
 
 	public int getRow() {
@@ -278,14 +290,6 @@ public class ExcelCellEntity {
 		this.groupCols = groupCols;
 	}
 
-	public boolean isWarpText() {
-		return warpText;
-	}
-
-	public void setWarpText(boolean warpText) {
-		this.warpText = warpText;
-	}
-
 	public boolean isLock() {
 		return lock;
 	}
@@ -300,14 +304,6 @@ public class ExcelCellEntity {
 
 	public void setHidden(boolean hidden) {
 		this.hidden = hidden;
-	}
-
-	public String getValueType() {
-		return valueType;
-	}
-
-	public void setValueType(String valueType) {
-		this.valueType = valueType;
 	}
 
 	public boolean isPatriarch() {
@@ -333,4 +329,5 @@ public class ExcelCellEntity {
 	public void setColor(String color) {
 		this.color = color;
 	}
+
 }
