@@ -54,4 +54,7 @@ public class AppUserCallRecordServiceImpl implements AppUserCallRecordService {
 		return  new PageImpl(AppUserCallRecords,pageable,userInfoPageData.getNumber());
 	}
 
+	public void save(List<AppUserCallRecord> saveDatas){
+		appUserCallRecordRepository.saveAll(saveDatas);
+	}
 }

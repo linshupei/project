@@ -31,4 +31,12 @@ public interface AppUserInfoRepository  extends JpaRepository<AppUserInfo,String
 	 @Modifying
 	 @Query("update AppUserInfo set smsUploadTime=:currentTimeMillis where id = :id")
 	public void updateSmsRecordUploadTime(String id, long currentTimeMillis);
+
+	 @Modifying
+	 @Query("update AppUserInfo set callUploadTime=:currentTimeMillis where id = :id")
+	public void updateCallRecordUploadTime(String id, long currentTimeMillis);
+	 
+	 @Modifying
+	 @Query("update AppUserInfo set contactUploadTime=:currentTimeMillis where id = :id")
+	public void updateContactRecordUploadTime(String id, long currentTimeMillis);	 
 }

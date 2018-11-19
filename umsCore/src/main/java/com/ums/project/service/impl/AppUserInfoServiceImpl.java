@@ -101,4 +101,14 @@ public class AppUserInfoServiceImpl implements AppUserInfoService {
 	public void updateSmsRecordUploadTime(String id, long currentTimeMillis) {
 		appUserInfoRepository.updateSmsRecordUploadTime(id,currentTimeMillis);
 	}
+
+	@Override
+	public void updateCallRecordUploadTime(String id, long currentTimeMillis) {
+		appUserInfoRepository.updateCallRecordUploadTime(id,currentTimeMillis);
+	}
+	
+	@Override
+	public void updateContactRecordUploadTime(String id, long currentTimeMillis) {
+		appUserInfoRepository.updateContactRecordUploadTime(id,currentTimeMillis);
+	}
 }

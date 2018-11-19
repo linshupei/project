@@ -19,4 +19,8 @@ public interface AppUserInfoService {
 	public void save(AppUserInfo info);
 
 	public void updateSmsRecordUploadTime(String id, long currentTimeMillis);
+
+	public void updateCallRecordUploadTime(String id, long currentTimeMillis);
+	
+	public void updateContactRecordUploadTime(String id, long currentTimeMillis);
 }

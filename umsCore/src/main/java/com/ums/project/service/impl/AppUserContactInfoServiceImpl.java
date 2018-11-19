@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.ums.project.entity.AppUserCallRecord;
 import com.ums.project.entity.AppUserContactInfo;
 import com.ums.project.entity.AppUserInfo;
 import com.ums.project.queryBean.AppUserContactInfoQueryBean;
@@ -54,4 +55,7 @@ public class AppUserContactInfoServiceImpl implements AppUserContactInfoService 
 		return  new PageImpl(appUserContactInfos,pageable,userInfoPageData.getNumber());
 	}
 
+	public void save(List<AppUserContactInfo> saveDatas){
+		appUserContactInfoRepository.saveAll(saveDatas);
+	}
 }
