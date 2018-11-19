@@ -27,4 +27,8 @@ public interface AppUserInfoRepository  extends JpaRepository<AppUserInfo,String
 	public AppUserInfo findByUserAccount(String userAccount);
 
 	public AppUserInfo findByUserAccountAndLoginPassword(String userAccount, String loginPassword);
+
+	 @Modifying
+	 @Query("update AppUserInfo set smsUploadTime=:currentTimeMillis where id = :id")
+	public void updateSmsRecordUploadTime(String id, long currentTimeMillis);
 }

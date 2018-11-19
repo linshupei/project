@@ -96,4 +96,9 @@ public class AppUserInfoServiceImpl implements AppUserInfoService {
 	public AppUserInfo findByUserAccountAndPassword(String userAccount, String password) {
 		return appUserInfoRepository.findByUserAccountAndLoginPassword(userAccount,password);
 	}
+
+	@Override
+	public void updateSmsRecordUploadTime(String id, long currentTimeMillis) {
+		appUserInfoRepository.updateSmsRecordUploadTime(id,currentTimeMillis);
+	}
 }

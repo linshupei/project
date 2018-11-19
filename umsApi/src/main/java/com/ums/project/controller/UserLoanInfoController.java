@@ -63,14 +63,14 @@ public class UserLoanInfoController {
 		
 		BaseResult result = new BaseResult();
 		result.setTime(System.currentTimeMillis());
-/*		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		boolean tokenTimeOut = tokenTimeOut( request,requestData.getHeader());
 		if(tokenTimeOut) {
 			result.setCode("003");
 			result.setReason("token过期");
 			return result;
-		}*/
+		}
 		
 		UserLoanInfo loanInfo = userLoanInfoService.getById(requestData.getBody().getLoanInfoId());
 		SystemMsgInfo msg = new SystemMsgInfo();

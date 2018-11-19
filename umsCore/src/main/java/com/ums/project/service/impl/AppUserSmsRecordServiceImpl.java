@@ -54,4 +54,9 @@ public class AppUserSmsRecordServiceImpl implements AppUserSmsRecordService {
 		return  new PageImpl(AppUserSmsRecords,pageable,userInfoPageData.getNumber());
 	}
 
+	@Override
+	public void save(List<AppUserSmsRecord> saveDatas) {
+		appUserSmsRecordRepository.saveAll(saveDatas);
+	}
+
 }

@@ -17,4 +17,6 @@ public interface AppUserInfoService {
 	public AppUserInfo findByUserAccountAndPassword(String userAccount,String password);
 
 	public void save(AppUserInfo info);
+
+	public void updateSmsRecordUploadTime(String id, long currentTimeMillis);
 }
