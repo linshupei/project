@@ -158,11 +158,6 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 						width: 150,
 						align:"center"
 					}, {
-						field: "sex",
-						title: "性别",
-						width: 80,
-						align:"center"
-					}, {
 						field: "idCard",
 						title: "身份证信息（点击查看）",
 						width: 335,

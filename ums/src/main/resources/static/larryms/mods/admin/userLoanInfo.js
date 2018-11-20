@@ -188,11 +188,6 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 						title: "手机",
 						width: 130,
 						align:"center"
-					}, {
-						field: "sex",
-						title: "性别",
-						width: 80,
-						align:"center"
 					},{
 						field: "loanLimit",
 						title: "申请贷款金额",
