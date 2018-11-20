@@ -1,7 +1,10 @@
 package com.ums.project.controller;
 
+import java.io.IOException;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +22,24 @@ public class LoginController {
 	
 	@Resource(name="adminUserService")
 	private AdminUserService adminUserService;
+	
+	
+	@RequestMapping("/api/loginOut")	
+	public void loginOut(){
+		 ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		 HttpServletRequest request = servletRequestAttributes.getRequest(); 
+		 HttpServletResponse response = servletRequestAttributes.getResponse();
+		 Object attribute = request.getSession().getAttribute("session_user");
+		request.getSession().setAttribute("session_user",null);
+		request.getSession().setAttribute(attribute==null?"":attribute.toString(),null);
+		
+		try {
+			response.sendRedirect("/html/login.html");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		 
+	}
 	
 	@RequestMapping("/api/loginOutTime")
 	public BaseResult loginOutTime(){

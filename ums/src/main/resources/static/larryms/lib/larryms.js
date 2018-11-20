@@ -48,7 +48,9 @@ layui.define(["jquery", "layer", "laytpl", "element", "form"], function(e) {
 			return r
 		},
 		u = function() {
-			this.version = "LarryMS 2.0.8 Stable", this.sysName = "LarryMS", this.tit = [this.sysName + "提示您", this.sysName + "错误提示", this.sysName + "参数配置错误提示", this.sysName + "数据源配置错误", "关闭失败提示", "操作成功", "操作失败", this.sysName + " Ajax 调试信息控制台"], this.config = {
+			this.version = "LarryMS 2.0.8 Stable",
+			this.sysName = "系统", 
+			this.tit = [this.sysName + "提示您", this.sysName + "错误提示", this.sysName + "参数配置错误提示", this.sysName + "数据源配置错误", "关闭失败提示", "操作成功", "操作失败", this.sysName + " Ajax 调试信息控制台"], this.config = {
 				plusDir: "/common/plus/",
 				jqDefined: undefined,
 				jqUrl: undefined

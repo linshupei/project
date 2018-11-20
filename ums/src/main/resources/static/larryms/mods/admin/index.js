@@ -575,7 +575,7 @@ layui.define(["jquery", "configure", "larryTab"], function(e) {
 
 	
 	function U() {
-		var e = '<iframe src="' + layui.cache.homeUrl + '" id="ifr-0" data-group="0" data-id="ifr0" lay-id="" name="ifr_0" class="larryms-iframe"></iframe>';
+		var e = '<iframe src="' + layui.cache.homeUrl + '" id="ifr-0" data-group="0" data-id="1701" lay-id="" name="ifr_0" class="larryms-iframe"></iframe>';
 		l("#homePage").append(e)
 	}
 	if (window.addEventListener) {

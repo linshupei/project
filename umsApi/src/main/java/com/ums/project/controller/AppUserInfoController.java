@@ -55,7 +55,7 @@ public class AppUserInfoController {
 			result.setCode("1");
 			result.setReason("手机号已存在，无法注册。");
 		}else {
-			String time = System.currentTimeMillis()+"";
+			String time = "0";
 			info = new AppUserInfo();
 			info.setAppUserCallRecords(null);
 			info.setAppUserContactInfos(null);

@@ -71,7 +71,7 @@
                         <a id="larryTheme"><i class="larry-icon larry-zhutishezhi-"></i><cite>主题设置</cite></a>
                     </li>   
             		<li class="layui-nav-item exit" lay-unselect>
-                        <a id="logout" data-url='login.html'><i class="larry-icon larry-exit"></i><cite>退出</cite></a>
+                        <a id="logout" data-url='/api/loginOut'><i class="larry-icon larry-exit"></i><cite>退出</cite></a>
                     </li>
             	</ul>
                 <div class="mobile-select"  id="rightMenuButton">
@@ -109,7 +109,7 @@
                 <div class="larryms-title-box clearfix" id="larryms_title">
                     <div class="larryms-btn-default larryms-press larryms-pull-left hide" id="goLeft"><i class="larry-icon larry-top-left-jt"></i></div> 
                     <ul class="layui-tab-title larryms-tab-title" lay-allowclose='false' id="larry_tab_title" lay-filter='larrymsTabTitle'>
-                        <li lay-id="0" data-flag='nav' data-group="0" data-id="larry-2" fresh="1" data-url="console.html" class="layui-this" id="larryms_home" >
+                        <li lay-id="0" data-flag='nav' data-group="0" data-id="larry-2" fresh="1" data-url="admin/userInfo/userInfo.html" class="layui-this" id="larryms_home" >
                             <i class="larry-icon larry-shouye2" data-icon="larry-shouye2" data-font="larry-icon"></i><cite>后台首页</cite>
                         </li>
                     </ul>
@@ -169,7 +169,7 @@
 <!-- 加载js文件-->
 <script type="text/javascript" src="../larryms/layui/layui.js"></script>
 <script type="text/javascript">
-layui.cache.homeUrl = 'console.html';
+layui.cache.homeUrl = 'admin/userInfo/userInfo.html';
 layui.cache.menusUrl = '/larryms/data/menu.json';//这里设置 菜单数据项接口地址 或data参数
 layui.cache.page = 'index'; //加载的js,说明：并非一个页面只能加载一个模块 可以这样定义：'index,common';也并非每个页面都要定义一个模块，事实上模块根据功能需要可以公用
 //layui.cache.rightMenu = 'custom'; //默认开启页面右键菜单，设置为 custom 时需要自定义右键菜单，设置为false 关闭右键菜单
