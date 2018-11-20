@@ -26,6 +26,16 @@
 
 	<dependencies>
 		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>3.10.1</version>
+		</dependency>	
+		<dependency>
+		    <groupId>commons-lang</groupId>
+		    <artifactId>commons-lang</artifactId>
+		    <version>2.6</version>
+		</dependency>	
+		<dependency>
 			<groupId>com.example</groupId>
 			<artifactId>umsCore</artifactId>
 			<version>0.0.1-SNAPSHOT</version>

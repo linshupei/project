@@ -36,6 +36,7 @@ layui.define(["jquery", "configure", "larryTab"], function(e) {
 	        async:false, 
 	        success: function(jsonData){ 
 				if(jsonData.code=="0"){
+				 l(".larryms-msg-info").remove();
 					s.notice({
 						msg: jsonData.data.msgContent,
 						url: "",
@@ -57,6 +58,7 @@ layui.define(["jquery", "configure", "larryTab"], function(e) {
 	        async:false, 
 	        success: function(jsonData){ 
 				if(jsonData.code=="0"){
+				    l(".larryms-msg-warning").remove();
 					s.notice({
 						msg: "您今天有"+jsonData.data+"笔逾期贷款未处理",
 						url: "",
@@ -64,7 +66,7 @@ layui.define(["jquery", "configure", "larryTab"], function(e) {
 					}, {
 						action: 4,
 						hide: "click"
-					})					
+					});
 				}
 	        } 
 		});		
