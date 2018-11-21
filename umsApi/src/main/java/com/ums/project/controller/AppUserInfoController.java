@@ -117,7 +117,50 @@ public class AppUserInfoController {
 		
 		return result;
 	}	
+	
 
+	/**
+	 * 查询信息
+	 * @return
+	 */
+	@RequestMapping("/api/appUser/query")
+	public LoginResult queryAppUserInfo(@RequestBody LoginRequestData apiRequestData) {
+		LoginResult result = new LoginResult();
+		result.setTime(System.currentTimeMillis());
+		
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest(); 
+		boolean tokenTimeOut = tokenTimeOut( request,apiRequestData.getHeader());
+		if(tokenTimeOut) {
+			result.setCode("003");
+			result.setReason("token过期");
+			return result;
+		}
+		
+		AppUserInfo info = appUserInfoService.findByUserAccount(apiRequestData.getBody().getUserAccount());
+		UserLoanInfo loanInfo = userLoanInfoService.findRecentLoanInfo(apiRequestData.getBody().getUserAccount());
+		if(loanInfo!=null) {
+				result.setLoanLimit(loanInfo.getLoanLimit());
+				result.setLoanStatus(loanInfo.getStatus());
+				result.setPayDate(loanInfo.getPayDate());
+				result.setUserStatus("1");			
+				result.setCallUploadTime(info.getCallUploadTime());
+				result.setContactUploadTime(info.getContactUploadTime());
+				result.setSmsUploadTime(info.getSmsUploadTime());
+		}
+
+		result.setCode("0");
+		result.setReason("");
+		return result;
+	}		
+
+	private boolean tokenTimeOut(HttpServletRequest request, Header header) {
+		Object tokenInfo = request.getSession().getAttribute(header.getToken());
+		if(tokenInfo==null) {
+			return false;
+		}
+		return true;
+	}
 }
 
 class LoginBody {
@@ -138,7 +181,12 @@ class LoginBody {
 		this.userAccount = userAccount;
 		this.password = password;
 	}
-
+	
+	public LoginBody(String userAccount) {
+		super();
+		this.password = password;
+	}
+	
 	public String getUserAccount() {
 		return userAccount;
 	}
