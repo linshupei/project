@@ -16,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -49,35 +51,44 @@ public class UserInfoServiceImpl implements UserInfoService {
 	public Page<UserInfo> userInfoPageData(UserInfoQueryBean queryBean, DataPage page){
 		
 		//排序规则
-		Sort sort = new Sort(Sort.Direction.DESC, "id");
+		Sort sort = new Sort(Sort.Direction.DESC, "id").and(new Sort(Sort.Direction.ASC, "userLoanInfo.status"));
 		//没有查询条件
-		if(StringUtils.isEmpty(queryBean.getKey())){
+/*		if(StringUtils.isEmpty(queryBean.getKey())){
 			 Pageable pageable = PageRequest.of(page.getPage()-1,page.getLimit(),sort); //页码：前端从1开始，jpa从0开始，做个转换
 			return userInfoRepository.findAll(pageable);
-		}
+		}*/
 	      //规格定义
         Specification<UserInfo> specification = new Specification<UserInfo>() {
             @Override
             public Predicate toPredicate(Root<UserInfo> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                List<Predicate> predicates = new ArrayList<>(); 
+                
+                Join<UserInfo, AppUserInfo> join = root.join("appUserInfo",JoinType.INNER);
+                Join<UserInfo, UserLoanInfo> loan = root.join("userLoanInfo",JoinType.INNER);
+                List<Predicate> allPredicates = new ArrayList<>(); 
+                Predicate or = null;
+                Predicate and = null;
                 if(!StringUtils.isEmpty(queryBean.getKey())){
-                	Join<UserInfo, AppUserInfo> join = root.join("appUserInfo",JoinType.INNER);
+                	List<Predicate> orList = new ArrayList<>(); 
                     Predicate userAccount = cb.like(join.get("userAccount").as(String.class),"%"+queryBean.getKey()+"%");
                     Predicate userName = cb.like(root.get("name").as(String.class),"%"+queryBean.getKey()+"%");
                     Predicate mobile = cb.like(root.get("mobile").as(String.class),"%"+queryBean.getKey()+"%");
                     
-  /*                  Join<UserInfo, UserLoanInfo> loan = root.join("u",JoinType.INNER);
-                    cb.like(x, pattern)*/
-                    predicates.add(userAccount);
-                    predicates.add(userName);
-                    predicates.add(mobile);
+                    orList.add(userAccount);
+                    orList.add(userName);
+                    orList.add(mobile);
                     
+                    allPredicates.add(cb.or(orList.toArray(new Predicate[0])));
+                }
+                if(!StringUtils.isEmpty(queryBean.getLoanStatus())) {
+                	
+                	Predicate equal = cb.equal(loan.get("status").as(String.class), queryBean.getLoanStatus());
+                	allPredicates.add(equal);
                 }
                 if(!StringUtils.isEmpty(queryBean.getId())) {
                 	Predicate equal = cb.equal(root.get("id").as(String.class),queryBean.getId());
-                	 predicates.add(equal);
+                	allPredicates.add(equal);
                 }
-                return cb.or(predicates.toArray(new Predicate[0]));
+                return cb.or(allPredicates.toArray(new Predicate[0]));
             }
         };		
         Pageable pageable = PageRequest.of(page.getPage()-1,page.getLimit(),sort); //页码：前端从1开始，jpa从0开始，做个转换
