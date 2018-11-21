@@ -10,7 +10,17 @@ public class UserInfoQueryBean {
 	
 	private String id;
 	
+	private String loanStatus;
 	
+	
+	public String getLoanStatus() {
+		return loanStatus;
+	}
+
+	public void setLoanStatus(String loanStatus) {
+		this.loanStatus = loanStatus;
+	}
+
 	public String getId() {
 		return id;
 	}

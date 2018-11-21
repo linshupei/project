@@ -32,7 +32,14 @@
             	<form class="layui-form layui-inline fl layui-hide-xs">
             		<div class="larryms-search-box">
 						<div class="layui-input-inline">
-							<input type="text" name="keywords" id="keywords"  class="layui-input searchVal layui-inline"  onkeypress="if(event.keyCode==13) {searchBtn.click();return false;}" autocomplete="off">
+							<select name="status" id="loanStatus">
+							  <option value="">全部</option>
+							  <option value="0">申请中</option>
+							  <option value="1">审核不通过</option>
+							  <option value="2">已放款</option>
+							  <option value="3">逾期未还</option>
+							  <option value="4">已还款</option>
+							</select>     							
 						</div>            		
 						<div class="layui-input-inline">
 							<input type="text" name="keywords" id="keywords"  class="layui-input searchVal layui-inline" placeholder="账号、姓名、手机号、身份证搜索" onkeypress="if(event.keyCode==13) {searchBtn.click();return false;}" autocomplete="off">

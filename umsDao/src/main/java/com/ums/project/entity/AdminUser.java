@@ -44,6 +44,10 @@ public class AdminUser  implements Serializable{
     @Column(name = "role_id") 
     private String roleId;
 
+    //头像地址
+    @Column(name = "head_image") 
+    private String headImage;
+    
 	public String getId() {
 		return id;
 	}
@@ -88,6 +92,14 @@ public class AdminUser  implements Serializable{
 		return serialVersionUID;
 	}
 
+	public String getHeadImage() {
+		return headImage;
+	}
+
+	public void setHeadImage(String headImage) {
+		this.headImage = headImage;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -116,7 +128,9 @@ public class AdminUser  implements Serializable{
 	@Override
 	public String toString() {
 		return "AdminUser [id=" + id + ", account=" + account + ", password=" + password + ", name=" + name
-				+ ", roleId=" + roleId + "]";
+				+ ", roleId=" + roleId + ", headImage=" + headImage + "]";
 	}
+
+
     
 }

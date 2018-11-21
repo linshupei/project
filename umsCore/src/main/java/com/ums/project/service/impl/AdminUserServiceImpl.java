@@ -17,4 +17,9 @@ public class AdminUserServiceImpl implements AdminUserService{
 	public AdminUser findAccountAndPassword(String account,String password){
 		return adminUserRepository.findAccountAndPassword(account, password);
 	}
+
+	@Override
+	public AdminUser findByAccount(String account) {
+		return adminUserRepository.findByAccount(account);
+	}
 }

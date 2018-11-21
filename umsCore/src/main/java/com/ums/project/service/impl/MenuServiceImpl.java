@@ -22,13 +22,14 @@ public class MenuServiceImpl implements MenuService{
 
 		List<Menu> findAll = menuRepository.findAll();
 	    List<MenuVo> datas = new ArrayList<MenuVo>();
+	    List<MenuVo> returnDatas =  new ArrayList<MenuVo>();
 	    for(Menu me:findAll){
 	    	MenuVo vo = new MenuVo();
 	    	vo.setChildren(new ArrayList<MenuVo>(0));
 	    	vo.setFont(me.getFont());
 	    	vo.setIcon(me.getIcon());
 	    	vo.setId(me.getId());
-	    	vo.setPid(me.getPid());
+	    	vo.setPid(me.getPid()==null?"0":me.getPid());
 	    	vo.setSpread(me.getSpread());
 	    	vo.setTitle(me.getTitle());
 	    	vo.setUrl(me.getUrl());
@@ -46,6 +47,11 @@ public class MenuServiceImpl implements MenuService{
 			}
 		}
 		
-		return datas;
+		for(MenuVo menu:datas) {
+			if("0".equals(menu.getPid())) {
+				returnDatas.add(menu);
+			}
+		}
+		return returnDatas;
 	}
 }

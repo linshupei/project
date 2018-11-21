@@ -22,6 +22,7 @@ import org.springframework.util.StringUtils;
 
 import com.ums.project.entity.AppUserInfo;
 import com.ums.project.entity.UserInfo;
+import com.ums.project.entity.UserLoanInfo;
 import com.ums.project.queryBean.AppUserInfoQueryBean;
 import com.ums.project.queryBean.UserInfoQueryBean;
 import com.ums.project.repository.AppUserInfoRepository;
@@ -64,6 +65,9 @@ public class UserInfoServiceImpl implements UserInfoService {
                     Predicate userAccount = cb.like(join.get("userAccount").as(String.class),"%"+queryBean.getKey()+"%");
                     Predicate userName = cb.like(root.get("name").as(String.class),"%"+queryBean.getKey()+"%");
                     Predicate mobile = cb.like(root.get("mobile").as(String.class),"%"+queryBean.getKey()+"%");
+                    
+  /*                  Join<UserInfo, UserLoanInfo> loan = root.join("u",JoinType.INNER);
+                    cb.like(x, pattern)*/
                     predicates.add(userAccount);
                     predicates.add(userName);
                     predicates.add(mobile);

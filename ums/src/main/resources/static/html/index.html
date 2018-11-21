@@ -56,9 +56,9 @@
             	<ul class="layui-nav clearfix" id="topbarRMenu">
                     <li class="layui-nav-item" lay-unselect>
                         <a larry-tab="page" class="message" data-group='0' data-url='admin/panel/message.html' data-id='12' >
+                            <span id="messageDot" class="layui-badge-dot"></span>
                             <i class="larry-icon larry-xiaoxi2" data-icon="larry-xiaoxi2" data-font="larry-icon"></i>
                             <cite>消息</cite>
-                            <span class="layui-badge-dot"></span>
                         </a>
                     </li>
                     <li class="layui-nav-item" lay-unselect>
@@ -90,9 +90,9 @@
                 <!-- 管理员信息      -->
                 <div class="user-info">
                     <div class="photo">
-                        <img src="../larryms/images/user.jpg" id="user_photo" alt="">
+                        <img src="" id="user_photo" alt="">
                     </div>
-                    <p><span id="uname">larry</span>您好！欢迎登录</p>
+                    <p><span id="uname"></span>您好！欢迎登录</p>
                 </div>
                 <!-- 系统菜单 -->
                 <div class="sys-menu-box" >
@@ -164,7 +164,8 @@
 <script type="text/javascript" src="../larryms/layui/layui.js"></script>
 <script type="text/javascript">
 layui.cache.homeUrl = 'admin/userInfo/userInfo.html';
-layui.cache.menusUrl = '/api/menuData';//这里设置 菜单数据项接口地址 或data参数
+layui.cache.menusUrl = '/larryms/data/menu.json'
+//layui.cache.menusUrl = '/api/menuData';//这里设置 菜单数据项接口地址 或data参数
 layui.cache.page = 'index'; //加载的js,说明：并非一个页面只能加载一个模块 可以这样定义：'index,common';也并非每个页面都要定义一个模块，事实上模块根据功能需要可以公用
 //layui.cache.rightMenu = 'custom'; //默认开启页面右键菜单，设置为 custom 时需要自定义右键菜单，设置为false 关闭右键菜单
 

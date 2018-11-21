@@ -6,4 +6,6 @@ public interface AdminUserService {
 	
 	
 	public AdminUser findAccountAndPassword(String account,String password);
+
+	public AdminUser findByAccount(String account);
 }

@@ -34,7 +34,7 @@ public class Menu  implements Serializable{
 	private String id;
 
     @Column(name = "pid") 
-    private String pid;
+    private String pid="0";
 
     
     @Column(name = "title") 

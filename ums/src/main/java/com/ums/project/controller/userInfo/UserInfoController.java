@@ -114,9 +114,10 @@ public class UserInfoController {
 	 * @return
 	 */
 	@RequestMapping("/api/userInfos")
-	public TableData UserInfoPageData(@RequestParam(required=false) String keyword,@RequestParam int page,@RequestParam int limit) {
+	public TableData UserInfoPageData(@RequestParam(required=false) String loanStatus,@RequestParam(required=false) String keyword,@RequestParam int page,@RequestParam int limit) {
 		
 		UserInfoQueryBean queryBean = new UserInfoQueryBean();
+		queryBean.setLoanStatus(loanStatus);
 		queryBean.setKey(keyword);
 		DataPage datapage = new DataPage();
 		queryBean.setKey(keyword);

@@ -18,5 +18,7 @@ public interface AdminUserRepository  extends JpaRepository<AdminUser,String>{
 	@Query("select aui from AdminUser aui where aui.account=:account and password=:password")
 	public AdminUser findAccountAndPassword(String account,String password);
 
+	public AdminUser findByAccount(String account);
+
 
 }

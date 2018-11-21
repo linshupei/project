@@ -115,8 +115,9 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 			}
 			d("#searchBtn").on("click", function() {
 					var t = d(this).data("url"),
-						i = d("#keywords").val();
-					    l.reload("test",{where:{"keyword":i}})
+						i = d("#keywords").val(),
+						loanStatus = d("#loanStatus").val();
+					    l.reload("test",{where:{"keyword":i,"loanStatus":loanStatus}})
 			});			 
 				   
 			l.render({

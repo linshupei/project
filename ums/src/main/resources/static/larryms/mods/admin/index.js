@@ -71,7 +71,19 @@ layui.define(["jquery", "configure", "larryTab"], function(e) {
 	        } 
 		});		
 	},1000*60);	
-		
+
+	l.ajax({ 
+	       type: "post", 
+	       url: "/api/currentAccount", 
+	       dataType: "json",
+	       success: function(jsonData){ 
+		       if(jsonData.code=="0"){
+		      	 l("#uname").html(jsonData.account);
+		      	 l("#user_photo").attr("src",jsonData.headImage+"?data="+Math.random());
+		       }
+	       } 
+	});
+				
 	larryTab = layui.larryTab({
 		tab_elem: "#larry_tab",
 		tabMax: 30,
@@ -504,19 +516,30 @@ layui.define(["jquery", "configure", "larryTab"], function(e) {
 	function L() {
 		var e = l("#user_photo").attr("src"),
 			a = l("#uname").text();
-		if (l("#unlock_pass").val() === "larry") {
-			D({
-				Display: "none",
-				UserPhoto: e,
-				UserName: a
-			})
-		} else {
-			o.tips("模拟锁屏，输入密码：larry 解锁", l("#unlock"), {
-				tips: [2, "#FF5722"],
-				time: 1e3
-			});
-			return
-		}
+		l.ajax({ 
+	        type: "post", 
+	        url: "/api/login", 
+	        async:false, 
+	        data:{"userName":a,"password":l("#unlock_pass").val()},
+	        dataType: "json",
+	        success: function(jsonData){ 
+				if (jsonData.code=="0") {
+					D({
+						Display: "none",
+						UserPhoto: e,
+						UserName: a
+					})
+				} else {
+					o.tips("锁屏，输入登录密码解锁", l("#unlock"), {
+						tips: [2, "#FF5722"],
+						time: 1e3
+					});
+					return
+				}	           	 
+	        } 
+		});
+					
+
 	}
 	l(document).keydown(function() {
 		return A(arguments[0])
@@ -536,7 +559,7 @@ layui.define(["jquery", "configure", "larryTab"], function(e) {
 	function D(e) {
 		var a = "larry_lock_screen",
 			t = document.createElement("div"),
-			o = i(['<div class="lock-screen" style="display: {{d.Display}};">', '<div class="lock-wrapper" id="lock-screen">', '<div id="time"></div>', '<div class="lock-box">', '<img src="{{d.UserPhoto}}" alt="">', "<h1>{{d.UserName}}</h1>", '<form action="" class="layui-form lock-form">', '<div class="layui-form-item">', '<input type="password" id="unlock_pass" name="lock_password" lay-verify="pass" placeholder="锁屏状态，请输入密码解锁" autocomplete="off" class="layui-input"  autofocus="">', "</div>", '<div class="layui-form-item">', '<span class="layui-btn larry-btn" id="unlock">立即解锁</span>', "</div>", "</form>", "</div>", "</div>", "</div>"].join("")).render(e),
+			o = i(['<div class="lock-screen" style="display: {{d.Display}};">', '<div class="lock-wrapper" id="lock-screen">', '<div id="time"></div>', '<div class="lock-box">', '<img src="{{d.UserPhoto}}" alt="">', "<h1>{{d.UserName}}</h1>", '<form action="" class="layui-form lock-form">', '<div class="layui-form-item">', '<input type="password" value="" id="unlock_pass" name="lock_password" lay-verify="pass" placeholder="锁屏状态，请输入密码解锁" autocomplete="off" class="layui-input"  autofocus="">', "</div>", '<div class="layui-form-item">', '<span class="layui-btn larry-btn" id="unlock">立即解锁</span>', "</div>", "</form>", "</div>", "</div>", "</div>"].join("")).render(e),
 			r = document.getElementById(a);
 		t.id = a;
 		t.innerHTML = o;

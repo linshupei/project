@@ -12,6 +12,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.ums.project.entity.AdminUser;
+import com.ums.project.result.AdminInfoResult;
 import com.ums.project.result.BaseResult;
 import com.ums.project.result.LoginResult;
 import com.ums.project.result.ResultCode;
@@ -74,6 +75,26 @@ public class LoginController {
 		
 		return result;
 	}
+	
+	@RequestMapping("/api/currentAccount")
+	public AdminInfoResult currentAccount() {
+		
+		AdminInfoResult result = new AdminInfoResult();
+		result.setTime(System.currentTimeMillis());
+		result.setCode("0");
+		
+		 ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		 HttpServletRequest request = servletRequestAttributes.getRequest(); 
+		 Object account = request.getSession().getAttribute("session_user");
+		
+		 AdminUser user = adminUserService.findByAccount(account.toString());
+		result.setAccount(user.getAccount());
+		result.setHeadImage(user.getHeadImage());
+		result.setName(user.getName());
+		
+		return result;
+	}
+	
 	@RequestMapping("/api/login")
 	public LoginResult ResultData(String userName, String password) {
 		 ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();

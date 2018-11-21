@@ -7,7 +7,7 @@ public class MenuVo {
 
 	private String id;
 
-    private String pid;
+    private String pid="0";
 
     
 	private String title;
