@@ -42,6 +42,7 @@ public class UserLoanInfoDefine {
 	
 	public static String excelHeadDataPattern="[" +
 	"{\"value\":\"用户贷款信息\",\"row\":0,\"col\":0,\"groupCols\":16,\"blob\":true,\"warpText\":true,\"cellWidth\":1.5,\"cellHeight\":1}," +
+	"{\"value\":\"序号\",\"row\":1,\"col\":0,\"blob\":true,\"warpText\":true,\"cellWidth\":1.5,\"cellHeight\":1}," +
 	"{\"value\":\"所属APP账号\",\"row\":1,\"col\":1,\"blob\":true,\"warpText\":true,\"cellWidth\":1.5,\"cellHeight\":1}," +
 	"{\"value\":\"姓名\",\"row\":1,\"col\":2,\"blob\":true,\"warpText\":true,\"cellWidth\":1.5,\"cellHeight\":1}," +	
 	"{\"value\":\"手机\",\"row\":1,\"col\":3,\"blob\":true,\"warpText\":true,\"cellWidth\":1.5,\"cellHeight\":1}," +	

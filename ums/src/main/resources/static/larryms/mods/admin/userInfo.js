@@ -12,13 +12,19 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 				t = layui.form,
 				i = d("#test").data("url"),
 				layer = layui.layer;
-				
+			l.on("toolbar(test)",function(obj){
+				  var layEvent = obj.event; 
+				  if(layEvent=="exportExcel"){
+					 //导出excel
+					  window.location.href="/api/exportLoanInfo";
+				 }				
+			});	
 			l.on("tool(test)",function(obj){
 				  var data = obj.data; //获得当前行数据
 				  var layEvent = obj.event; 
 				  var tr = obj.tr;  
-				  
-				  if(layEvent=="openUserLoanInfo"){
+						  
+				 if(layEvent=="openUserLoanInfo"){
 				  	var openUserLoanInfoUrl = d(this).data("url") + "?userInfoId=" + data.id;
 				      var a = c.open({
 							title: "用户贷款信息",
@@ -118,12 +124,13 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 						i = d("#keywords").val(),
 						loanStatus = d("#loanStatus").val();
 					    l.reload("test",{where:{"keyword":i,"loanStatus":loanStatus}})
-			});			 
-				   
+			});		
+			
 			l.render({
 				elem: "#test",
 				url: i,
-				toolbar: "#toolbarDemo",
+				toolbar: '<div id="exportExcel" class="layui-table-tool-self"><div class="layui-inline" title="导出到excel" lay-event="exportExcel"><i class="layui-icon layui-icon-export"></i></div></div>',
+				defaultToolbar:['filter'],
 				title: "用户数据表",
 				page:true,
 				cols: [

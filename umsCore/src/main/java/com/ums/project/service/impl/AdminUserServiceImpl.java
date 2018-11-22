@@ -15,11 +15,17 @@ public class AdminUserServiceImpl implements AdminUserService{
 	private AdminUserRepository adminUserRepository;
 	
 	public AdminUser findAccountAndPassword(String account,String password){
-		return adminUserRepository.findAccountAndPassword(account, password);
+		return adminUserRepository.findByAccountAndPassword(account, password);
 	}
 
 	@Override
 	public AdminUser findByAccount(String account) {
 		return adminUserRepository.findByAccount(account);
+	}
+
+	@Override
+	public void updatePassword(String account, String oldPassword, String newPassword) {
+		 
+		adminUserRepository.updatePassword(account,oldPassword,newPassword);
 	}
 }

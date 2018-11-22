@@ -13,6 +13,19 @@ layui.define(["jquery", "configure", "larryTab"], function(e) {
 		y = r.basePath + "lib/templets/style/theme.css",
 		f = "lib/templets/theme";
 	
+	l("#resetPassword").on("click", function() {
+		var dataUrl = l("#resetPassword").data("url"),
+			account = l("#uname").html();
+	  	  var openResetPasswordUrl = dataUrl + "?account=" + account;
+	      var a = s.open({
+				title: "修改密码",
+				type: 2,
+				maxmin:false,
+				area: ["500px", "300px"],
+				scrollbar:false,
+				content: openResetPasswordUrl
+		  });			 
+	});		
 	
 	setInterval(function(){
 		l.ajax({ 

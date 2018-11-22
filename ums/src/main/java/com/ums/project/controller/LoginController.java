@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -17,6 +18,8 @@ import com.ums.project.result.BaseResult;
 import com.ums.project.result.LoginResult;
 import com.ums.project.result.ResultCode;
 import com.ums.project.service.AdminUserService;
+import com.ums.project.util.MD5Util;
+import com.ums.project.vo.ResetPasswordVo;
 
 @RestController
 public class LoginController {
@@ -24,6 +27,27 @@ public class LoginController {
 	@Resource(name="adminUserService")
 	private AdminUserService adminUserService;
 	
+	@RequestMapping("/api/resetAdminPassword")	
+	public BaseResult resetPassword(@RequestBody ResetPasswordVo vo){
+		 BaseResult result = new BaseResult();
+		 result.setCode("0");
+		 result.setReason("");
+		 result.setTime(System.currentTimeMillis());
+		 
+		 ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		 HttpServletRequest request = servletRequestAttributes.getRequest(); 
+		 Object attribute = request.getSession().getAttribute("session_user");
+		 
+		 String account = attribute.toString();
+		 AdminUser adminUser = adminUserService.findAccountAndPassword(account, MD5Util.getMD5(vo.getOldPassword()));
+		 if(adminUser==null){//密码不对
+			 result.setCode("1");
+			 result.setReason("原密码不正确");			 
+		 }else{
+			 adminUserService.updatePassword(account,MD5Util.getMD5(vo.getOldPassword()),MD5Util.getMD5(vo.getNewPassword()));
+		 }
+		 return result;
+	}
 	
 	@RequestMapping("/api/loginOut")	
 	public void loginOut(){
@@ -39,7 +63,6 @@ public class LoginController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		 
 	}
 	
 	@RequestMapping("/api/loginOutTime")
@@ -105,7 +128,7 @@ public class LoginController {
 		result.setReason("");
 		result.setToken("");
 		
-		 AdminUser user = adminUserService.findAccountAndPassword(userName, password);
+		 AdminUser user = adminUserService.findAccountAndPassword(userName, MD5Util.getMD5(password));
 		 if(user==null){
 				result.setCode(ResultCode.FAIL);
 				result.setReason("账号或密码错误");				 

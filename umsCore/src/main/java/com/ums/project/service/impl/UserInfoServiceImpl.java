@@ -65,8 +65,6 @@ public class UserInfoServiceImpl implements UserInfoService {
                 Join<UserInfo, AppUserInfo> join = root.join("appUserInfo",JoinType.INNER);
                 Join<UserInfo, UserLoanInfo> loan = root.join("userLoanInfo",JoinType.INNER);
                 List<Predicate> allPredicates = new ArrayList<>(); 
-                Predicate or = null;
-                Predicate and = null;
                 if(!StringUtils.isEmpty(queryBean.getKey())){
                 	List<Predicate> orList = new ArrayList<>(); 
                     Predicate userAccount = cb.like(join.get("userAccount").as(String.class),"%"+queryBean.getKey()+"%");
@@ -88,7 +86,7 @@ public class UserInfoServiceImpl implements UserInfoService {
                 	Predicate equal = cb.equal(root.get("id").as(String.class),queryBean.getId());
                 	allPredicates.add(equal);
                 }
-                return cb.or(allPredicates.toArray(new Predicate[0]));
+                return cb.and(allPredicates.toArray(new Predicate[0]));
             }
         };		
         Pageable pageable = PageRequest.of(page.getPage()-1,page.getLimit(),sort); //页码：前端从1开始，jpa从0开始，做个转换
