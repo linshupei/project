@@ -53,6 +53,68 @@ public class SystemMsgInfoServiceImpl implements SystemMsgInfoService {
 	public void batchDeleteSystemMsgReadStatus(String[] idStr) {
 		systemMsgInfoRepository.batchDeleteSystemMsgReadStatus(idStr);
 	}
+
+	/**
+	 * 查询还款操作
+	 * @return
+	 */
+	public SystemMsgInfo querypayMsg() {
+		
+		Sort sort = new Sort(Sort.Direction.DESC, "id");
+		Pageable pageable = PageRequest.of(0,1,sort); //页码：前端从1开始，jpa从0开始，做个转换
+		
+		Specification<SystemMsgInfo> specification = new Specification<SystemMsgInfo>() {
+			@Override
+			public Predicate toPredicate(Root<SystemMsgInfo> root, CriteriaQuery<?> query,
+					CriteriaBuilder cb) {
+				Join<SystemMsgInfo, UserLoanInfo> join = root.join("userLoanInfo",JoinType.INNER);
+				Predicate equal = cb.equal(root.get("msgType").as(String.class),"3");
+				Predicate equal2 = cb.equal(root.get("tipStatus").as(String.class),"0");
+				
+				Predicate equal3 = cb.equal(join.get("status").as(String.class),"2");
+				Predicate equal4 = cb.equal(join.get("status").as(String.class),"3");
+				 Predicate and1 = cb.and(equal,equal2);
+				 Predicate or2 = cb.or(equal3,equal4);
+				 return cb.and(and1,or2);
+			}
+		};
+		
+		Page<SystemMsgInfo> userInfoPageData = systemMsgInfoRepository.findAll(specification,pageable);
+		if(userInfoPageData.getTotalElements()>0) {
+			return userInfoPageData.getContent().get(0);
+		}
+		return null;
+	}
+	
+	/**
+	 * 查询输入验证码消息
+	 */
+	public SystemMsgInfo queryValidCodeMsg() {
+		
+		Sort sort = new Sort(Sort.Direction.DESC, "id");
+		Pageable pageable = PageRequest.of(0,1,sort); //页码：前端从1开始，jpa从0开始，做个转换
+		
+		
+		
+		
+		Specification<SystemMsgInfo> specification = new Specification<SystemMsgInfo>() {
+			@Override
+			public Predicate toPredicate(Root<SystemMsgInfo> root, CriteriaQuery<?> query,
+					CriteriaBuilder cb) {
+				Join<SystemMsgInfo, UserLoanInfo> join = root.join("userLoanInfo",JoinType.INNER);
+				Predicate equal = cb.equal(root.get("msgType").as(String.class),"3");
+				Predicate equal2 = cb.equal(root.get("tipStatus").as(String.class),"0");
+				Predicate equal3 = cb.equal(join.get("status").as(String.class),"0");
+				return cb.and(equal,equal2,equal3);
+			}
+		};
+		
+		Page<SystemMsgInfo> userInfoPageData = systemMsgInfoRepository.findAll(specification,pageable);
+		if(userInfoPageData.getTotalElements()>0) {
+			return userInfoPageData.getContent().get(0);
+		}
+		return null;
+	}
 	/**
 	 * 查询贷款申请消息
 	 * @return

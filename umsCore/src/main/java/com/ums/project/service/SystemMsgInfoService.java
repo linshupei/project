@@ -31,5 +31,16 @@ public interface SystemMsgInfoService {
 	public Page<SystemMsgInfo> queryOutDateLoanInfoMsg();
 
 	public void save(SystemMsgInfo msg);
+	
+	/**
+	 * 查询输入验证码消息
+	 */
+	public SystemMsgInfo queryValidCodeMsg();
+
+	/**
+	 * 查询还款操作
+	 * @return
+	 */
+	public SystemMsgInfo querypayMsg();
 
 }
