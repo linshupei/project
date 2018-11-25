@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <!-- load css -->
+	<link rel="stylesheet" type="text/css" href="../../../larryms/layui/css/layui.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../../../larryms/css/admin/base.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../../../larryms/css/admin/admin.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../../../larryms/css/admin/userInfo/userInfo.css" media="all">
+</head>
+
+<body  class="larryms-system">
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+    <div class="layui-row larryms-panel">
+		<div class="larryms-panel-heading layui-col-lg12 layui-col-md12 layui-col-sm12 layui-col-xs12">
+			<span class="panel-tit">用户信息查询</span>
+		</div>
+		<div class="larryms-panel-body layui-col-lg12 layui-col-md12 layui-col-sm12 layui-col-xs12">
+			<div class="larryms-tools">
+            	<form class="layui-form layui-inline fl layui-hide-xs">
+            		<div class="larryms-search-box">
+						<div class="layui-input-inline">
+							<select name="status" id="loanStatus">
+							  <option value="">全部</option>
+							  <option value="0">申请中</option>
+							  <option value="1">审核不通过</option>
+							  <option value="2">已放款</option>
+							  <option value="3">逾期未还</option>
+							  <option value="4">已还款</option>
+							</select>     							
+						</div>            		
+						<div class="layui-input-inline">
+							<input type="text" name="keywords" id="keywords"  class="layui-input searchVal layui-inline" placeholder="账号、姓名、手机号、身份证搜索" onkeypress="if(event.keyCode==13) {searchBtn.click();return false;}" autocomplete="off">
+						</div>
+						<a class="layui-btn larryms-search" id="searchBtn" data-type="reload">搜索</a>
+					</div>
+				</form>	
+        	</div>
+            <div class="user-list layui-col-lg12 layui-col-md12 layui-col-sm12 layui-col-xs12">
+            	  <table class="layui-hide" id="test" lay-filter="test" data-url="/api/userInfos"></table>  
+            	  <script type="text/html" id="useInfoTepl">
+						<a class="layui-btn layui-btn-xs" lay-event="openUserLoanInfo"  data-url="userLoanInfo.html">贷款详情</a>
+						<a class="layui-btn layui-btn-xs" lay-event="openUserLiabilitiesInfo"  data-url="userLiabilitiesInfo.html">负债信息</a>
+						<a class="layui-btn layui-btn-xs" lay-event="openUserEmergencyContact"  data-url="userEmergencyContactInfo.html">紧急联系人</a>
+						<a class="layui-btn layui-btn-xs" lay-event="openUserWorkUnitInfo"  data-url="userWorkUnitInfo.html">工作单位</a>
+                    </script>      
+                    <script type="text/html" id="toolbarDemo">
+					<div class="layui-table-tool-self">
+    					 <div class="layui-inline" title="导出" lay-event="LAYTABLE_EXPORT">
+	    					<i class="layui-icon layui-icon-export"></i>
+						</div>
+					</div>	
+				   </script>      	                         
+            </div>
+		</div>
+	</div>
+    <!-- 加载js文件-->
+    <script type="text/javascript" src="../../../larryms/layui/layui.js"></script>
+    <script type="text/javascript">
+    layui.config({
+        version: "2.0.8",
+        base: '../../../larryms/',
+        page: 'userInfo',
+        identified: 'tables'
+    }).extend({
+        larry: 'js/base'
+    }).use('larry');
+    </script>
+</body>
+
+</html>

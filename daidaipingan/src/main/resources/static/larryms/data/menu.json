@@ -1,0 +1,85 @@
+{
+	"code": 1,
+	"msg": "success",
+	"data": [{
+		"id": 110,
+		"pid": 0,
+		"title": "贷款信息",
+		"font": "larry-icon",
+		"icon": "larry-changyongshili",
+		"url": "",
+		"param": "",
+		"condition": "",
+		"spread": false,
+		"children": [{
+			"id": 1701,
+			"pid": 110,
+			"title": "用户贷款信息",
+			"font": "larry-icon",
+			"icon": "larry-shouye2",
+			"url": "/html/admin/userInfo/userInfo.html",
+			"param": "",
+			"condition": "",
+			"spread": false
+			},{
+				"id": 12,
+				"pid": 110,
+				"title": "贷款消息中心",
+				"font": "larry-icon",
+				"icon": "larry-xiaoxi",
+				"url": "admin/panel/message.html",
+				"param": "",
+				"condition": "",
+				"spread": false,
+				"children": []
+			}]		
+	},{
+		"id": 160,
+		"pid": 0,
+		"title": "APP用户信息",
+		"font": "larry-icon",
+		"icon": "larry-changyongshili",
+		"url": "",
+		"param": "",
+		"condition": "",
+		"spread": false,	
+		"children": [{
+			"id": 1701,
+			"pid": 170,
+			"title": "APP用户信息查询",
+			"font": "larry-icon",
+			"icon": "larry-shouye2",
+			"url": "/html/admin/appUserInfo/appUserInfo.html",
+			"param": "",
+			"condition": "",
+			"spread": false
+			},{
+			"id": 1704,
+			"pid": 170,
+			"title": "APP用户通讯录查询",
+			"font": "larry-icon",
+			"icon": "larry-shouye2",
+			"url": "/html/admin/appUserInfo/appUserContactInfo.html",
+			"param": "",
+			"condition": "",
+			"spread": false},{
+			"id": 1705,
+			"pid": 170,
+			"title": "APP用户短信记录查询",
+			"font": "larry-icon",
+			"icon": "larry-shouye2",
+			"url": "/html/admin/appUserInfo/appUserSmsRecordInfo.html",
+			"param": "",
+			"condition": "",
+			"spread": false},{
+			"id": 1706,
+			"pid": 170,
+			"title": "APP用户通话记录查询",
+			"font": "larry-icon",
+			"icon": "larry-shouye2",
+			"url": "/html/admin/appUserInfo/appUserCallRecordInfo.html",
+			"param": "",
+			"condition": "",
+			"spread": false}]		
+		}]
+}
