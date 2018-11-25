@@ -44,46 +44,57 @@ layui.define(["jquery", "configure", "larryTab"], function(e) {
 	setInterval(function(){
 		l.ajax({ 
 	        type: "get", 
-	        url: "/api/query/applyLoanInfo", 
+	        url: "/api/query/loanInfoMsg", 
 	        dataType: "json",
 	        async:false, 
 	        success: function(jsonData){ 
 				if(jsonData.code=="0"){
-				 l(".larryms-msg-info").remove();
-					s.notice({
-						msg: jsonData.data.msgContent,
-						url: "",
-						msgtype: "info"
-					}, {
-						action: 4,
-						hide: "click"
-					})					
-				}
-	        } 
-		});		
-	},1000*60);	
+				   o.closeAll();
+				   if(jsonData.data){
+				      if(jsonData.data.outLoan){
+							s.notice({
+								msg: "您今天有"+jsonData.data.outLoan+"笔逾期贷款未处理",
+								url: "",
+								msgtype: "warning"
+							}, {
+								action: 4,
+								hide: "click"
+							});				      
+				      }else if(jsonData.data.applyLoanMsg){
+							s.notice({
+								msg: jsonData.data.applyLoanMsg.msgContent,
+								url: "",
+								msgtype: "info"
+							}, {
+								action: 4,
+								hide: "click"
+							})				      
+				      }else if(jsonData.data.validCodeMsg){
+							s.notice({
+								msg: jsonData.data.validCodeMsg.msgContent,
+								url: "",
+								msgtype: "info"
+							}, {
+								action: 4,
+								hide: "click"
+							})				      
+				      }else if(jsonData.data.payMsg){
+							s.notice({
+								msg: jsonData.data.payMsg.msgContent,
+								url: "",
+								msgtype: "info"
+							}, {
+								action: 4,
+								hide: "click"
+							})				      
+				      }				      
+				   
+				   }
 
-	setInterval(function(){
-		l.ajax({ 
-	        type: "get", 
-	        url: "/api/query/outDateLoanInfo", 
-	        dataType: "json",
-	        async:false, 
-	        success: function(jsonData){ 
-				if(jsonData.code=="0"){
-				    l(".larryms-msg-warning").remove();
-					s.notice({
-						msg: "您今天有"+jsonData.data+"笔逾期贷款未处理",
-						url: "",
-						msgtype: "warning"
-					}, {
-						action: 4,
-						hide: "click"
-					});
 				}
 	        } 
 		});		
-	},1000*60);	
+	},1000*10);	
 
 	l.ajax({ 
 	       type: "post", 

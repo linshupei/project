@@ -15,8 +15,16 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 			l.on("toolbar(test)",function(obj){
 				  var layEvent = obj.event; 
 				  if(layEvent=="exportExcel"){
+				  
+				  var params = "?1=1";
+				  if(d("#loanStatus").val()!=""){
+				  	params = param+"&loanStatus="+d("#loanStatus").val();
+				  }
+				  if(d("#keywords").val()!=""){
+				  	params = param+"&keyword="+d("#keywords").val();
+				  }				  
 					 //导出excel
-					  window.location.href="/api/exportLoanInfo";
+					  window.location.href="/api/exportLoanInfo"+params;
 				 }				
 			});	
 			l.on("tool(test)",function(obj){

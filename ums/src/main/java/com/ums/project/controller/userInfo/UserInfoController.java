@@ -44,15 +44,18 @@ public class UserInfoController {
 	private UserLoanInfoService userLoanInfoService;
 	
 	@RequestMapping("/api/exportLoanInfo")
-	public void exportLoanInfo(){
+	public void exportLoanInfo(@RequestParam(required=false) String loanStatus,@RequestParam(required=false) String keyword){
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
 		HttpServletResponse response = servletRequestAttributes.getResponse();
 		HttpServletRequest request = servletRequestAttributes.getRequest();
 		
+		UserLoanInfoQueryBean queryBean = new UserLoanInfoQueryBean();
+		queryBean.setKey(keyword);
+		queryBean.setLoanStatus(loanStatus);
 		DataPage page = new DataPage();
 		page.setLimit(Integer.MAX_VALUE);
 		page.setPage(1);
-		Page<UserLoanInfo> userInfoPageData = userLoanInfoService.userInfoPageData(new UserLoanInfoQueryBean(), page);
+		Page<UserLoanInfo> userInfoPageData = userLoanInfoService.userInfoPageData(queryBean, page);
 		
 		
 		 List<ExportLoanInfo> body = new ArrayList<ExportLoanInfo>(0);

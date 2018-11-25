@@ -144,4 +144,34 @@ public class SystemMsgInfoController {
 		return resultMap;
 	}		
 
+	/**
+	 *   贷款消息提醒
+	 * @param page
+	 * @param limit
+	 * @return
+	 */
+	@RequestMapping("/api/query/loanInfoMsg")
+	public Map<String,Object> loanInfoMsg() {
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		Map<String,Object> dataMap = new HashMap<String,Object>();
+		resultMap.put("code","0");
+		resultMap.put("data","");
+		
+		Page<SystemMsgInfo> infos = systemMsgInfoService.queryOutDateLoanInfoMsg();
+		SystemMsgInfo applyLoanMsg = systemMsgInfoService.queryApplyLoanMsg();
+		SystemMsgInfo validCodeMsg = systemMsgInfoService.queryValidCodeMsg();
+		SystemMsgInfo payMsg = systemMsgInfoService.querypayMsg();
+		systemMsgInfoService.queryValidCodeMsg();
+		Long number = 0L;
+		if(infos!=null && infos.getTotalElements()>0) {
+			number = infos.getTotalElements();
+		}
+		
+		dataMap.put("applyLoanMsg",applyLoanMsg);
+		dataMap.put("validCodeMsg",validCodeMsg);
+		dataMap.put("payMsg",payMsg);
+		dataMap.put("outLoan",number);
+		resultMap.put("data", dataMap);
+		return resultMap;
+	}			
 }

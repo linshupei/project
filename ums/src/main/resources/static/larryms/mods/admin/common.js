@@ -204,13 +204,13 @@ function(t) {
     };
     if (window.top !== window.self) {
         if (!layui.cache.layertype) {
-            r.utils.fixbar({
+           /** r.utils.fixbar({
                 bar1: true,
                 bgcolor: "#009688",
                 custom: 'larry-tab="iframe" data-group="0" data-id="1701" fresh="1" data-url="userInfo.html"'
-            })
+            })**/
         }
-        a.fixbar()
+        //a.fixbar()
     }
     n("*[lay-tips]").on("mouseenter",
     function() {
