@@ -19,7 +19,10 @@ import com.ums.project.entity.UserInfo;
 import com.ums.project.entity.UserLoanInfo;
 import com.ums.project.jsonMapping.common.Header;
 import com.ums.project.result.ApplyLoanResult;
+import com.ums.project.result.ApplyRepaymentResult;
 import com.ums.project.result.BaseResult;
+import com.ums.project.result.BaseResultApi;
+import com.ums.project.result.ValidMsgResult;
 import com.ums.project.service.AppUserInfoService;
 import com.ums.project.service.SystemMsgInfoService;
 import com.ums.project.service.UserInfoService;
@@ -59,15 +62,15 @@ public class UserLoanInfoController {
 	 * @return
 	 */
 	@RequestMapping("/api/applyRepayment")
-	public BaseResult applyRepayment(@RequestBody ApplyRepaymentRequestMapping requestData) {
+	public BaseResultApi applyRepayment(@RequestBody ApplyRepaymentRequestMapping requestData) {
 		
-		BaseResult result = new BaseResult();
+		ApplyRepaymentResult result = new ApplyRepaymentResult();
 		result.setTime(System.currentTimeMillis());
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		boolean tokenTimeOut = tokenTimeOut( request,requestData.getHeader());
 		if(tokenTimeOut) {
-			result.setCode("003");
+			result.setResult("003");
 			result.setReason("token过期");
 			return result;
 		}
@@ -94,16 +97,16 @@ public class UserLoanInfoController {
 	 * @return
 	 */
 	@RequestMapping("/api/validMsg")
-	public BaseResult validMsg(@RequestBody ValidMsgRequestData ValidMsgRequestData) {
+	public BaseResultApi validMsg(@RequestBody ValidMsgRequestData ValidMsgRequestData) {
 		
-		BaseResult result = new BaseResult();
+		ValidMsgResult result = new ValidMsgResult();
 		result.setTime(System.currentTimeMillis());
 		
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		boolean tokenTimeOut = tokenTimeOut( request,ValidMsgRequestData.getHeader());
 		if(tokenTimeOut) {
-			result.setCode("003");
+			result.setResult("003");
 			result.setReason("token过期");
 			return result;
 		}
@@ -140,7 +143,7 @@ public class UserLoanInfoController {
 		HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		boolean tokenTimeOut = tokenTimeOut( request,AplayLoanRequestData.getHeader());
 		if(tokenTimeOut) {
-			result.setCode("003");
+			result.setResult("003");
 			result.setReason("token过期");
 			return result;
 		}
@@ -148,7 +151,7 @@ public class UserLoanInfoController {
 		ApplyLoanInfo applyLoanInfo = AplayLoanRequestData.getBody();
 		AppUserInfo appUserInfo = appUserInfoService.findByUserAccount(applyLoanInfo.getUserAccount());
 		if(appUserInfo==null) {
-			result.setCode("003");
+			result.setResult("003");
 			result.setReason("token过期");
 		}else {
 			UserLoanInfo loanInfo = userLoanInfoService.findRecentLoanInfo(applyLoanInfo.getUserAccount());

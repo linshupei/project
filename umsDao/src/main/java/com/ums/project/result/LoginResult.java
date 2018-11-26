@@ -1,6 +1,8 @@
 package com.ums.project.result;
 
-public class LoginResult extends BaseResult{
+public class LoginResult extends BaseResultApi{
+	
+	private String code ="";
 
 	private String token="";
 	
@@ -20,6 +22,14 @@ public class LoginResult extends BaseResult{
 	
 	public LoginResult() {
 		super();
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getSmsUploadTime() {

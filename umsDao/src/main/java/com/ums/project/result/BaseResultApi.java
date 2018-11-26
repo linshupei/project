@@ -1,24 +1,26 @@
 package com.ums.project.result;
 
-public class BaseResult {
+public class BaseResultApi {
 	
-	private String code;
+	private String result="0";
 	
 	private String reason;
 
 	private long time;
 
 	
-	public BaseResult() {
+	public BaseResultApi() {
 		super();
 	}
 
-	public BaseResult(String code, String reason,long time) {
+
+	public BaseResultApi(String result, String reason, long time) {
 		super();
-		this.code = code;
+		this.result = result;
 		this.reason = reason;
 		this.time = time;
 	}
+
 
 	public long getTime() {
 		return time;
@@ -28,13 +30,6 @@ public class BaseResult {
 		this.time = time;
 	}
 
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
 
 	public String getReason() {
 		return reason;
@@ -43,4 +38,14 @@ public class BaseResult {
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+	
+	
 }

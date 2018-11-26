@@ -15,7 +15,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.ums.project.entity.AppUserInfo;
 import com.ums.project.entity.UserLoanInfo;
 import com.ums.project.jsonMapping.common.Header;
-import com.ums.project.result.BaseResult;
+import com.ums.project.result.AppRegisterResult;
+import com.ums.project.result.BaseResultApi;
 import com.ums.project.result.LoginResult;
 import com.ums.project.service.AppUserInfoService;
 import com.ums.project.service.UserLoanInfoService;
@@ -43,12 +44,12 @@ public class AppUserInfoController {
 	 * @return
 	 */
 	@RequestMapping("/api/appUser")
-	public BaseResult appUserRegister(@RequestBody LoginRequestData apiRequestDat) {
+	public BaseResultApi appUserRegister(@RequestBody LoginRequestData apiRequestDat) {
 		
 		String userAccount = apiRequestDat.getBody().getUserAccount();
 		String password = apiRequestDat.getBody().getPassword();
 		
-		BaseResult result = new BaseResult();
+		AppRegisterResult result = new AppRegisterResult();
 		result.setTime(System.currentTimeMillis());
 		AppUserInfo info = appUserInfoService.findByUserAccount(userAccount);
 		if(info!=null) {//账号已存在
@@ -132,7 +133,7 @@ public class AppUserInfoController {
 		HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		boolean tokenTimeOut = tokenTimeOut( request,apiRequestData.getHeader());
 		if(tokenTimeOut) {
-			result.setCode("003");
+			result.setResult("003");
 			result.setReason("token过期");
 			return result;
 		}
@@ -179,11 +180,6 @@ class LoginBody {
 	public LoginBody(String userAccount, String password) {
 		super();
 		this.userAccount = userAccount;
-		this.password = password;
-	}
-	
-	public LoginBody(String userAccount) {
-		super();
 		this.password = password;
 	}
 	

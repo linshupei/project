@@ -15,6 +15,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.ums.project.result.BaseResult;
+import com.ums.project.result.BaseResultApi;
 import com.ums.project.util.Base64Utils;
 import com.ums.project.vo.FileUploadResult;
 
@@ -30,7 +31,7 @@ public class FileUploadController {
 	 private Environment env;
 	 
 	@RequestMapping("/api/imageUpload")
-	public BaseResult uploadImage(@RequestBody Map<String,Object> params) {
+	public BaseResultApi uploadImage(@RequestBody Map<String,Object> params) {
 		String base64Data = (String) params.get("base64Data");
 		String fileType = (String) params.get("fileType");
 		 ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
@@ -52,7 +53,6 @@ public class FileUploadController {
 		 
 		 String imageUrl = env.getProperty("serverDomain")+"/upload/image/"+fileName;
 		 FileUploadResult result = new FileUploadResult();
-		 result.setCode("");
 		 result.setReason("");
 		 result.setTime(System.currentTimeMillis());
 		 result.setImageUrl(imageUrl);

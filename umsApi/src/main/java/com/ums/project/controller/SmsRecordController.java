@@ -16,6 +16,7 @@ import com.ums.project.entity.AppUserInfo;
 import com.ums.project.entity.AppUserSmsRecord;
 import com.ums.project.jsonMapping.common.Header;
 import com.ums.project.result.BaseResult;
+import com.ums.project.result.BaseResultApi;
 import com.ums.project.result.SmsRecordUploadResult;
 import com.ums.project.service.AppUserInfoService;
 import com.ums.project.service.AppUserSmsRecordService;
@@ -38,7 +39,7 @@ public class SmsRecordController {
 	
 	
 	@RequestMapping("/umsApi/api/smsRecord")
-	public BaseResult smsRecord(@RequestBody SmsRecordRequestData apiRequestsmsRecord){
+	public BaseResultApi smsRecord(@RequestBody SmsRecordRequestData apiRequestsmsRecord){
 		SmsRecordUploadResult result = new SmsRecordUploadResult();
 		result.setTime(System.currentTimeMillis());
 		
@@ -46,7 +47,7 @@ public class SmsRecordController {
 		HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		boolean tokenTimeOut = tokenTimeOut( request,apiRequestsmsRecord.getHeader());
 		if(tokenTimeOut) {
-			result.setCode("003");
+			result.setResult("003");
 			result.setReason("token过期");
 			return result;
 		}		

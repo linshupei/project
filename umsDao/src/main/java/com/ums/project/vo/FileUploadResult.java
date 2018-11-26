@@ -1,8 +1,8 @@
 package com.ums.project.vo;
 
-import com.ums.project.result.BaseResult;
+import com.ums.project.result.BaseResultApi;
 
-public class FileUploadResult extends BaseResult{
+public class FileUploadResult extends BaseResultApi{
 
 	private String imageUrl;
 

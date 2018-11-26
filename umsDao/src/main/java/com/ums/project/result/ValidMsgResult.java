@@ -1,30 +1,25 @@
 package com.ums.project.result;
 
-public class BaseResult {
+public class ValidMsgResult extends BaseResultApi{
 	
-	private String code;
+	private String code="";
 	
 	private String reason;
 
 	private long time;
 
 	
-	public BaseResult() {
+	public ValidMsgResult() {
 		super();
 	}
 
-	public BaseResult(String code, String reason,long time) {
+
+
+
+	public ValidMsgResult(String code, String reason, long time) {
 		super();
 		this.code = code;
 		this.reason = reason;
-		this.time = time;
-	}
-
-	public long getTime() {
-		return time;
-	}
-
-	public void setTime(long time) {
 		this.time = time;
 	}
 
@@ -35,6 +30,15 @@ public class BaseResult {
 	public void setCode(String code) {
 		this.code = code;
 	}
+
+	public long getTime() {
+		return time;
+	}
+
+	public void setTime(long time) {
+		this.time = time;
+	}
+
 
 	public String getReason() {
 		return reason;
