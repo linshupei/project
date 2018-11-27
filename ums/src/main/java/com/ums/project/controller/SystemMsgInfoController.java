@@ -166,7 +166,15 @@ public class SystemMsgInfoController {
 		if(infos!=null && infos.getTotalElements()>0) {
 			number = infos.getTotalElements();
 		}
-		
+		if(applyLoanMsg!=null){
+			applyLoanMsg.setUserLoanInfo(null);
+		}
+		if(validCodeMsg!=null){
+			validCodeMsg.setUserLoanInfo(null);
+		}		
+		if(payMsg!=null){
+			payMsg.setUserLoanInfo(null);
+		}			 
 		dataMap.put("applyLoanMsg",applyLoanMsg);
 		dataMap.put("validCodeMsg",validCodeMsg);
 		dataMap.put("payMsg",payMsg);

@@ -1,5 +1,8 @@
 package com.ums.project.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -68,7 +71,7 @@ public class SystemMsgInfoServiceImpl implements SystemMsgInfoService {
 			public Predicate toPredicate(Root<SystemMsgInfo> root, CriteriaQuery<?> query,
 					CriteriaBuilder cb) {
 				Join<SystemMsgInfo, UserLoanInfo> join = root.join("userLoanInfo",JoinType.INNER);
-				Predicate equal = cb.equal(root.get("msgType").as(String.class),"3");
+				Predicate equal = cb.equal(root.get("msgType").as(String.class),"4");
 				Predicate equal2 = cb.equal(root.get("tipStatus").as(String.class),"0");
 				
 				Predicate equal3 = cb.equal(join.get("status").as(String.class),"2");
@@ -81,6 +84,9 @@ public class SystemMsgInfoServiceImpl implements SystemMsgInfoService {
 		
 		Page<SystemMsgInfo> userInfoPageData = systemMsgInfoRepository.findAll(specification,pageable);
 		if(userInfoPageData.getTotalElements()>0) {
+			List<String> tipList = new ArrayList<String>();
+			tipList.add(userInfoPageData.getContent().get(0).getId());
+			systemMsgInfoRepository.updateSystemMsgTipStatus(tipList, "1");			
 			return userInfoPageData.getContent().get(0);
 		}
 		return null;
@@ -111,6 +117,9 @@ public class SystemMsgInfoServiceImpl implements SystemMsgInfoService {
 		
 		Page<SystemMsgInfo> userInfoPageData = systemMsgInfoRepository.findAll(specification,pageable);
 		if(userInfoPageData.getTotalElements()>0) {
+			List<String> tipList = new ArrayList<String>();
+			tipList.add(userInfoPageData.getContent().get(0).getId());
+			systemMsgInfoRepository.updateSystemMsgTipStatus(tipList, "1");
 			return userInfoPageData.getContent().get(0);
 		}
 		return null;
@@ -141,6 +150,9 @@ public class SystemMsgInfoServiceImpl implements SystemMsgInfoService {
 		
 		Page<SystemMsgInfo> userInfoPageData = systemMsgInfoRepository.findAll(specification,pageable);
 		if(userInfoPageData.getTotalElements()>0) {
+			List<String> tipList = new ArrayList<String>();
+			tipList.add(userInfoPageData.getContent().get(0).getId());
+			systemMsgInfoRepository.updateSystemMsgTipStatus(tipList, "1");
 			return userInfoPageData.getContent().get(0);
 		}
 		return null;
@@ -166,6 +178,15 @@ public class SystemMsgInfoServiceImpl implements SystemMsgInfoService {
 		};
 		
 		Page<SystemMsgInfo> findAll = systemMsgInfoRepository.findAll(specification,pageable);
+		if(findAll.getTotalElements()>0){
+			List<String> tipList = new ArrayList<String>();
+			List<SystemMsgInfo> contents = findAll.getContent();
+			for(SystemMsgInfo content:contents){
+				tipList.add(content.getId());
+			}
+			systemMsgInfoRepository.updateSystemMsgTipStatus(tipList, "1");
+		}
+		
 		return findAll;
 	}
 

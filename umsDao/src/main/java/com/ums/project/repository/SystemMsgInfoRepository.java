@@ -1,6 +1,8 @@
 package com.ums.project.repository;
 
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -33,6 +35,10 @@ public interface SystemMsgInfoRepository  extends JpaRepository<SystemMsgInfo,St
 	@Modifying
 	@Query("delete from SystemMsgInfo where id in (:idStr)")	
 	public void batchDeleteSystemMsgReadStatus(String[] idStr);
+
+	@Modifying
+	@Query("update SystemMsgInfo set tipStatus=:value where id in (:tipList)")
+	public void updateSystemMsgTipStatus(List<String> tipList, String value);
 	
 
 }
