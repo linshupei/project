@@ -38,7 +38,7 @@ public class UserLoanInfo  implements Serializable{
     @Column(name = "all_instalment") 
     private String allInstalment;
 
-    //0：申请中  1：审核不通过  2：已放款 3：逾期未还 4：已还款
+    //0：申请中  1：审核不通过  2：已放款 3：逾期未还 4：已还款  5：申请还款
     @Column(name = "status") 
     private String status;
     

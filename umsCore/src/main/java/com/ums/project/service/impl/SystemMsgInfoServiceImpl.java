@@ -74,10 +74,10 @@ public class SystemMsgInfoServiceImpl implements SystemMsgInfoService {
 				Predicate equal = cb.equal(root.get("msgType").as(String.class),"4");
 				Predicate equal2 = cb.equal(root.get("tipStatus").as(String.class),"0");
 				
-				Predicate equal3 = cb.equal(join.get("status").as(String.class),"2");
-				Predicate equal4 = cb.equal(join.get("status").as(String.class),"3");
+				Predicate equal3 = cb.equal(join.get("status").as(String.class),"5");
+				//Predicate equal4 = cb.equal(join.get("status").as(String.class),"3");
 				 Predicate and1 = cb.and(equal,equal2);
-				 Predicate or2 = cb.or(equal3,equal4);
+				 Predicate or2 = cb.or(equal3);
 				 return cb.and(and1,or2);
 			}
 		};
