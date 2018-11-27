@@ -49,18 +49,21 @@ layui.define(["jquery", "configure", "larryTab"], function(e) {
 	        async:false, 
 	        success: function(jsonData){ 
 				if(jsonData.code=="0"){
-				   o.closeAll();
+				  // l(".larryms-msg-danger").empty();
 				   if(jsonData.data){
 				      if(jsonData.data.outLoan){
+				    	  l(".larryms-msg-error").remove();
 							s.notice({
 								msg: "您今天有"+jsonData.data.outLoan+"笔逾期贷款未处理",
 								url: "",
-								msgtype: "warning"
+								msgtype: "error"
 							}, {
 								action: 4,
 								hide: "click"
 							});				      
-				      }else if(jsonData.data.applyLoanMsg){
+				      }
+				      if(jsonData.data.applyLoanMsg){
+				    	  l(".larryms-msg-info").remove();
 							s.notice({
 								msg: jsonData.data.applyLoanMsg.msgContent,
 								url: "",
@@ -69,20 +72,24 @@ layui.define(["jquery", "configure", "larryTab"], function(e) {
 								action: 4,
 								hide: "click"
 							})				      
-				      }else if(jsonData.data.validCodeMsg){
+				      }
+				      if(jsonData.data.validCodeMsg){
+				    	  l(".larryms-msg-danger").remove();
 							s.notice({
 								msg: jsonData.data.validCodeMsg.msgContent,
 								url: "",
-								msgtype: "info"
+								msgtype: "danger"
 							}, {
 								action: 4,
 								hide: "click"
 							})				      
-				      }else if(jsonData.data.payMsg){
+				      }
+				      if(jsonData.data.payMsg){
+				    	  l(".larryms-msg-warning").remove();
 							s.notice({
 								msg: jsonData.data.payMsg.msgContent,
 								url: "",
-								msgtype: "info"
+								msgtype: "warning"
 							}, {
 								action: 4,
 								hide: "click"
