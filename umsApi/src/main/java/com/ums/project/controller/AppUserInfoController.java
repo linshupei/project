@@ -89,7 +89,7 @@ public class AppUserInfoController {
 	public LoginResult appUserLogin(@RequestBody LoginRequestData apiRequestData) {
 		LoginResult result = new LoginResult();
 		result.setTime(System.currentTimeMillis());
-		AppUserInfo info = appUserInfoService.findByUserAccountAndPassword(apiRequestData.getBody().getUserAccount(),MD5Util.getMD5(apiRequestData.getBody().getPassword()));
+		AppUserInfo info = appUserInfoService.findByUserAccountAndPassword(apiRequestData.getBody().getUserAccount(),apiRequestData.getBody().getPassword());
 		if(info==null) {//账号或密码错误
 			result.setCode("1");
 			result.setReason("账号或密码错误");
