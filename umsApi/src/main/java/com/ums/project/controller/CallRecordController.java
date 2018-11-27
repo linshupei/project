@@ -42,7 +42,7 @@ public class CallRecordController {
 	
 	
 	@RequestMapping("/umsApi/api/callRecord")
-	public BaseResultApi callRecord(@RequestBody CallRecordRequestData apiRequestCallRecord){
+	public SmsRecordUploadResult callRecord(@RequestBody CallRecordRequestData apiRequestCallRecord){
 		SmsRecordUploadResult result = new SmsRecordUploadResult();
 		result.setTime(System.currentTimeMillis());
 		

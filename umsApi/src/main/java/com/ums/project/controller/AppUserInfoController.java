@@ -44,7 +44,7 @@ public class AppUserInfoController {
 	 * @return
 	 */
 	@RequestMapping("/api/appUser")
-	public BaseResultApi appUserRegister(@RequestBody LoginRequestData apiRequestDat) {
+	public AppRegisterResult appUserRegister(@RequestBody LoginRequestData apiRequestDat) {
 		
 		String userAccount = apiRequestDat.getBody().getUserAccount();
 		String password = apiRequestDat.getBody().getPassword();
@@ -89,7 +89,7 @@ public class AppUserInfoController {
 	public LoginResult appUserLogin(@RequestBody LoginRequestData apiRequestData) {
 		LoginResult result = new LoginResult();
 		result.setTime(System.currentTimeMillis());
-		AppUserInfo info = appUserInfoService.findByUserAccountAndPassword(apiRequestData.getBody().getUserAccount(),apiRequestData.getBody().getPassword());
+		AppUserInfo info = appUserInfoService.findByUserAccountAndPassword(apiRequestData.getBody().getUserAccount(),MD5Util.getMD5(apiRequestData.getBody().getPassword()));
 		if(info==null) {//账号或密码错误
 			result.setCode("1");
 			result.setReason("账号或密码错误");
@@ -102,18 +102,16 @@ public class AppUserInfoController {
 				result.setLoanLimit(loanInfo.getLoanLimit());
 				result.setLoanStatus(loanInfo.getStatus());
 				result.setPayDate(loanInfo.getPayDate());
-				result.setToken(UUIDGeneratorUtil.generateUUID());
 				result.setUserStatus("1");			
 				result.setCallUploadTime(info.getCallUploadTime());
 				result.setContactUploadTime(info.getContactUploadTime());
 				result.setSmsUploadTime(info.getSmsUploadTime());
-				
-				 ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-				 HttpServletRequest request = servletRequestAttributes.getRequest(); 
-				 request.getSession().setMaxInactiveInterval(1800);
-				 request.getSession().setAttribute(result.getToken(), info);
 			}
-
+				result.setToken(UUIDGeneratorUtil.generateUUID());
+			 ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+			 HttpServletRequest request = servletRequestAttributes.getRequest(); 
+			 request.getSession().setMaxInactiveInterval(1800);
+			 request.getSession().setAttribute(result.getToken(), info);
 		}
 		
 		return result;

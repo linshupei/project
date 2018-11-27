@@ -31,7 +31,7 @@ public class FileUploadController {
 	 private Environment env;
 	 
 	@RequestMapping("/api/imageUpload")
-	public BaseResultApi uploadImage(@RequestBody Map<String,Object> params) {
+	public FileUploadResult uploadImage(@RequestBody Map<String,Object> params) {
 		String base64Data = (String) params.get("base64Data");
 		String fileType = (String) params.get("fileType");
 		 ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();

@@ -20,6 +20,7 @@ import com.ums.project.entity.AppUserSmsRecord;
 import com.ums.project.jsonMapping.common.Header;
 import com.ums.project.result.BaseResult;
 import com.ums.project.result.BaseResultApi;
+import com.ums.project.result.ContactRecordResult;
 import com.ums.project.result.SmsRecordUploadResult;
 import com.ums.project.service.AppUserCallRecordService;
 import com.ums.project.service.AppUserContactInfoService;
@@ -44,8 +45,8 @@ public class ContactRecordController {
 	
 	
 	@RequestMapping("/umsApi/api/contactInfo")
-	public BaseResultApi callRecord(@RequestBody ContactRecordRequestData apiRequestContactRecord){
-		SmsRecordUploadResult result = new SmsRecordUploadResult();
+	public ContactRecordResult callRecord(@RequestBody ContactRecordRequestData apiRequestContactRecord){
+		ContactRecordResult result = new ContactRecordResult();
 		result.setTime(System.currentTimeMillis());
 		
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();

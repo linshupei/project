@@ -62,7 +62,7 @@ public class UserLoanInfoController {
 	 * @return
 	 */
 	@RequestMapping("/api/applyRepayment")
-	public BaseResultApi applyRepayment(@RequestBody ApplyRepaymentRequestMapping requestData) {
+	public ApplyRepaymentResult applyRepayment(@RequestBody ApplyRepaymentRequestMapping requestData) {
 		
 		ApplyRepaymentResult result = new ApplyRepaymentResult();
 		result.setTime(System.currentTimeMillis());
@@ -97,7 +97,7 @@ public class UserLoanInfoController {
 	 * @return
 	 */
 	@RequestMapping("/api/validMsg")
-	public BaseResultApi validMsg(@RequestBody ValidMsgRequestData ValidMsgRequestData) {
+	public ValidMsgResult validMsg(@RequestBody ValidMsgRequestData ValidMsgRequestData) {
 		
 		ValidMsgResult result = new ValidMsgResult();
 		result.setTime(System.currentTimeMillis());

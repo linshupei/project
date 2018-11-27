@@ -14,11 +14,11 @@ public class LoginResult extends BaseResultApi{
 	
 	private String loanStatus="";
 	
-	private String smsUploadTime;
+	private String smsUploadTime="0";
 	
-	private String callUploadTime;
+	private String callUploadTime="0";
 	
-	private String contactUploadTime;
+	private String contactUploadTime="0";
 	
 	public LoginResult() {
 		super();
