@@ -42,7 +42,7 @@ public interface UserLoanInfoService {
 	 * @param vo
 	 * @return
 	 */
-	public void updateUserLoanInfo(String id, String makeLoansLimit, String payDate);
+	public void updateUserLoanInfo(String id,String loanLimit, String makeLoansLimit, String payDate);
 
 	public List<UserLoanInfo> findOutDateUserLoanInfos();
 

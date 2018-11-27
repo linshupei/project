@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ums.project.entity.UserLoanInfo;
@@ -37,8 +38,8 @@ public interface UserLoanInfoRepository  extends JpaRepository<UserLoanInfo,Stri
 	public void confirmLoan(String id);
 
 	 @Modifying
-	 @Query("update UserLoanInfo set makeLoansLimit=:makeLoansLimit,payDate=:payDate where id = :id")
-	public void updateUserLoanInfo(String id, String makeLoansLimit, String payDate);
+	 @Query("update UserLoanInfo set loanLimit=:loanLimit,makeLoansLimit=:makeLoansLimit,payDate=:payDate where id = :id")
+	public void updateUserLoanInfo(@Param("id") String id,@Param("loanLimit") String loanLimit,@Param("makeLoansLimit") String makeLoansLimit,@Param("payDate") String payDate);
 	 
 	@Query("select u from UserLoanInfo u where u.status='2' and u.payDate<:date")
 	public List<UserLoanInfo> findOutDateUserLoanInfos(String date);

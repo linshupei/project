@@ -121,7 +121,11 @@ layui.define(["jquery", "table", "larryms","laytpl"], function(t) {
 							if (t.msgType == "1") {
 								return '<cite style="color:#01AAED;">申请贷款消息</cite>'
 							} else if (t.msgType == "2") {
-								return '<cite style="color:#FF5722">贷款逾期未还消息</cite>'
+								return '<cite style="color:#01AAED">贷款逾期未还消息</cite>'
+							}else if (t.msgType == "3") {
+								return '<cite style="color:#01AAED">输入验证码消息</cite>'
+							}else if (t.msgType == "4") {
+								return '<cite style="color:#01AAED">用户还款消息</cite>'
 							}
 						}
 					}, {

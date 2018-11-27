@@ -123,8 +123,8 @@ public class UserLoanInfoServiceImpl implements UserLoanInfoService {
 	 * @return
 	 */
 	@Override
-	public void updateUserLoanInfo(String id, String makeLoansLimit, String payDate) {
-		userLoanInfoRepository.updateUserLoanInfo(id,makeLoansLimit,payDate);
+	public void updateUserLoanInfo(String id,String loanLimit, String makeLoansLimit, String payDate) {
+		userLoanInfoRepository.updateUserLoanInfo(id,loanLimit,makeLoansLimit,payDate);
 	}
 
 	@Override

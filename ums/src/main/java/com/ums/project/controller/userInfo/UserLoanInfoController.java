@@ -164,7 +164,7 @@ public class UserLoanInfoController {
 	@RequestMapping("/api/userLoanInfo")
 	public BaseResult updateUserLoanInfo(@RequestBody UserLoanInfoVo vo) {
 		
-		userLoanInfoService.updateUserLoanInfo(vo.getId(),vo.getMakeLoansLimit(),vo.getPayDate());
+		userLoanInfoService.updateUserLoanInfo(vo.getId(),vo.getLoanLimit(),vo.getMakeLoansLimit(),vo.getPayDate());
 		
 		BaseResult  result = new BaseResult();
 		result.setCode("0");
