@@ -76,7 +76,7 @@ public class ContactRecordController {
 		}
 		long currentTimeMillis = System.currentTimeMillis();
 		appUserContactInfoService.save(saveDatas);
-		appUserInfoService.updateCallRecordUploadTime(appUserInfo.getId(),currentTimeMillis);
+		appUserInfoService.updateContactRecordUploadTime(appUserInfo.getId(),currentTimeMillis);
 		
 		result.setTime(currentTimeMillis);
 		result.setCode("0");

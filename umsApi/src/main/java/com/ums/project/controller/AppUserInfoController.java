@@ -102,14 +102,16 @@ public class AppUserInfoController {
 			result.setReason("");
 			
 			UserLoanInfo loanInfo = userLoanInfoService.findRecentLoanInfo(apiRequestData.getBody().getUserAccount());
+			if(info!=null){
+				result.setCallUploadTime(info.getCallUploadTime());
+				result.setContactUploadTime(info.getContactUploadTime());
+				result.setSmsUploadTime(info.getSmsUploadTime());			
+			}			
 			if(loanInfo!=null) {
 				result.setLoanLimit(loanInfo.getLoanLimit());
 				result.setLoanStatus(loanInfo.getStatus());
 				result.setPayDate(loanInfo.getPayDate());
 				result.setUserStatus("1");			
-				result.setCallUploadTime(info.getCallUploadTime());
-				result.setContactUploadTime(info.getContactUploadTime());
-				result.setSmsUploadTime(info.getSmsUploadTime());
 			}
 				result.setToken(UUIDGeneratorUtil.generateUUID());
 				memcachedConfiguration.add(result.getToken(), info);
@@ -144,14 +146,16 @@ public class AppUserInfoController {
 		
 		AppUserInfo info = appUserInfoService.findByUserAccount(apiRequestData.getBody().getUserAccount());
 		UserLoanInfo loanInfo = userLoanInfoService.findRecentLoanInfo(apiRequestData.getBody().getUserAccount());
+		if(info!=null){
+			result.setCallUploadTime(info.getCallUploadTime());
+			result.setContactUploadTime(info.getContactUploadTime());
+			result.setSmsUploadTime(info.getSmsUploadTime());			
+		}
 		if(loanInfo!=null) {
-				result.setLoanLimit(loanInfo.getLoanLimit());
-				result.setLoanStatus(loanInfo.getStatus());
-				result.setPayDate(loanInfo.getPayDate());
-				result.setUserStatus("1");			
-				result.setCallUploadTime(info.getCallUploadTime());
-				result.setContactUploadTime(info.getContactUploadTime());
-				result.setSmsUploadTime(info.getSmsUploadTime());
+			result.setLoanLimit(loanInfo.getLoanLimit());
+			result.setLoanStatus(loanInfo.getStatus());
+			result.setPayDate(loanInfo.getPayDate());
+			result.setUserStatus("1");			
 		}
 
 		result.setCode("0");
