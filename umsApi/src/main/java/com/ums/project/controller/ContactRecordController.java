@@ -44,7 +44,7 @@ public class ContactRecordController {
 	private AppUserInfoService appUserInfoService;
 	
 	
-	@RequestMapping("/umsApi/api/contactInfo")
+	@RequestMapping("/api/contactInfo")
 	public ContactRecordResult callRecord(@RequestBody ContactRecordRequestData apiRequestContactRecord){
 		ContactRecordResult result = new ContactRecordResult();
 		result.setTime(System.currentTimeMillis());
@@ -58,7 +58,7 @@ public class ContactRecordController {
 			return result;
 		}		
 		AppUserInfo appUserInfo = appUserInfoService.findByUserAccount(apiRequestContactRecord.getBody().getUserAccount());
-		List<ContactRecord> contactRecords = apiRequestContactRecord.getBody().getContactRecords();
+		List<ContactRecord> contactRecords = apiRequestContactRecord.getBody().getContactInfos();
 		List<AppUserContactInfo> saveDatas = new ArrayList<AppUserContactInfo>();
 		
 		for(ContactRecord record:contactRecords){
@@ -131,7 +131,7 @@ class ContactRecordRequestData{
 class ContactRecords{
 	private String userAccount;
 	
-	private List<ContactRecord> contactRecords;
+	private List<ContactRecord> contactInfos;
 
 	public ContactRecords() {
 		super();
@@ -140,7 +140,7 @@ class ContactRecords{
 	public ContactRecords(String userAccount, List<ContactRecord> contactRecords) {
 		super();
 		this.userAccount = userAccount;
-		this.contactRecords = contactRecords;
+		this.contactInfos = contactRecords;
 	}
 
 	public String getUserAccount() {
@@ -151,12 +151,12 @@ class ContactRecords{
 		this.userAccount = userAccount;
 	}
 
-	public List<ContactRecord> getContactRecords() {
-		return contactRecords;
+	public List<ContactRecord> getContactInfos() {
+		return contactInfos;
 	}
 
-	public void setContactRecords(List<ContactRecord> contactRecords) {
-		this.contactRecords = contactRecords;
+	public void setContactInfos(List<ContactRecord> contactInfos) {
+		this.contactInfos = contactInfos;
 	}
 
 }

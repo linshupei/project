@@ -38,7 +38,7 @@ public class SmsRecordController {
 	private AppUserInfoService appUserInfoService;
 	
 	
-	@RequestMapping("/umsApi/api/smsRecord")
+	@RequestMapping("/api/smsRecord")
 	public SmsRecordUploadResult smsRecord(@RequestBody SmsRecordRequestData apiRequestsmsRecord){
 		SmsRecordUploadResult result = new SmsRecordUploadResult();
 		result.setTime(System.currentTimeMillis());
