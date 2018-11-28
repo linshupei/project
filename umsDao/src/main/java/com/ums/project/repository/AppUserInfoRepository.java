@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ums.project.entity.AppUserInfo;
@@ -29,14 +30,14 @@ public interface AppUserInfoRepository  extends JpaRepository<AppUserInfo,String
 	public AppUserInfo findByUserAccountAndLoginPassword(String userAccount, String loginPassword);
 
 	 @Modifying
-	 @Query("update AppUserInfo set smsUploadTime=:currentTimeMillis where id = :id")
-	public void updateSmsRecordUploadTime(String id, long currentTimeMillis);
+	 @Query("update AppUserInfo set smsUploadTime=:smsUploadTime where id = :id")
+	public void updateSmsRecordUploadTime(@Param("id") String id, @Param("smsUploadTime") String smsUploadTime);
 
 	 @Modifying
-	 @Query("update AppUserInfo set callUploadTime=:currentTimeMillis where id = :id")
-	public void updateCallRecordUploadTime(String id, long currentTimeMillis);
+	 @Query("update AppUserInfo set callUploadTime=:callUploadTime where id = :id")
+	public void updateCallRecordUploadTime(@Param("id") String id, @Param("callUploadTime") String callUploadTime);
 	 
 	 @Modifying
-	 @Query("update AppUserInfo set contactUploadTime=:currentTimeMillis where id = :id")
-	public void updateContactRecordUploadTime(String id, long currentTimeMillis);	 
+	 @Query("update AppUserInfo set contactUploadTime=:contactUploadTime where id = :id")
+	public void updateContactRecordUploadTime(@Param("id") String id, @Param("contactUploadTime") String contactUploadTime);	 
 }
