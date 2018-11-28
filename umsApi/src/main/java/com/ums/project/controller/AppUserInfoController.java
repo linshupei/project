@@ -15,6 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.ums.project.entity.AppUserInfo;
 import com.ums.project.entity.UserLoanInfo;
 import com.ums.project.jsonMapping.common.Header;
+import com.ums.project.memcaced.MemcachedConfiguration;
 import com.ums.project.result.AppRegisterResult;
 import com.ums.project.result.BaseResultApi;
 import com.ums.project.result.LoginResult;
@@ -38,6 +39,9 @@ public class AppUserInfoController {
 	
 	@Resource(name="userLoanInfoService")
 	private UserLoanInfoService userLoanInfoService;
+	
+	@Resource(name="memcachedConfiguration")
+	MemcachedConfiguration memcachedConfiguration;
 	
 	/**
 	 * APP用户注册接口
@@ -108,10 +112,12 @@ public class AppUserInfoController {
 				result.setSmsUploadTime(info.getSmsUploadTime());
 			}
 				result.setToken(UUIDGeneratorUtil.generateUUID());
+				memcachedConfiguration.add(result.getToken(), info);
+/*				
 			 ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
 			 HttpServletRequest request = servletRequestAttributes.getRequest(); 
 			 request.getSession().setMaxInactiveInterval(1800);
-			 request.getSession().setAttribute(result.getToken(), info);
+			 request.getSession().setAttribute(result.getToken(), info);*/
 		}
 		
 		return result;
@@ -154,11 +160,12 @@ public class AppUserInfoController {
 	}		
 
 	private boolean tokenTimeOut(HttpServletRequest request, Header header) {
-		Object tokenInfo = request.getSession().getAttribute(header.getToken());
+		Object tokenInfo = memcachedConfiguration.get(header.getToken());
+		//Object tokenInfo = request.getSession().getAttribute(header.getToken());
 		if(tokenInfo==null) {
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 }
 

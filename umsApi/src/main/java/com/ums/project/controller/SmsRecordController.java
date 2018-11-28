@@ -15,6 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.ums.project.entity.AppUserInfo;
 import com.ums.project.entity.AppUserSmsRecord;
 import com.ums.project.jsonMapping.common.Header;
+import com.ums.project.memcaced.MemcachedConfiguration;
 import com.ums.project.result.BaseResult;
 import com.ums.project.result.BaseResultApi;
 import com.ums.project.result.SmsRecordUploadResult;
@@ -37,6 +38,8 @@ public class SmsRecordController {
 	@Resource(name="appUserInfoService")
 	private AppUserInfoService appUserInfoService;
 	
+	@Resource(name="memcachedConfiguration")
+	MemcachedConfiguration memcachedConfiguration;
 	
 	@RequestMapping("/api/smsRecord")
 	public SmsRecordUploadResult smsRecord(@RequestBody SmsRecordRequestData apiRequestsmsRecord){
@@ -79,11 +82,12 @@ public class SmsRecordController {
 	}
 	
 	private boolean tokenTimeOut(HttpServletRequest request, Header header) {
-		Object tokenInfo = request.getSession().getAttribute(header.getToken());
+		Object tokenInfo = memcachedConfiguration.get(header.getToken());
+		//Object tokenInfo = request.getSession().getAttribute(header.getToken());
 		if(tokenInfo==null) {
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 

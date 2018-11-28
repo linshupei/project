@@ -18,6 +18,7 @@ import com.ums.project.entity.SystemMsgInfo;
 import com.ums.project.entity.UserInfo;
 import com.ums.project.entity.UserLoanInfo;
 import com.ums.project.jsonMapping.common.Header;
+import com.ums.project.memcaced.MemcachedConfiguration;
 import com.ums.project.result.ApplyLoanResult;
 import com.ums.project.result.ApplyRepaymentResult;
 import com.ums.project.result.BaseResult;
@@ -49,12 +50,16 @@ public class UserLoanInfoController {
 	@Resource(name="appUserInfoService")
 	private AppUserInfoService appUserInfoService;
 	
+	@Resource(name="memcachedConfiguration")
+	MemcachedConfiguration memcachedConfiguration;
+	
 	private boolean tokenTimeOut(HttpServletRequest request, Header header) {
-		Object tokenInfo = request.getSession().getAttribute(header.getToken());
+		Object tokenInfo = memcachedConfiguration.get(header.getToken());
+		//Object tokenInfo = request.getSession().getAttribute(header.getToken());
 		if(tokenInfo==null) {
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 	/**
 	 *       申请还款
