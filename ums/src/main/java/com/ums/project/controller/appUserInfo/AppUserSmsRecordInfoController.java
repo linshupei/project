@@ -44,6 +44,7 @@ public class AppUserSmsRecordInfoController {
 			vo.setSendTime(record.getSendTimeFormat());
 			vo.setSendPhone(record.getSendPhone());
 			vo.setSmsContent(record.getSmsContent());
+			vo.setType(record.getType());
 			userInfos.add(vo);
 		}
 		

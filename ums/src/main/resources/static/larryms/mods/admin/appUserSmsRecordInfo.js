@@ -38,6 +38,10 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 						width: 120,
 						align:"center",
 						hide:true
+					},  {
+						field: "userAccount",
+						title: "APP用户账号",
+						align:"center"
 					}, {
 						field: "type",
 						title: "类型",
@@ -52,7 +56,7 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 						title: "发送内容",
 						align:"center"
 					}, {
-						field: "sendTimeFormat",
+						field: "sendTime",
 						title: "发送时间",
 						align:"center"
 					}]

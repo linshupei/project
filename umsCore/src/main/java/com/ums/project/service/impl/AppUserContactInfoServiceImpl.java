@@ -15,7 +15,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.ums.project.entity.AppUserCallRecord;
 import com.ums.project.entity.AppUserContactInfo;
 import com.ums.project.entity.AppUserInfo;
 import com.ums.project.queryBean.AppUserContactInfoQueryBean;
@@ -44,13 +43,16 @@ public class AppUserContactInfoServiceImpl implements AppUserContactInfoService 
 		  }
 		
 		  AppUserInfoQueryBean appUserInfoQueryBean = new AppUserInfoQueryBean();
+		  appUserInfoQueryBean.setKey(queryBean.getKey());
 		  Page<AppUserInfo> userInfoPageData = appUserInfoService.userInfoPageData(appUserInfoQueryBean, page);
 		  List<String> appUserAccounts = new ArrayList<String>();
 		  for(AppUserInfo appUserInfo:userInfoPageData.getContent()) {
 			  appUserAccounts.add(appUserInfo.getUserAccount());
 		  }
-		 
-		  List<AppUserContactInfo> appUserContactInfos = appUserContactInfoRepository.queryAppUserContactInfos(appUserAccounts);
+		  List<AppUserContactInfo> appUserContactInfos  = new ArrayList<AppUserContactInfo>(0);
+		 if(appUserAccounts.size()>0){
+			 appUserContactInfos = appUserContactInfoRepository.queryAppUserContactInfos(appUserAccounts);
+		 }
 		  
 		return  new PageImpl(appUserContactInfos,pageable,userInfoPageData.getNumber());
 	}

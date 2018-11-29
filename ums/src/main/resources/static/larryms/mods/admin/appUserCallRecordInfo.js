@@ -56,7 +56,7 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 						title: "备注",
 						align:"center"
 					}, {
-						field: "callTimeStr",
+						field: "callTime",
 						title: "呼叫时间",
 						align:"center"
 					}]

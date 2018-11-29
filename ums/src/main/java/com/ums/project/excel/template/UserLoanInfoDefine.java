@@ -22,7 +22,7 @@ public class UserLoanInfoDefine {
 	/**
 	 * 表体数据开始行
 	 */
-	public static int headRows = 3;
+	public static int headRows = 2;
 
 	/**
 	 * 头部占用的总列数

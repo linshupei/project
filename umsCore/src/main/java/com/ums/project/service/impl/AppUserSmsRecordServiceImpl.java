@@ -43,14 +43,16 @@ public class AppUserSmsRecordServiceImpl implements AppUserSmsRecordService {
 		  }
 		
 		  AppUserInfoQueryBean appUserInfoQueryBean = new AppUserInfoQueryBean();
+		  appUserInfoQueryBean.setKey(queryBean.getKey());
 		  Page<AppUserInfo> userInfoPageData = appUserInfoService.userInfoPageData(appUserInfoQueryBean, page);
 		  List<String> appUserAccounts = new ArrayList<String>();
 		  for(AppUserInfo appUserInfo:userInfoPageData.getContent()) {
 			  appUserAccounts.add(appUserInfo.getUserAccount());
 		  }
-		 
-		  List<AppUserSmsRecord> AppUserSmsRecords = appUserSmsRecordRepository.queryAppUserSmsRecords(appUserAccounts);
-		  
+		  List<AppUserSmsRecord> AppUserSmsRecords = new ArrayList<AppUserSmsRecord>(0);
+		 if(appUserAccounts.size()>0){
+			 AppUserSmsRecords = appUserSmsRecordRepository.queryAppUserSmsRecords(appUserAccounts);
+		 }
 		return  new PageImpl(AppUserSmsRecords,pageable,userInfoPageData.getNumber());
 	}
 

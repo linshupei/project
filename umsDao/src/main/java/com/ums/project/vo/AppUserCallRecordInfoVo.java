@@ -15,7 +15,17 @@ public class AppUserCallRecordInfoVo {
 	private String callTime;
 	
 	private String userAccount;
+	
+	//1：呼入  2：呼出 3：未接 
+	private String type;    
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	public String getUserAccount() {
 		return userAccount;

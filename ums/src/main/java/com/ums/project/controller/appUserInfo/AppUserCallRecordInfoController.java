@@ -41,10 +41,11 @@ public class AppUserCallRecordInfoController {
 			
 			vo.setId(record.getId());
 			vo.setUserAccount(record.getUserAccount());
-			vo.setCallTime(record.getCallTime());
+			vo.setCallTime(record.getCallTimeStr());
 			vo.setCallPhone(record.getCallPhone());
 			vo.setCalledPhone(record.getCalledPhone());
 			vo.setCallName(record.getCallName());			
+			vo.setType(record.getType());
 			userInfos.add(vo);
 		}
 		

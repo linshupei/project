@@ -18,10 +18,10 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 				  
 				  var params = "?1=1";
 				  if(d("#loanStatus").val()!=""){
-				  	params = param+"&loanStatus="+d("#loanStatus").val();
+				  	params = params+"&loanStatus="+d("#loanStatus").val();
 				  }
 				  if(d("#keywords").val()!=""){
-				  	params = param+"&keyword="+d("#keywords").val();
+				  	params = params+"&keyword="+d("#keywords").val();
 				  }				  
 					 //导出excel
 					  window.location.href="/api/exportLoanInfo"+params;
@@ -151,7 +151,7 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 					}, {
 						field: "userAccount",
 						title: "所属APP账号",
-						width: 120,
+						width: 130,
 						align:"center"
 					}, {
 						field: "userName",

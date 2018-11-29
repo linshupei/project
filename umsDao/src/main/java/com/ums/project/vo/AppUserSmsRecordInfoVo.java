@@ -14,6 +14,17 @@ public class AppUserSmsRecordInfoVo {
 	
 	//发送手机号
 	private String sendPhone;
+	
+	  //1：收到 2：发送
+    private String type;
+    
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	public String getUserAccount() {
 		return userAccount;

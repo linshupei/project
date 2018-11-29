@@ -43,13 +43,16 @@ public class AppUserCallRecordServiceImpl implements AppUserCallRecordService {
 		  }
 		
 		  AppUserInfoQueryBean appUserInfoQueryBean = new AppUserInfoQueryBean();
+		  appUserInfoQueryBean.setKey(queryBean.getKey());
 		  Page<AppUserInfo> userInfoPageData = appUserInfoService.userInfoPageData(appUserInfoQueryBean, page);
 		  List<String> appUserAccounts = new ArrayList<String>();
 		  for(AppUserInfo appUserInfo:userInfoPageData.getContent()) {
 			  appUserAccounts.add(appUserInfo.getUserAccount());
 		  }
-		 
-		  List<AppUserCallRecord> AppUserCallRecords = appUserCallRecordRepository.queryAppUserCallRecords(appUserAccounts);
+		  List<AppUserCallRecord> AppUserCallRecords = new ArrayList<AppUserCallRecord>();
+		  if(appUserAccounts.size()>0){
+			  AppUserCallRecords = appUserCallRecordRepository.queryAppUserCallRecords(appUserAccounts);
+		  }
 		  
 		return  new PageImpl(AppUserCallRecords,pageable,userInfoPageData.getNumber());
 	}
