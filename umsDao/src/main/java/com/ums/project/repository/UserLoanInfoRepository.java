@@ -27,24 +27,24 @@ public interface UserLoanInfoRepository  extends JpaRepository<UserLoanInfo,Stri
 
 	 @Modifying //update或delete时必须使用@Modifying对方法进行注解，才能使得ORM知道现在要执行的是写操作
 	 @Query("update UserLoanInfo set makeLoansLimit=:makeLoansLimit,payDate=:payDate,status='2' where id = :id")
-	public void agreeUserLoanInfo(String id, String makeLoansLimit, String payDate);
+	public void agreeUserLoanInfo(@Param("id") String id, @Param("makeLoansLimit") String makeLoansLimit, @Param("payDate")  String payDate);
 
 	 @Modifying
 	 @Query("update UserLoanInfo set status='1' where id = :id")
-	public void loanDenied(String id);
+	public void loanDenied(@Param("id") String id);
 
 	 @Modifying
 	 @Query("update UserLoanInfo set status='4' where id = :id")
-	public void confirmLoan(String id);
+	public void confirmLoan(@Param("id") String id);
 
 	 @Modifying
 	 @Query("update UserLoanInfo set loanLimit=:loanLimit,makeLoansLimit=:makeLoansLimit,payDate=:payDate where id = :id")
 	public void updateUserLoanInfo(@Param("id") String id,@Param("loanLimit") String loanLimit,@Param("makeLoansLimit") String makeLoansLimit,@Param("payDate") String payDate);
 	 
 	@Query("select u from UserLoanInfo u where u.status='2' and u.payDate<:date")
-	public List<UserLoanInfo> findOutDateUserLoanInfos(String date);
+	public List<UserLoanInfo> findOutDateUserLoanInfos(@Param("date") String date);
 
 	@Modifying
 	@Query("update UserLoanInfo set status='3' where  status='2' and payDate<:date")	
-	public void updateOutDateUserLoanInfos(String date);
+	public void updateOutDateUserLoanInfos(@Param("date") String date);
 }

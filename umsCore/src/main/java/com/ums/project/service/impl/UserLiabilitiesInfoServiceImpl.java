@@ -41,6 +41,7 @@ public class UserLiabilitiesInfoServiceImpl implements UserLiabilitiesInfoServic
 	@Resource(name="userLiabilitiesInfoRepository")
 	private UserLiabilitiesInfoRepository userLiabilitiesInfoRepository;
 	
+	
 	public Page<UserLiabilitiesInfo> userInfoPageData(UserLiabilitiesInfoQueryBean queryBean, DataPage page){
 		
 	      //规格定义
@@ -70,5 +71,8 @@ public class UserLiabilitiesInfoServiceImpl implements UserLiabilitiesInfoServic
 		return userInfoPageData;
 	}
 
-
+	@Override
+	public void saveAll(List<UserLiabilitiesInfo> savePData){
+		userLiabilitiesInfoRepository.saveAll(savePData);
+	}
 }

@@ -35,11 +35,11 @@ public interface SystemMsgInfoRepository  extends JpaRepository<SystemMsgInfo,St
 
 	@Modifying
 	@Query("delete from SystemMsgInfo where id in (:idStr)")	
-	public void batchDeleteSystemMsgReadStatus(String[] idStr);
+	public void batchDeleteSystemMsgReadStatus(@Param("idStr") String[] idStr);
 
 	@Modifying
 	@Query("update SystemMsgInfo set tipStatus=:value where id in (:tipList)")
-	public void updateSystemMsgTipStatus(List<String> tipList, String value);
+	public void updateSystemMsgTipStatus(@Param("tipList")  List<String> tipList,@Param("value") String value);
 	
 
 }

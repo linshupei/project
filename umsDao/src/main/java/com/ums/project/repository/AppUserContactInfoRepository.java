@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ums.project.entity.AppUserContactInfo;
@@ -26,7 +27,7 @@ public interface AppUserContactInfoRepository  extends JpaRepository<AppUserCont
 	public Page<AppUserContactInfo> findAll(Specification<AppUserContactInfo> spec, Pageable pageable);
 	
 	@Query("select aui from AppUserContactInfo aui where aui.userAccount in (:userAccounts)")
-	public List<AppUserContactInfo> queryAppUserContactInfos(List<String> userAccounts);
+	public List<AppUserContactInfo> queryAppUserContactInfos(@Param("userAccounts") List<String> userAccounts);
 	
 
 }

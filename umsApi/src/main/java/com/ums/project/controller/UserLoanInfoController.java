@@ -1,5 +1,6 @@
 package com.ums.project.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,9 +15,13 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.ums.project.entity.AppUserInfo;
+import com.ums.project.entity.LiabilitiesPlatformInfo;
 import com.ums.project.entity.SystemMsgInfo;
+import com.ums.project.entity.UserEmergencyContact;
 import com.ums.project.entity.UserInfo;
+import com.ums.project.entity.UserLiabilitiesInfo;
 import com.ums.project.entity.UserLoanInfo;
+import com.ums.project.entity.UserWorkUnitInfo;
 import com.ums.project.jsonMapping.common.Header;
 import com.ums.project.memcaced.MemcachedConfiguration;
 import com.ums.project.result.ApplyLoanResult;
@@ -26,8 +31,12 @@ import com.ums.project.result.BaseResultApi;
 import com.ums.project.result.ValidMsgResult;
 import com.ums.project.service.AppUserInfoService;
 import com.ums.project.service.SystemMsgInfoService;
+import com.ums.project.service.UserEmergencyContactService;
 import com.ums.project.service.UserInfoService;
+import com.ums.project.service.UserLiabilitiesInfoService;
 import com.ums.project.service.UserLoanInfoService;
+import com.ums.project.service.UserWorkUnitInfoService;
+import com.ums.project.service.LiabilitiesPlatformInfoService;
 import com.ums.project.util.DateUtil;
 
 /**
@@ -50,8 +59,21 @@ public class UserLoanInfoController {
 	@Resource(name="appUserInfoService")
 	private AppUserInfoService appUserInfoService;
 	
+	@Resource(name="userWorkUnitInfoService")
+	private UserWorkUnitInfoService userWorkUnitInfoService;
+	
+	@Resource(name="userEmergencyContactService")
+	private UserEmergencyContactService userEmergencyContactService;
+
+	@Resource(name="userLiabilitiesInfoService")
+	private UserLiabilitiesInfoService  userLiabilitiesInfoService;
+	
+	@Resource(name="liabilitiesPlatformInfoService")
+	private LiabilitiesPlatformInfoService liabilitiesPlatformInfoService;
+	
 	@Resource(name="memcachedConfiguration")
-	MemcachedConfiguration memcachedConfiguration;
+	private MemcachedConfiguration memcachedConfiguration;
+
 	
 	private boolean tokenTimeOut(HttpServletRequest request, Header header) {
 		Object tokenInfo = memcachedConfiguration.get(header.getToken());
@@ -160,7 +182,7 @@ public class UserLoanInfoController {
 			result.setReason("token过期");
 		}else {
 			UserLoanInfo loanInfo = userLoanInfoService.findRecentLoanInfo(applyLoanInfo.getUserAccount());
-			if(loanInfo!=null) {
+			if(loanInfo!=null && !"1".equals(loanInfo.getStatus()) && !"4".equals(loanInfo.getStatus())) {
 				result.setCode("1");
 				result.setReason("存在未完成贷款，无法申请");
 			}else {
@@ -209,6 +231,54 @@ public class UserLoanInfoController {
 				result.setCode("0");
 				result.setReason("");
 				result.setLoanInfoId(userLoanInfo.getId());
+				
+				List<Contact> emergencyContacts = AplayLoanRequestData.getBody().getEmergencyContacts();
+				List<UserEmergencyContact> saveContacts = new ArrayList<UserEmergencyContact>();
+				for(Contact contact:emergencyContacts){
+					UserEmergencyContact ec = new UserEmergencyContact();
+					ec.setMobile(contact.getMobile());
+					ec.setName(contact.getName());
+					ec.setUserAccount(userInfo.getUserAccount());
+					ec.setUserInfo(userInfo);
+					saveContacts.add(ec);
+					userEmergencyContactService.save(saveContacts);
+				}
+				
+				
+				String miFang = AplayLoanRequestData.getBody().getMiFang();
+				String jieDaiBao = AplayLoanRequestData.getBody().getJieDaiBao();
+				String voucher = AplayLoanRequestData.getBody().getVoucher();
+				List<LiabilitiesPlatformInfo> findAll = liabilitiesPlatformInfoService.findAll();
+				List<UserLiabilitiesInfo> savePData = new ArrayList<UserLiabilitiesInfo>();
+				for(LiabilitiesPlatformInfo pl:findAll){
+					UserLiabilitiesInfo uil = new UserLiabilitiesInfo();
+					uil.setUserAccount(userInfo.getUserAccount());
+					uil.setUserInfo(userInfo);
+					if("miFang".equals(pl.getLiabilitiesPlatform())){
+						uil.setLiabilitiesAmount(miFang);
+						uil.setLiabilitiesPlatformInfo(pl);					
+					}
+					if("jieDaiBao".equals(pl.getLiabilitiesPlatform())){
+						uil.setLiabilitiesAmount(jieDaiBao);
+						uil.setLiabilitiesPlatformInfo(pl);					
+					}
+					if("voucher".equals(pl.getLiabilitiesPlatform())){
+						uil.setLiabilitiesAmount(voucher);
+						uil.setLiabilitiesPlatformInfo(pl);					
+					}				
+					savePData.add(uil);
+				}
+				userLiabilitiesInfoService.saveAll(savePData);
+
+				UserWorkUnitInfo workInfo = new UserWorkUnitInfo();
+				String workUnitAddress = AplayLoanRequestData.getBody().getWorkUnitAddress();
+				String workUnitPhone = AplayLoanRequestData.getBody().getWorkUnitPhone();
+				
+				workInfo.setUserAccount(userInfo.getUserAccount());
+				workInfo.setUserInfo(userInfo);
+				workInfo.setWorkUnitAddress(workUnitAddress);
+				workInfo.setWorkUnitPhone(workUnitPhone);
+				userWorkUnitInfoService.save(workInfo);
 			}			
 		}
 

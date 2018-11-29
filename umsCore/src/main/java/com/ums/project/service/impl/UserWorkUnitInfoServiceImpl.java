@@ -70,4 +70,7 @@ public class UserWorkUnitInfoServiceImpl implements UserWorkUnitInfoService {
 	}
 
 
+	public void save(UserWorkUnitInfo workInfo){
+		userWorkUnitInfoRepository.save(workInfo);
+	}
 }

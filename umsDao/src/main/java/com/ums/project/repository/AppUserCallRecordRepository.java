@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ums.project.entity.AppUserCallRecord;
@@ -23,7 +24,7 @@ public interface AppUserCallRecordRepository  extends JpaRepository<AppUserCallR
 	public Page<AppUserCallRecord> findAll(Specification<AppUserCallRecord> spec, Pageable pageable);
 	
 	@Query("select aui from AppUserCallRecord aui where aui.userAccount in (:userAccounts)")
-	public List<AppUserCallRecord> queryAppUserCallRecords(List<String> userAccounts);
+	public List<AppUserCallRecord> queryAppUserCallRecords(@Param("userAccounts") List<String> userAccounts);
 	
 
 }

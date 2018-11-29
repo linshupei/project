@@ -10,4 +10,6 @@ public interface UserWorkUnitInfoService {
 	
 	public Page<UserWorkUnitInfo> userInfoPageData(UserWorkUnitInfoQueryBean queryBean, DataPage page);
 
+	public void save(UserWorkUnitInfo workInfo);
+
 }

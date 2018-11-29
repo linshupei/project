@@ -69,5 +69,10 @@ public class UserEmergencyContactServiceImpl implements UserEmergencyContactServ
 		return userInfoPageData;
 	}
 
+	@Override
+	public void save(List<UserEmergencyContact> saveContacts) {
+		userEmergencyContactRepository.saveAll(saveContacts);
+	}
+
 
 }
