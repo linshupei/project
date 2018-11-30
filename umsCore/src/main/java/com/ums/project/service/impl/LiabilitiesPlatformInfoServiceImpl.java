@@ -1,4 +1,4 @@
-package liabilitiesPlatformInfoService;
+package com.ums.project.service.impl;
 
 import java.util.List;
 
