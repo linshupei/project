@@ -65,46 +65,52 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 							content: openUserLiabilitiesInfoUrl
 					  });						  
 				  }else if(layEvent=="idCardPositive"){
+					  var idCardPositiveUrl = d(this).data("url") + "?imageUrl=" + data.idCardPositive;
 				      var a = c.open({
 							title: "身份证信息",
 							type: 2,
-							area: ["760px", "550px"],
-							content: data.idCardPositive
+							area: ["100%", "100%"],
+							content: idCardPositiveUrl
 					  });						  
 				  }else if(layEvent=="idCardOtherSize"){
+					  var idCardOtherSizeUrl = d(this).data("url") + "?imageUrl=" + data.idCardOtherSize;
 				      var a = c.open({
 							title: "身份证信息",
 							type: 2,
-							area: ["760px", "550px"],
-							content: data.idCardOtherSize
+							area: ["100%", "100%"],
+							content: idCardOtherSizeUrl
 					  });						  
 				  }else if(layEvent=="idCardHand"){
+					  var idCardHandUrl = d(this).data("url") + "?imageUrl=" + data.idCardHand;
 				      var a = c.open({
 							title: "身份证信息",
 							type: 2,
-							area: ["760px", "550px"],
-							content: data.idCardHand
+							area: ["100%", "100%"],
+							content: idCardHandUrl
 					  });						  
 				  }else if(layEvent=="zhiMaFenImage"){
+					  var zhiMaFenImageUrl = d(this).data("url") + "?imageUrl=" + data.zhiMaFenImage;
 				      var a = c.open({
 							title: "芝麻分",
 							type: 2,
-							area: ["760px", "550px"],
-							content: data.zhiMaFenImage
+							area: ["100%", "100%"],
+							content: zhiMaFenImageUrl
 					  });						  
 				  }else if(layEvent=="huaBeiImage"){
+					  var huaBeiImageUrl = d(this).data("url") + "?imageUrl=" + data.huaBeiImage;
 				      var a = c.open({
 							title: "花呗额度",
 							type: 2,
-							area: ["760px", "550px"],
-							content: data.huaBeiImage
+							area: ["100%", "100%"],
+							content: huaBeiImageUrl
 					  });						  
 				  }else if(layEvent=="bankCardImage"){
+					  var bankCardImageUrl = d(this).data("url") + "?imageUrl=" + data.bankCardImage;
 				      var a = c.open({
 							title: "收款银行卡",
 							type: 2,
-							area: ["760px", "550px"],
-							content: data.bankCardImage
+							area: ["100%", "100%"],
+							content: bankCardImageUrl
 					  });					  
 				  }else if(layEvent=="resetPassword"){
 						d.ajax({ 
@@ -178,7 +184,7 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 						title: "身份证信息（点击查看）",
 						width: 335,
 						align:"center",
-						templet:'<div>{{d.idCard}}&nbsp;<a href="javascript:void(0)" lay-event="idCardPositive" lay-filter="idCardPositive" class="layui-table-link">正面</a>&nbsp;<a href="javascript:void(0)" lay-event="idCardOtherSize" lay-filter="idCardOtherSize" class="layui-table-link">反面</a>&nbsp;<a href="javascript:void(0)" lay-event="idCardHand" lay-filter="idCardHand" class="layui-table-link">手持身份证</a></div>'
+						templet:'<div>{{d.idCard}}&nbsp;<a href="javascript:void(0)" data-url="imageView.html" lay-event="idCardPositive" lay-filter="idCardPositive" class="layui-table-link">正面</a>&nbsp;<a href="javascript:void(0)" data-url="imageView.html" lay-event="idCardOtherSize" lay-filter="idCardOtherSize" class="layui-table-link">反面</a>&nbsp;<a href="javascript:void(0)" data-url="imageView.html" lay-event="idCardHand" lay-filter="idCardHand" class="layui-table-link">手持身份证</a></div>'
 					}, {
 						field: "alipayAccount",
 						title: "支付宝账号",
@@ -189,19 +195,19 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 						title: "芝麻分",
 						width: 110,
 						align:"center",
-						templet:'<div>{{d.zhiMaFen}}&nbsp;<a href="javascript:void(0)" lay-event="zhiMaFenImage" lay-filter="zhiMaFenImage" class="layui-table-link">预览</a></div>'
+						templet:'<div>{{d.zhiMaFen}}&nbsp;<a href="javascript:void(0)" data-url="imageView.html" lay-event="zhiMaFenImage" lay-filter="zhiMaFenImage" class="layui-table-link">预览</a></div>'
 					}, {
 						field: "huaBei",
 						title: "花呗",
 						width: 110,
 						align:"center",
-						templet:'<div>{{d.huaBei}}&nbsp;<a href="javascript:void(0)" lay-event="huaBeiImage" lay-filter="huaBeiImage" class="layui-table-link">预览</a></div>'
+						templet:'<div>{{d.huaBei}}&nbsp;<a href="javascript:void(0)" data-url="imageView.html" lay-event="huaBeiImage" lay-filter="huaBeiImage" class="layui-table-link">预览</a></div>'
 					},{
 						field: "bankCard",
 						title: "收款银行卡账户",
 						width: 218,
 						align:"center",
-						templet:'<div>{{d.bankCard}}&nbsp;<a href="javascript:void(0)" lay-event="bankCardImage" lay-filter="bankCardImage" class="layui-table-link">预览</a></div>'
+						templet:'<div>{{d.bankCard}}&nbsp;<a href="javascript:void(0)" data-url="imageView.html" lay-event="bankCardImage" lay-filter="bankCardImage" class="layui-table-link">预览</a></div>'
 					},{
 						field: "",
 						fixed:"right",
