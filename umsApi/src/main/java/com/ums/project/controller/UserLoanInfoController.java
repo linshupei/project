@@ -103,6 +103,7 @@ public class UserLoanInfoController {
 		}
 		
 		UserLoanInfo loanInfo = userLoanInfoService.getById(requestData.getBody().getLoanInfoId());
+		userLoanInfoService.updateStatus(loanInfo.getId(),"5");
 		SystemMsgInfo msg = new SystemMsgInfo();
 		msg.setMsgContent("APP用户还款，请及时确认;申请人："+loanInfo.getUserInfo().getName()+" 手机号："+loanInfo.getUserInfo().getMobile());
 		msg.setMsgTime(DateUtil.getDateFormat("yyyy-MM-dd HH:mm:ss", new Date()));

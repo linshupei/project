@@ -47,4 +47,8 @@ public interface UserLoanInfoRepository  extends JpaRepository<UserLoanInfo,Stri
 	@Modifying
 	@Query("update UserLoanInfo set status='3' where  status='2' and payDate<:date")	
 	public void updateOutDateUserLoanInfos(@Param("date") String date);
+
+	@Modifying
+	@Query("update UserLoanInfo set status=:status where id=:id")	
+	public void updateStatus(@Param("id") String id,@Param("status") String status);
 }

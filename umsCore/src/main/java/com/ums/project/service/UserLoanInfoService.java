@@ -52,4 +52,6 @@ public interface UserLoanInfoService {
 
 	public UserLoanInfo getById(String loanInfoId);
 
+	public void updateStatus(String id, String status);
+
 }

@@ -179,4 +179,9 @@ public class UserLoanInfoServiceImpl implements UserLoanInfoService {
 	public UserLoanInfo getById(String loanInfoId) {
 		return userLoanInfoRepository.getOne(loanInfoId);
 	}
+
+	@Override
+	public void updateStatus(String id, String status) {
+		userLoanInfoRepository.updateStatus(id,status);
+	}
 }
