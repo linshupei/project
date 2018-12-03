@@ -20,6 +20,17 @@ public class LoginResult extends BaseResultApi{
 	
 	private String contactUploadTime="0";
 	
+	private String loanInfoId="";
+	
+	
+	public String getLoanInfoId() {
+		return loanInfoId;
+	}
+
+	public void setLoanInfoId(String loanInfoId) {
+		this.loanInfoId = loanInfoId;
+	}
+
 	public LoginResult() {
 		super();
 	}

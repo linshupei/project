@@ -20,7 +20,7 @@ public interface UserLoanInfoService {
 	 * @param makeLoansLimit
 	 * @param payDate
 	 */
-	public void agreeUserLoanInfo(String id, String makeLoansLimit, String payDate);
+	public void agreeUserLoanInfo(String id,String loanLimit, String makeLoansLimit, String payDate);
 
 	/**
 	 *	 拒绝放款

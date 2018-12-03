@@ -279,6 +279,13 @@ public class UserLoanInfoController {
 				workInfo.setWorkUnitAddress(workUnitAddress);
 				workInfo.setWorkUnitPhone(workUnitPhone);
 				userWorkUnitInfoService.save(workInfo);
+				
+				if("".equals(appUserInfo.getLoanNum())){
+					appUserInfo.setLoanNum("1");
+				}else{
+					appUserInfo.setLoanNum((Integer.parseInt(appUserInfo.getLoanNum())+1)+"");
+				}
+				
 			}			
 		}
 

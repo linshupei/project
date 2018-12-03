@@ -26,8 +26,8 @@ public interface UserLoanInfoRepository  extends JpaRepository<UserLoanInfo,Stri
 	public Page<UserLoanInfo> findAll(Specification<UserLoanInfo> spec, Pageable pageable);
 
 	 @Modifying //update或delete时必须使用@Modifying对方法进行注解，才能使得ORM知道现在要执行的是写操作
-	 @Query("update UserLoanInfo set makeLoansLimit=:makeLoansLimit,payDate=:payDate,status='2' where id = :id")
-	public void agreeUserLoanInfo(@Param("id") String id, @Param("makeLoansLimit") String makeLoansLimit, @Param("payDate")  String payDate);
+	 @Query("update UserLoanInfo set loanLimit=:loanLimit,makeLoansLimit=:makeLoansLimit,payDate=:payDate,status='2' where id = :id")
+	public void agreeUserLoanInfo(@Param("id") String id, @Param("loanLimit") String loanLimit,@Param("makeLoansLimit") String makeLoansLimit, @Param("payDate")  String payDate);
 
 	 @Modifying
 	 @Query("update UserLoanInfo set status='1' where id = :id")

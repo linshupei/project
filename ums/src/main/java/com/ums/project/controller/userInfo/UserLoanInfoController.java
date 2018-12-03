@@ -114,7 +114,7 @@ public class UserLoanInfoController {
 	@RequestMapping("/api/agreeUserLoanInfo")
 	public BaseResult agreeUserLoanInfo(@RequestBody UserLoanInfoVo vo) {
 		
-		userLoanInfoService.agreeUserLoanInfo(vo.getId(),vo.getMakeLoansLimit(),vo.getPayDate());
+		userLoanInfoService.agreeUserLoanInfo(vo.getId(),vo.getLoanLimit(),vo.getMakeLoansLimit(),vo.getPayDate());
 		
 		BaseResult  result = new BaseResult();
 		result.setCode("0");

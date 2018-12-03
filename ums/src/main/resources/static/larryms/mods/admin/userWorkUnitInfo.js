@@ -28,11 +28,11 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 						width: 120,
 						align:"center",
 						hide:true
-					}, {
+					}/*, {
 						field: "workUnitName",
 						title: "公司名称",
 						align:"center"
-					}, {
+					}*/, {
 						field: "workUnitPhone",
 						title: "公司联系电话",
 						align:"center"

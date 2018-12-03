@@ -90,8 +90,8 @@ public class UserLoanInfoServiceImpl implements UserLoanInfoService {
 	}
 
 	@Override
-	public void agreeUserLoanInfo(String id, String makeLoansLimit, String payDate) {
-		userLoanInfoRepository.agreeUserLoanInfo(id,makeLoansLimit,payDate);
+	public void agreeUserLoanInfo(String id,String loanLimit, String makeLoansLimit, String payDate) {
+		userLoanInfoRepository.agreeUserLoanInfo(id,loanLimit,makeLoansLimit,payDate);
 	}
 	
 	/**
