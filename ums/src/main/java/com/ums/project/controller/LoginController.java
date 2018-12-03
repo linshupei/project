@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +20,7 @@ import com.ums.project.result.BaseResult;
 import com.ums.project.result.LoginResult;
 import com.ums.project.result.ResultCode;
 import com.ums.project.service.AdminUserService;
+import com.ums.project.util.IPAddressUtil;
 import com.ums.project.util.MD5Util;
 import com.ums.project.vo.ResetPasswordVo;
 
@@ -26,16 +29,21 @@ public class LoginController {
 	
 	@Resource(name="adminUserService")
 	private AdminUserService adminUserService;
+
+	private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 	
 	@RequestMapping("/api/resetAdminPassword")	
 	public BaseResult resetPassword(@RequestBody ResetPasswordVo vo){
+		 ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		 HttpServletRequest request = servletRequestAttributes.getRequest(); 
+		 log.info("ip："+IPAddressUtil.getIpAdrress(request)+" 用户重置密码："+vo.toString());
+		
 		 BaseResult result = new BaseResult();
 		 result.setCode("0");
 		 result.setReason("");
 		 result.setTime(System.currentTimeMillis());
 		 
-		 ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-		 HttpServletRequest request = servletRequestAttributes.getRequest(); 
+
 		 Object attribute = request.getSession().getAttribute("session_user");
 		 
 		 String account = attribute.toString();

@@ -6,6 +6,12 @@ public class ResetPasswordVo {
 		// TODO Auto-generated constructor stub
 	}
 	
+	@Override
+	public String toString() {
+		return "ResetPasswordVo [oldPassword=" + oldPassword + ", newPassword=" + newPassword + ", newConfirmPassword="
+				+ newConfirmPassword + "]";
+	}
+
 	private String oldPassword;
 	
 	private String newPassword;
