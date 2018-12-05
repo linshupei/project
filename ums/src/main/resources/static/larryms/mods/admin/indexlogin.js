@@ -54,7 +54,8 @@ layui.define(["larry", "form", "larryms"], function(i) {
 			});
 			layui.sessionData("ticket",resultData.ticket);
 			setTimeout(function() {
-				window.location.href = "index.html";
+				 location.replace("index.html"); 
+				//window.location.href = "index.html";
 			}, 1e3)
 		} else {
 			layer.tips("用户名或密码错误！", a("#password"), {
