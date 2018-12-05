@@ -88,6 +88,8 @@ public class UserInfoController {
 				 excelData.setStatus("逾期未还");
 			 }else if("4".equals(loanInfo.getStatus())) {
 				 excelData.setStatus("已还款");
+			 }else if("5".equals(loanInfo.getStatus())) {
+				 excelData.setStatus("申请还款");
 			 }
 			 
 			 excelData.setZhiMaFen(loanInfo.getUserInfo().getZhiMaFen());

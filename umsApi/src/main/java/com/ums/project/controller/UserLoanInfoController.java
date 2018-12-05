@@ -107,7 +107,7 @@ public class UserLoanInfoController {
 		SystemMsgInfo msg = new SystemMsgInfo();
 		msg.setMsgContent("APP用户还款，请及时确认;申请人："+loanInfo.getUserInfo().getName()+" 手机号："+loanInfo.getUserInfo().getMobile());
 		msg.setMsgTime(DateUtil.getDateFormat("yyyy-MM-dd HH:mm:ss", new Date()));
-		msg.setMsgType("5");
+		msg.setMsgType("4");
 		msg.setReadStatus("0");
 		msg.setTipStatus("0");
 		msg.setUserLoanInfo(loanInfo);		
