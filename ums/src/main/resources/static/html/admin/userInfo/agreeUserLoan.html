@@ -31,7 +31,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">申请贷款金额：</label>
                     <div class="layui-input-block">
-                        <input type="text" id="loanLimit" name="loanLimit" value="" lay-verify="required|number" placeholder="申请贷款金额" class="layui-input larry-input" autocomplete="off">
+                        <input type="text" id="loanLimit" name="loanLimit" value="" lay-verify="required|number|positiveMoney" placeholder="申请贷款金额" class="layui-input larry-input" autocomplete="off">
                     </div>
                 </div>             
                 <div class="layui-form-item">
@@ -43,7 +43,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">放款金额：</label>
                     <div class="layui-input-block">
-                        <input type="text" id="makeLoansLimit" name="makeLoansLimit" value="" lay-verify="required|number" placeholder="放款金额" class="layui-input larry-input" autocomplete="off">
+                        <input type="text" id="makeLoansLimit" name="makeLoansLimit" value="" lay-verify="required|number|positiveMoney" placeholder="放款金额" class="layui-input larry-input" autocomplete="off">
                     </div>
                 </div>                                
                  <div class="layui-form-item">
@@ -84,6 +84,11 @@
             larry = layui.larry,
             larryms = layui.larryms,
             form = layui.form;
+        $.extend(form.config.verify,
+        		{
+        			positiveMoney: function(e) {if (!e || isNaN(e) || e<=0) return "金额不能为0"}
+        		});
+        
         var curIfr = parent.layer.getFrameIndex(window.name);
         $('#closeAdd').on('click', function() {
             parent.layer.close(curIfr);
