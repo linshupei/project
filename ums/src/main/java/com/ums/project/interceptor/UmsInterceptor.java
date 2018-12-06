@@ -48,6 +48,9 @@ public class UmsInterceptor extends HandlerInterceptorAdapter{
 		        		if(System.currentTimeMillis()-sessionTime<=900000){
 		        			request.getSession().setAttribute(userAccount.toString(),sessionTime+900000);			
 		        		}else{
+			        		if(url.contains("index.html")) {
+			        			response.sendRedirect("/html/login.html");
+			        		}		        			
 		        			return false;
 		        		}
 		        	}else{

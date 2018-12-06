@@ -26,19 +26,44 @@ layui.define(["jquery", "configure", "larryTab"], function(e) {
 				content: openResetPasswordUrl
 		  });			 
 	});		
+	l(document).ready(function(e) { 
+	        var counter = 0;
+	        if (window.history && window.history.pushState) {
+	                         l(window).on('popstate', function () {
+	                                        window.history.pushState('forward', null, '#');
+	                                        window.history.forward(1);
+	                            });
+	          }
 	
-	setInterval(function(){
+	          window.history.pushState('forward', null, '#'); //在IE中必须得有这两行
+	          window.history.forward(1);
+	});
+	
+	(function outDateFunction(){
 		l.ajax({ 
 	        type: "get", 
 	        url: "/api/loginOutTime", 
 	        dataType: "json",
 	        success: function(jsonData){ 
 	        	if(jsonData.code=="1"){
-	        		location.href="/html/login.html";
+	        		location.replace("/html/login.html");
 	        	}
 	        } 
 		});		
-	},1000*60);
+		setInterval(function(){
+			l.ajax({ 
+		        type: "get", 
+		        url: "/api/loginOutTime", 
+		        dataType: "json",
+		        success: function(jsonData){ 
+		        	if(jsonData.code=="1"){
+		        		location.replace("/html/login.html");
+		        	}
+		        } 
+			});		
+		},1000*60);		
+	})();
+
 	
 	
 	setInterval(function(){

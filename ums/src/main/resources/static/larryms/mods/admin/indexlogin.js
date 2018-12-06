@@ -3,7 +3,19 @@ layui.define(["larry", "form", "larryms"], function(i) {
 		e = layui.larry,
 		r = layui.larryms,
 		l = layui.form;
+	a(document).ready(function(e) { 
+        var counter = 0;
+        if (window.history && window.history.pushState) {
+                         a(window).on('popstate', function () {
+                                        window.history.pushState('forward', null, '#');
+                                        window.history.forward(1);
+                            });
+          }
 
+          window.history.pushState('forward', null, '#'); //在IE中必须得有这两行
+          window.history.forward(1);
+	});
+	
 	function t() {
 		a.supersized({
 			slide_interval: 3e3,
