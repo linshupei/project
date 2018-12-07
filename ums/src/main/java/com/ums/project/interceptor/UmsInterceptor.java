@@ -20,7 +20,6 @@ public class UmsInterceptor extends HandlerInterceptorAdapter{
 			
 	@Override
 	 public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-				
 		        String url = request.getRequestURL().toString();
 	        	Object userAccount = request.getSession().getAttribute("session_user");  
 		        //登录超时，未指定的接口都返回空数据
@@ -51,13 +50,15 @@ public class UmsInterceptor extends HandlerInterceptorAdapter{
 			        		if(url.contains("index.html")) {
 			        			response.sendRedirect("/html/login.html");
 			        		}		        			
-		        			return false;
+		        			//return false;
+			        		return super.preHandle(request, response, handler);
 		        		}
 		        	}else{
 		        		if(url.contains("index.html")) {
 		        			response.sendRedirect("/html/login.html");
 		        		}
-		        		return false;
+		        		//return false;
+		        		return super.preHandle(request, response, handler);
 		        	}
 		        }
 		        return super.preHandle(request, response, handler);
@@ -72,6 +73,9 @@ public class UmsInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
+		if(response.getStatus()==404){
+			response.sendRedirect("/html/404.html");
+		}
 		super.afterCompletion(request, response, handler, ex);
 	}
 
