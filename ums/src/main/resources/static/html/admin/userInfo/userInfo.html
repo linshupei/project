@@ -52,6 +52,7 @@
             <div class="user-list layui-col-lg12 layui-col-md12 layui-col-sm12 layui-col-xs12">
             	  <table class="layui-hide" id="test" lay-filter="test" data-url="/api/userInfos"></table>  
             	  <script type="text/html" id="useInfoTepl">
+						<a class="layui-btn layui-btn-xs" lay-event="deleteUserInfo" data-url="deleteUserInfo.html">删除信息</a>						
 						<a class="layui-btn layui-btn-xs" lay-event="openUserLoanInfo"  data-url="userLoanInfo.html">贷款详情</a>
 						<a class="layui-btn layui-btn-xs" lay-event="openUserLiabilitiesInfo"  data-url="userLiabilitiesInfo.html">负债信息</a>
 						<a class="layui-btn layui-btn-xs" lay-event="openUserEmergencyContact"  data-url="userEmergencyContactInfo.html">紧急联系人</a>

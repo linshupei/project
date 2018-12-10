@@ -12,4 +12,6 @@ public interface UserWorkUnitInfoService {
 
 	public void save(UserWorkUnitInfo workInfo);
 
+	public void deleteByUserInfo(String userInfoId);
+
 }

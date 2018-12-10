@@ -75,4 +75,9 @@ public class UserLiabilitiesInfoServiceImpl implements UserLiabilitiesInfoServic
 	public void saveAll(List<UserLiabilitiesInfo> savePData){
 		userLiabilitiesInfoRepository.saveAll(savePData);
 	}
+
+	@Override
+	public void deleteByUserInfo(String userInfoId) {
+		userLiabilitiesInfoRepository.deleteByUserInfo(userInfoId);
+	}
 }

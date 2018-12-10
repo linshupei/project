@@ -123,7 +123,40 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 					           	 resetResultProcess(jsonData);
 					        } 
 						});				  
-				  }
+				  }else if(layEvent=="deleteUserInfo"){				
+						var result = null;
+	                    c.confirm('确认删除信息？', {
+	                        icon: 3,
+	                        skin:"larry-green",
+	                        anim:false,
+	                        title: '删除信息'
+	                    }, function() {
+	                    	var loanedObj = new Object();
+	                    	loanedObj.id=data.id;
+	                    	d.ajax({ 
+	                            type: "post", 
+	                            url: "/api/deleteUserInfo", 
+	                            contentType:"application/json;charset=utf-8",
+	                            async:false, 
+	                            data:JSON.stringify(loanedObj),
+	                            dataType: "json",
+	                            success: function(jsonData){ 
+	                            	result = jsonData;
+	                            } 
+	                    	});    
+	                        if(result){
+	                        	if(result.code=="0"){
+	            					var t = d(this).data("url"),
+	        						i = d("#keywords").val(),
+	        						loanStatus = d("#loanStatus").val();	                        		
+	                        		 l.reload("test",{where:{"keyword":i,"loanStatus":loanStatus}})
+	                        		c.alert("操作成功！");
+	                        	}else{
+	                        		c.alert(result.reason);                  
+	                        	}                    	
+	                        }                    	
+	                    });
+				}
 			});		
 
 			function resetResultProcess(resultData){

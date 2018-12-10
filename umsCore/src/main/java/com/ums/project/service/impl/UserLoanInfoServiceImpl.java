@@ -184,4 +184,21 @@ public class UserLoanInfoServiceImpl implements UserLoanInfoService {
 	public void updateStatus(String id, String status) {
 		userLoanInfoRepository.updateStatus(id,status);
 	}
+
+	@Override
+	public int findLoaningNum(String userAccount) {
+		userLoanInfoRepository.findLoaningNum(userAccount); 
+		return 0;
+	}
+
+	@Override
+	public UserLoanInfo findbyUserInfo(String userInfoId) {
+		 return userLoanInfoRepository.findByUserInfo(userInfoId);
+	}
+
+	@Override
+	public void deleteByUserInfo(String userInfoId) {
+		userLoanInfoRepository.deleteByUserInfo(userInfoId);
+		
+	}
 }

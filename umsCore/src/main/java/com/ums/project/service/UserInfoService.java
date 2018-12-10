@@ -11,4 +11,8 @@ public interface UserInfoService {
 	public Page<UserInfo> userInfoPageData(UserInfoQueryBean queryBean, DataPage page);
 
 	public void save(UserInfo userInfo);
+
+	public UserInfo getById(String id);
+
+	public void removeById(String id);
 }

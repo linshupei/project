@@ -28,10 +28,15 @@ import com.ums.project.excel.template.UserLoanInfoDefine;
 import com.ums.project.excel.vo.ExportLoanInfo;
 import com.ums.project.queryBean.UserInfoQueryBean;
 import com.ums.project.queryBean.UserLoanInfoQueryBean;
+import com.ums.project.result.BaseResult;
 import com.ums.project.result.DataPage;
 import com.ums.project.result.TableData;
+import com.ums.project.service.SystemMsgInfoService;
+import com.ums.project.service.UserEmergencyContactService;
 import com.ums.project.service.UserInfoService;
+import com.ums.project.service.UserLiabilitiesInfoService;
 import com.ums.project.service.UserLoanInfoService;
+import com.ums.project.service.UserWorkUnitInfoService;
 import com.ums.project.vo.UserInfoVo;
 import com.ums.project.vo.UserLoanInfoVo;
 
@@ -44,6 +49,48 @@ public class UserInfoController {
 	@Resource(name="userLoanInfoService")
 	private UserLoanInfoService userLoanInfoService;
 	
+	@Resource(name="userWorkUnitInfoService")
+	private UserWorkUnitInfoService userWorkUnitInfoService;
+	
+	@Resource(name="userEmergencyContactService")
+	private UserEmergencyContactService userEmergencyContactService;
+	
+	@Resource(name="userLiabilitiesInfoService")
+	private UserLiabilitiesInfoService userLiabilitiesInfoService;
+	
+	@Resource(name="systemMsgInfoService")
+	private SystemMsgInfoService systemMsgInfoService;
+	 
+	@RequestMapping("/api/deleteUserInfo")
+	public BaseResult deleteUserInfo(@RequestBody UserInfoQueryBean bean){
+		
+		BaseResult result = new BaseResult();
+		result.setCode("0");
+		result.setTime(System.currentTimeMillis());
+		result.setReason("ok");
+		UserInfo userInfo= userInfoService.getById(bean.getId());
+		UserLoanInfo userLoanInfo = userLoanInfoService.findbyUserInfo(userInfo.getId());
+		if(!"1".equals(userLoanInfo.getStatus())
+				&&!"4".equals(userLoanInfo.getStatus())){//存在未完成贷款
+			result.setCode("1");
+			result.setReason("存在未完成贷款信息，无法删除。");
+		}else{
+			userInfoService.removeById(bean.getId());
+			userLoanInfoService.deleteByUserInfo(userInfo.getId());
+			userWorkUnitInfoService.deleteByUserInfo(userInfo.getId());
+			userEmergencyContactService.deleteByUserInfo(userInfo.getId());
+			userLiabilitiesInfoService.deleteByUserInfo(userInfo.getId());
+			systemMsgInfoService.deleteByUserLoanInfoId(userLoanInfo.getId());
+		}
+		return result;
+	}
+	
+	
+	/**
+	 * 数据导出
+	 * @param loanStatus
+	 * @param keyword
+	 */
 	@RequestMapping("/api/exportLoanInfo")
 	public void exportLoanInfo(@RequestParam(required=false) String loanStatus,@RequestParam(required=false) String keyword){
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();

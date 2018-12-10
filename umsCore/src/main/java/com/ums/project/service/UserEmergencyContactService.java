@@ -14,4 +14,6 @@ public interface UserEmergencyContactService {
 
 	public void save(List<UserEmergencyContact> saveContacts);
 
+	public void deleteByUserInfo(String userInfoId);
+
 }

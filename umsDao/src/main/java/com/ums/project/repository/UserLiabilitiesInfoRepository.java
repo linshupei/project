@@ -5,6 +5,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ums.project.entity.UserLiabilitiesInfo;
@@ -19,6 +22,10 @@ public interface UserLiabilitiesInfoRepository  extends JpaRepository<UserLiabil
 	
 
 	public Page<UserLiabilitiesInfo> findAll(Specification<UserLiabilitiesInfo> spec, Pageable pageable);
+
+	@Modifying
+	@Query("delete from UserLiabilitiesInfo where userInfo.id=:userInfoId")
+	public void deleteByUserInfo(@Param("userInfoId") String userInfoId);
 
 
 }

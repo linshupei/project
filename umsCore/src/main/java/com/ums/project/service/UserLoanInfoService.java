@@ -53,5 +53,16 @@ public interface UserLoanInfoService {
 	public UserLoanInfo getById(String loanInfoId);
 
 	public void updateStatus(String id, String status);
+	
+	/**
+	 * 查找未完成的贷款信息
+	 * @param userAccount
+	 * @return
+	 */
+	public int findLoaningNum(String userAccount);
+
+	public UserLoanInfo findbyUserInfo(String userInfoId);
+
+	public void deleteByUserInfo(String userInfoId);
 
 }

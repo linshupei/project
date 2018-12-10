@@ -51,4 +51,14 @@ public interface UserLoanInfoRepository  extends JpaRepository<UserLoanInfo,Stri
 	@Modifying
 	@Query("update UserLoanInfo set status=:status where id=:id")	
 	public void updateStatus(@Param("id") String id,@Param("status") String status);
+
+	@Query("select count(*) from UserLoanInfo where userAccount=:userAccount and status<>'1' and status<>'4'")	
+	public Long findLoaningNum(@Param("userAccount") String userAccount);
+
+	@Query("select ui from UserLoanInfo ui where ui.userInfo.id=:userInfoId")	
+	public UserLoanInfo findByUserInfo(@Param("userInfoId") String userInfoId);
+
+	@Modifying
+	@Query("delete from UserLoanInfo  where userInfo.id=:userInfoId")	
+	public void deleteByUserInfo(@Param("userInfoId") String userInfoId);
 }

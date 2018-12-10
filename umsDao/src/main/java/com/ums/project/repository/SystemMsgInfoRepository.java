@@ -40,6 +40,10 @@ public interface SystemMsgInfoRepository  extends JpaRepository<SystemMsgInfo,St
 	@Modifying
 	@Query("update SystemMsgInfo set tipStatus=:value where id in (:tipList)")
 	public void updateSystemMsgTipStatus(@Param("tipList")  List<String> tipList,@Param("value") String value);
+
+	@Modifying
+	@Query("delete from SystemMsgInfo where userLoanInfo.id=:userLoanInfoId")
+	public void deleteByUserLoanInfoId(@Param("userLoanInfoId") String userLoanInfoId);
 	
 
 }

@@ -43,4 +43,6 @@ public interface SystemMsgInfoService {
 	 */
 	public SystemMsgInfo querypayMsg();
 
+	public void deleteByUserLoanInfoId(String userLoanInfoId);
+
 }

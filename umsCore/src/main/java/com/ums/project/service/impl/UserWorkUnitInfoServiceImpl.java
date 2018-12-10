@@ -73,4 +73,10 @@ public class UserWorkUnitInfoServiceImpl implements UserWorkUnitInfoService {
 	public void save(UserWorkUnitInfo workInfo){
 		userWorkUnitInfoRepository.save(workInfo);
 	}
+
+
+	@Override
+	public void deleteByUserInfo(String userInfoId) {
+		userWorkUnitInfoRepository.deleteByUserInfo(userInfoId);
+	}
 }

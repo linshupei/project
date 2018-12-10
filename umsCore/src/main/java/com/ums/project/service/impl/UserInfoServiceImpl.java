@@ -99,4 +99,14 @@ public class UserInfoServiceImpl implements UserInfoService {
 	public void save(UserInfo userInfo) {
 		userInfoRepository.save(userInfo);
 	}
+
+	@Override
+	public UserInfo getById(String id) {
+		 return userInfoRepository.getOne(id);
+	}
+
+	@Override
+	public void removeById(String id) {
+		userInfoRepository.deleteById(id);
+	}
 }

@@ -74,5 +74,10 @@ public class UserEmergencyContactServiceImpl implements UserEmergencyContactServ
 		userEmergencyContactRepository.saveAll(saveContacts);
 	}
 
+	@Override
+	public void deleteByUserInfo(String userInfoId) {
+		userEmergencyContactRepository.deleteByUserInfo(userInfoId);
+	}
+
 
 }

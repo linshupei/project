@@ -194,4 +194,9 @@ public class SystemMsgInfoServiceImpl implements SystemMsgInfoService {
 	public void save(SystemMsgInfo msg) {
 		systemMsgInfoRepository.save(msg);
 	}
+
+	@Override
+	public void deleteByUserLoanInfoId(String userLoanInfoId) {
+		systemMsgInfoRepository.deleteByUserLoanInfoId(userLoanInfoId);
+	}
 }

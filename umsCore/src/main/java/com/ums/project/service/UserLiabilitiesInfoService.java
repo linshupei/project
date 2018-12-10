@@ -14,4 +14,6 @@ public interface UserLiabilitiesInfoService {
 
 	public void saveAll(List<UserLiabilitiesInfo> savePData);
 
+	public void deleteByUserInfo(String userInfoId);
+
 }
