@@ -245,7 +245,7 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 						field: "",
 						fixed:"right",
 						title: "操作",
-						width: 350,
+						width: 400,
 						align:"center",
 						templet:'#useInfoTepl'
 					}]
