@@ -61,4 +61,7 @@ public interface UserLoanInfoRepository  extends JpaRepository<UserLoanInfo,Stri
 	@Modifying
 	@Query("delete from UserLoanInfo  where userInfo.id=:userInfoId")	
 	public void deleteByUserInfo(@Param("userInfoId") String userInfoId);
+	
+	@Query("select count(*) from UserLoanInfo where userAccount=:userAccount and status='1'")	
+	public Long findDeniedApplayNum(@Param("userAccount") String userAccount);
 }

@@ -65,4 +65,6 @@ public interface UserLoanInfoService {
 
 	public void deleteByUserInfo(String userInfoId);
 
+	public long findDeniedApplayNum(String userAccount);
+
 }
