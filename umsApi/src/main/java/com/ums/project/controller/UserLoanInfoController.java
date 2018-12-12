@@ -26,6 +26,7 @@ import com.ums.project.jsonMapping.common.Header;
 import com.ums.project.memcaced.MemcachedConfiguration;
 import com.ums.project.result.ApplyLoanResult;
 import com.ums.project.result.ApplyRepaymentResult;
+import com.ums.project.result.ApplyValidResult;
 import com.ums.project.result.BaseResult;
 import com.ums.project.result.BaseResultApi;
 import com.ums.project.result.ValidMsgResult;
@@ -83,6 +84,42 @@ public class UserLoanInfoController {
 		}
 		return false;
 	}
+	
+
+	/**
+	 *       申请贷款第二步，输入验证
+	 * @param applyLoanInfo
+	 * @return
+	 */
+	@RequestMapping("/api/validApply")
+	public BaseResultApi validApply(@RequestBody ValidApplyRequestData validApplyRequestData) {
+		
+		ApplyValidResult result = new ApplyValidResult();
+		result.setTime(System.currentTimeMillis());
+		
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest(); 
+		boolean tokenTimeOut = tokenTimeOut( request,validApplyRequestData.getHeader());
+		if(tokenTimeOut) {
+			result.setResult("003");
+			result.setReason("token过期");
+			return result;
+		}
+		
+		ValidApply validApply = validApplyRequestData.getBody();
+		long num =userLoanInfoService.findDeniedApplayNum(validApply.getUserAccount());
+		if(num>=3){
+			result.setCode("0");
+			result.setReason("被拒绝贷款次数超过3次，无法申请");
+		}else{
+			result.setCode("1");
+			result.setReason("");			
+		}
+		
+		
+		return result;
+	}
+	
 	/**
 	 *       申请还款
 	 * @param applyLoanInfo
@@ -295,6 +332,41 @@ public class UserLoanInfoController {
 	}
 }
 
+class ValidApplyRequestData{
+	private Header header;
+	
+	private ValidApply body;
+
+	
+	public ValidApplyRequestData() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public ValidApplyRequestData(Header header, ValidApply body) {
+		super();
+		this.header = header;
+		this.body = body;
+	}
+
+	public Header getHeader() {
+		return header;
+	}
+
+	public void setHeader(Header header) {
+		this.header = header;
+	}
+
+	public ValidApply getBody() {
+		return body;
+	}
+
+	public void setBody(ValidApply body) {
+		this.body = body;
+	}
+	
+	
+}
 class ValidMsgRequestData{
 	private Header header;
 	
@@ -351,6 +423,22 @@ class ValidMsg {
 		this.code = code;
 	}
 }
+
+
+class ValidApply {
+	private String userAccount;
+
+	public String getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(String userAccount) {
+		this.userAccount = userAccount;
+	}
+	
+
+}
+
 
 class AplayLoanRequestData {
 	private Header header;

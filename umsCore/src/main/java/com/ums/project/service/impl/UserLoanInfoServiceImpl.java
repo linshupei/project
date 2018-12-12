@@ -201,4 +201,9 @@ public class UserLoanInfoServiceImpl implements UserLoanInfoService {
 		userLoanInfoRepository.deleteByUserInfo(userInfoId);
 		
 	}
+
+	@Override
+	public long findDeniedApplayNum(String userAccount) {
+		return userLoanInfoRepository.findDeniedApplayNum(userAccount);
+	}
 }
