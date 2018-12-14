@@ -40,11 +40,12 @@ public class AppUserInfoController {
 	}
 	
 	@RequestMapping("/api/appUserInfos")
-	public TableData userInfoPageData(@RequestParam(required=false) String keyword,@RequestParam int page,@RequestParam int limit) {
+	public TableData userInfoPageData(@RequestParam(required=false) String keyword,@RequestParam(required=false) String status,@RequestParam int page,@RequestParam int limit) {
 		AppUserInfoQueryBean bean = new AppUserInfoQueryBean();
 		DataPage datapage = new DataPage();
 		
 		bean.setKey(keyword);
+		bean.setStatus(status);
 		datapage.setLimit(limit);
 		datapage.setPage(page);
 		Page<AppUserInfo> resutlPage = appUserInfoService.userInfoPageData(bean, datapage);

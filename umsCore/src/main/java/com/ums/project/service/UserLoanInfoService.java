@@ -11,6 +11,8 @@ import com.ums.project.result.DataPage;
 public interface UserLoanInfoService {
 	
 	public Page<UserLoanInfo> userInfoPageData(UserLoanInfoQueryBean queryBean, DataPage page);
+	
+	public Page<UserLoanInfo> userInfoPageDataPart(UserLoanInfoQueryBean queryBean, DataPage page);
 
 	public UserLoanInfo findById(String id);
 

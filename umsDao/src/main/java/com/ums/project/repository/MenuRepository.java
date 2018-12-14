@@ -16,7 +16,7 @@ import com.ums.project.entity.Menu;
 @Repository("menuRepository")
 public interface MenuRepository  extends JpaRepository<Menu,String>{
 	
-	@Query("select menu from Menu menu where parentMenu is null ")
+	@Query("select menu from Menu menu where status='1' ")
 	public List<Menu> findData();
 
 }

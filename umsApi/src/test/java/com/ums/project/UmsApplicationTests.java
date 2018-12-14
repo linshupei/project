@@ -1,5 +1,8 @@
 package com.ums.project;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -23,7 +26,10 @@ public class UmsApplicationTests {
 	
 	public static void main(String[] args) {
 		
-		System.out.println(DigestUtils.md5DigestAsHex("123455".getBytes()).toUpperCase());
+		System.out.println("test");
+		Timestamp t = new  Timestamp(1544768330000L);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		System.out.println(sdf.format(t));
 	}
 
 }

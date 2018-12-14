@@ -1,6 +1,7 @@
 package com.ums.project.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -90,7 +92,40 @@ public class UserInfo  implements Serializable{
     @OneToOne(mappedBy = "userInfo",fetch=FetchType.LAZY)
     private UserLoanInfo userLoanInfo;
 
+    @OneToOne(mappedBy = "userInfo",fetch=FetchType.LAZY)
+    private UserWorkUnitInfo userWorkUnitInfo;
+ 
+    @OneToMany(mappedBy = "userInfo",fetch=FetchType.LAZY)
+    private List<UserLiabilitiesInfo> userLiabilitiesInfo;
     
+    @OneToMany(mappedBy = "userInfo",fetch=FetchType.LAZY)
+    private List<UserEmergencyContact> userEmergencyContact;
+    
+    
+	public List<UserEmergencyContact> getUserEmergencyContact() {
+		return userEmergencyContact;
+	}
+
+	public void setUserEmergencyContact(List<UserEmergencyContact> userEmergencyContact) {
+		this.userEmergencyContact = userEmergencyContact;
+	}
+
+	public List<UserLiabilitiesInfo> getUserLiabilitiesInfo() {
+		return userLiabilitiesInfo;
+	}
+
+	public void setUserLiabilitiesInfo(List<UserLiabilitiesInfo> userLiabilitiesInfo) {
+		this.userLiabilitiesInfo = userLiabilitiesInfo;
+	}
+
+	public UserWorkUnitInfo getUserWorkUnitInfo() {
+		return userWorkUnitInfo;
+	}
+
+	public void setUserWorkUnitInfo(UserWorkUnitInfo userWorkUnitInfo) {
+		this.userWorkUnitInfo = userWorkUnitInfo;
+	}
+
 	public UserLoanInfo getUserLoanInfo() {
 		return userLoanInfo;
 	}

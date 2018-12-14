@@ -52,7 +52,17 @@ public class Menu  implements Serializable{
     @Column(name = "spread") 
     private String spread;
     
+    @Column(name = "status") 
+    private String status;
+
     
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public String getId() {
 		return id;
@@ -143,7 +153,7 @@ public class Menu  implements Serializable{
 	@Override
 	public String toString() {
 		return "Menu [id=" + id + ", pid=" + pid + ", title=" + title + ", font=" + font + ", icon=" + icon + ", url="
-				+ url + ", spread=" + spread + "]";
+				+ url + ", spread=" + spread + ", status=" + status + "]";
 	}
 
 

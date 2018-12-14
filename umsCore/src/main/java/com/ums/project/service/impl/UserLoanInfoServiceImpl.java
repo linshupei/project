@@ -48,6 +48,56 @@ public class UserLoanInfoServiceImpl implements UserLoanInfoService {
 	@Resource(name="userLoanInfoRepository")
 	private UserLoanInfoRepository userLoanInfoRepository;	
 	
+	
+	/**
+	 * 申请客户资料查询
+	 * @param queryBean
+	 * @param page
+	 * @return
+	 */
+	public Page<UserLoanInfo> userInfoPageDataPart(UserLoanInfoQueryBean queryBean, DataPage page){
+	      //规格定义
+        Specification<UserLoanInfo> specification = new Specification<UserLoanInfo>() {
+            @Override
+            public Predicate toPredicate(Root<UserLoanInfo> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+            	List<Predicate> allPredicates = new ArrayList<>(); 
+                Join<UserLoanInfo, UserInfo> join = root.join("userInfo",JoinType.INNER);
+                if(!StringUtils.isEmpty(queryBean.getKey())){
+                	List<Predicate> predicates = new ArrayList<>(); 
+                    Predicate userName = cb.like(join.get("name").as(String.class),"%"+queryBean.getKey()+"%");
+                    Predicate mobile = cb.like(join.get("mobile").as(String.class),"%"+queryBean.getKey()+"%");
+                    predicates.add(userName);
+                    predicates.add(mobile);
+                    
+                    allPredicates.add(cb.or(predicates.toArray(new Predicate[0])));
+                }
+                if(!StringUtils.isEmpty(queryBean.getUserInfoId())) {
+                	Predicate userInfoId = cb.equal(join.get("id").as(String.class),queryBean.getUserInfoId());
+                	allPredicates.add(userInfoId);
+                }
+                if(!StringUtils.isEmpty(queryBean.getLoanStatus())) {
+                	List<Predicate> statusPredicates = new ArrayList<>(); 
+                	String[] statusArr = queryBean.getLoanStatus().split(",");
+                	for(String status:statusArr){
+                		Predicate loanStatus = cb.equal(root.get("status").as(String.class),status);
+                		statusPredicates.add(loanStatus);
+                	}
+                	
+                	Predicate or = cb.or(statusPredicates.toArray(new Predicate[0]));
+                	allPredicates.add(or);
+                }                
+                return cb.and(allPredicates.toArray(new Predicate[0]));
+            }
+        };			
+		Sort sort = new Sort(Sort.Direction.ASC, "status").and(new Sort(Sort.Direction.DESC, "id"));
+		Pageable pageable = PageRequest.of(page.getPage()-1,page.getLimit(),sort); //页码：前端从1开始，jpa从0开始，做个转换
+		Page<UserLoanInfo> userInfoPageData = userLoanInfoRepository.findAll(specification,pageable );
+		
+		return userInfoPageData;
+	}
+
+	
+	
 	public Page<UserLoanInfo> userInfoPageData(UserLoanInfoQueryBean queryBean, DataPage page){
 		
 	      //规格定义

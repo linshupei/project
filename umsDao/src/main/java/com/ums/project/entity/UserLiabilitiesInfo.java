@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -36,7 +37,7 @@ public class UserLiabilitiesInfo  implements Serializable{
     @Column(name = "liabilities_amount") 
     private String liabilitiesAmount;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")//people中的addr
 	private UserInfo userInfo;
 

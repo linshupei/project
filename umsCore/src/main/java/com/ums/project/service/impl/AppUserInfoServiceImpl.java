@@ -39,7 +39,7 @@ public class AppUserInfoServiceImpl implements AppUserInfoService {
 	public Page<AppUserInfo> userInfoPageData(AppUserInfoQueryBean queryBean, DataPage page){
 		
 		Sort sort = new Sort(Sort.Direction.DESC, "id");
-		  if(StringUtils.isEmpty(queryBean.getKey())){
+		  if(StringUtils.isEmpty(queryBean.getKey()) && StringUtils.isEmpty(queryBean.getStatus())){
 		        Pageable pageable = PageRequest.of(page.getPage()-1,page.getLimit(),sort); //页码：前端从1开始，jpa从0开始，做个转换
 			  return appUserInfoRepository.findAll(pageable);
 		  }
@@ -47,20 +47,32 @@ public class AppUserInfoServiceImpl implements AppUserInfoService {
         Specification<AppUserInfo> specification = new Specification<AppUserInfo>() {
             @Override
             public Predicate toPredicate(Root<AppUserInfo> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                List<Predicate> predicates = new ArrayList<>(); 
-                if(!StringUtils.isEmpty(queryBean.getKey())){
-                    Predicate userAccount = cb.like(root.get("userAccount").as(String.class),"%"+queryBean.getKey()+"%");
-                    
-                    
-                    ListJoin<AppUserInfo, UserInfo> subJoin = root.join(root.getModel().getList("userInfos",UserInfo.class),JoinType.LEFT);
-                    Predicate userName = cb.like(subJoin.get("name").as(String.class),"%"+queryBean.getKey()+"%");
-                    Predicate mobile = cb.like(subJoin.get("mobile").as(String.class),"%"+queryBean.getKey()+"%");
-                    predicates.add(userAccount);
-                    predicates.add(userName);
-                    predicates.add(mobile);
-                    
-                }
-                return cb.or(predicates.toArray(new Predicate[0]));
+            	 List<Predicate> allPredicates = new ArrayList<>(); 
+            	 if(!StringUtils.isEmpty(queryBean.getKey()) || !StringUtils.isEmpty(queryBean.getStatus())){
+            		 
+            		 ListJoin<AppUserInfo, UserInfo> subJoin = root.join(root.getModel().getList("userInfos",UserInfo.class),JoinType.LEFT);
+            		 
+                     if(!StringUtils.isEmpty(queryBean.getKey())){
+                    	 List<Predicate> predicates = new ArrayList<>(); 
+                    	 Predicate userAccount = cb.like(root.get("userAccount").as(String.class),"%"+queryBean.getKey()+"%");
+                        
+                        Predicate userName = cb.like(subJoin.get("name").as(String.class),"%"+queryBean.getKey()+"%");
+                        Predicate mobile = cb.like(subJoin.get("mobile").as(String.class),"%"+queryBean.getKey()+"%");
+                        predicates.add(userAccount);
+                        predicates.add(userName);
+                        predicates.add(mobile);
+                        
+                        Predicate or = cb.or(predicates.toArray(new Predicate[0]));
+                        
+                        allPredicates.add(or);
+                    }
+                    if(!StringUtils.isEmpty(queryBean.getStatus())){
+                    	Predicate equal = cb.equal(subJoin.get("status").as(String.class),queryBean.getStatus());
+                    	allPredicates.add(equal);
+                    }            		 
+            	 }
+
+                return cb.and(allPredicates.toArray(new Predicate[0]));
             }
         };		
         Pageable pageable = PageRequest.of(page.getPage()-1,page.getLimit(),sort); //页码：前端从1开始，jpa从0开始，做个转换

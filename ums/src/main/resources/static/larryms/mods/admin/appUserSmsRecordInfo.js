@@ -12,7 +12,7 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 				t = layui.form,
 				i = d("#appUserSmsRecordInfosTable").data("url"),
 				layer = layui.layer;
-				
+			
 			l.on("tool(appUserSmsRecordInfosTable)",function(obj){
 				  var data = obj.data; //获得当前行数据
 				  var layEvent = obj.event; 
@@ -28,9 +28,10 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 			l.render({
 				elem: "#appUserSmsRecordInfosTable",
 				url: i,
-				toolbar: false,
+				toolbar:false,
 				title: "APP用户短信记录查询",
 				page:true,
+				where:getReloadOptions().where,
 				cols: [
 					[{
 						field: "id",

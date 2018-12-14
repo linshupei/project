@@ -99,7 +99,7 @@
                 </div>
                 <!-- 系统菜单 -->
                 <div class="sys-menu-box" >
-                    <ul class="larryms-nav larryms-nav-tree" id="larryms_left_menu" lay-filter="LarrySide" data-group='0'>
+                    <ul class="larryms-nav larryms-nav-tree" id="larryms_left_menu" lay-filter="LarrySide" data-group='0' style="width:300px">
                         <!-- 此次动态生成 -->
                         
                     </ul>
@@ -168,8 +168,8 @@
 <script type="text/javascript">
 
 layui.cache.homeUrl = 'admin/userInfo/userInfo.html';
-layui.cache.menusUrl = '/larryms/data/menu.json'
-//layui.cache.menusUrl = '/api/menuData';//这里设置 菜单数据项接口地址 或data参数
+//layui.cache.menusUrl = '/larryms/data/menu.json'
+layui.cache.menusUrl = '/api/menuData';//这里设置 菜单数据项接口地址 或data参数
 layui.cache.page = 'index'; //加载的js,说明：并非一个页面只能加载一个模块 可以这样定义：'index,common';也并非每个页面都要定义一个模块，事实上模块根据功能需要可以公用
 //layui.cache.rightMenu = 'custom'; //默认开启页面右键菜单，设置为 custom 时需要自定义右键菜单，设置为false 关闭右键菜单
 

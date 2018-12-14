@@ -20,7 +20,7 @@ public class MenuServiceImpl implements MenuService{
 	
 	public List<MenuVo> getMenu(){
 
-		List<Menu> findAll = menuRepository.findAll();
+		List<Menu> findAll = menuRepository.findData();
 	    List<MenuVo> datas = new ArrayList<MenuVo>();
 	    List<MenuVo> returnDatas =  new ArrayList<MenuVo>();
 	    for(Menu me:findAll){
