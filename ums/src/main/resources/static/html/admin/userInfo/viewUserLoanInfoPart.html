@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>详情</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="Author" content="larry" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="../../../larryms/layui/css/layui.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../../../larryms/css/admin/base.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../../../larryms/css/admin/admin.css" media="all">
+     <link rel="stylesheet" type="text/css" href="../../../larryms/css/admin/userLoanInfo/viewUserLoanInfoPart.css" media="all">
+</head>
+
+<body class="larryms-system larryms-system-add-edit">
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+    <div class="layui-fluid">
+        <div class="layui-row larryms-panel auth-user-add">
+                <input type="hidden" id="loanId" name="id" value="" />
+				<table class="layui-table"   id="userLoanPart" lay-filter="userLoanPart">
+				   <tr>
+				   		<td align="right">账号</td><td><label id="userAccount"></label></td>
+				   		<td align="right">手机实名时长</td><td><label id="mobileRealNameTime"></label></td>
+				   		<td align="right">手机服务密码</td><td><label id="mobileServicePassword"></label></td>
+				   		<td align="right">支付宝</td><td><label id="alipayAccount"></label></td>
+				   </tr>
+				   <tr>
+				   		<td align="right">手机号码</td><td><label id="mobile"></label></td>
+				   		<td align="right">芝麻分</td><td><label id="zhiMaFen"></label></td>
+				   		<td align="right">花呗</td><td><label id="huaBei"></label></td>
+				   		<td align="right">单位电话</td><td><label id="workUnitPhone"></label></td>
+				   </tr>				   
+				   <tr>
+				   		<td rowspan="3" align="center">负债信息</td>
+				   		<td align="right">米房</td><td><label id="miFang"></label></td>
+				   		<td align="right">身份证</td><td><a data-url="imageViews.html" class="layui-table-link" id="idCardImage">点击预览</a></td>
+				   		<td align="center">申请贷款时间</td>
+				   		<td align="right">单位名称</td><td><label id="workUnitAddress"></label></td>
+				   </tr>
+				   <tr>
+				   		<td align="right">借贷宝</td><td><label id="jieDaiBao"></label></td>
+				   		<td align="right">手持照</td><td><a data-url="imageViews.html" class="layui-table-link" id="idCardHand" >点击预览</a></td>
+				   		<td align="center"><label id="applyTime"></label></td>
+				   		<td align="center">紧急联系人<label id="userEmergencyContact1"></label></td>
+				   		<td align="center">紧急联系人<label id="userEmergencyContact2"></label></td>
+				   </tr>	
+				   <tr>
+				   		<td align="right">有凭证</td><td><label id="voucher"></label></td>
+				   		<td align="right">银行卡</td><td><a data-url="imageViews.html" class="layui-table-link"  id="bankCard" >点击预览</a></td>
+				   		<td align="center"></td>
+				   		<td align="center">紧急联系人<label id="userEmergencyContact3"></label></td>
+				   		<td align="center">紧急联系人<label id="userEmergencyContact4"></label></td>
+				   </tr>	
+				   <tr>
+				   		<td colspan="3" align="center"><a data-url="../appUserInfo/appUserContactInfoSinglePre.html" style="cursor:pointer;padding-right:10px" id="userContactInfoPre">点我预览通讯录</a><a data-url="../appUserInfo/appUserContactInfoSingle.html" class="layui-table-link"  id="userContactInfo" style="cursor:pointer">（点我查看和下载）</a></td>
+				   		<td colspan="3" align="center"><a data-url="../appUserInfo/appUserSmsRecordInfoSinglePre.html" style="cursor:pointer;padding-right:10px" id="userSmsInfoPre">点我预览短信</a><a data-url="../appUserInfo/appUserSmsRecordInfoSingle.html" class="layui-table-link"  id="userSmsInfo" style="cursor:pointer">（点我查看和下载）</a></td>
+				   		<td colspan="2" align="center"><a data-url="../appUserInfo/appUserCallRecordInfoSinglePre.html" style="cursor:pointer;padding-right:10px" id="userCallInfoPre">点我预览通话记录</a><a data-url="../appUserInfo/appUserCallRecordInfoSingle.html" class="layui-table-link"  id="userCallInfo" style="cursor:pointer">（点我查看和下载）</a></td>
+				   </tr>			   			   				
+				</table>				                          
+        </div>
+   		 <div >
+                <div class="larryms-layer-btn" align="center">
+                    <a class="layui-btn layui-btn layui-btn-sm left" data-url="agreeUserLoan.html" lay-filter="agreeLoan" id="agreeLoan">同意放款</a>
+                    <a class="layui-btn layui-btn layui-btn-sm left" lay-submit="" lay-filter="loanDenied" id="loanDenied">拒绝放款</a>
+                    <a class="layui-btn layui-btn layui-btn-sm  layui-btn-danger" id="closeAdd">关闭</a>
+                </div>    
+   		 </div>        
+		<div style="height:520px">
+			<iframe frameborder="no" border="0" id="preIframe" src="../appUserInfo/appUserCallRecordInfoSinglePre.html" width="100%" height="100%"></iframe>
+		</div>        
+    	</div>
+
+    <!-- 加载js文件-->
+    <script type="text/javascript" src="../../../larryms/layui/layui.js"></script>
+    <script type="text/javascript">
+
+    layui.cache.page = 'viewUserLoanInfoPart';
+    layui.config({
+        version: "2.0.8",
+        base: '../../../larryms/', //实际使用时，建议改成绝对路径
+        identified: 'userList',
+        layertype: 2, //iframe内层弹窗类型不显示返回首页
+        rightMenu: true // false关闭，设置为custom时使用自定义，不使用默认menu
+    }).extend({
+        larry: 'js/base'
+    }).use(['larry', 'table','form','jquery'], function() {
+        var $ = layui.jquery,
+            larry = layui.larry,
+            larryms = layui.larryms,
+            form = layui.form;
+     
+        var curIfr = parent.layer.getFrameIndex(window.name);
+        $('#closeAdd').on('click', function() {
+            parent.layer.close(curIfr);
+        });
+    });
+    </script>
+</body>
+
+</html>
