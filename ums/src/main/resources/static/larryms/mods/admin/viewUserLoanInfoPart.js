@@ -5,6 +5,7 @@ layui.use(["form", "layedit", "laydate","table","larryms"], function() {
 		i = layui.layedit,
 		$ = layui.$,
 		c = layui.larryms,		
+		table = layui.table,
 		idCardImage="",
 		idCardHand="",
 		bankCard="",
@@ -20,6 +21,7 @@ layui.use(["form", "layedit", "laydate","table","larryms"], function() {
         data:{"id":requestParam["id"]},
         dataType: "json",
         success: function(jsonData){ 
+        	$("#loanId").val(requestParam["id"]);
         	$("#userAccount").html(jsonData.userAccount);  
             $("#mobileRealNameTime").html(jsonData.mobileRealNameTime);
             $("#mobileServicePassword").html(jsonData.mobileServicePassword);
@@ -43,7 +45,22 @@ layui.use(["form", "layedit", "laydate","table","larryms"], function() {
             $("#userEmergencyContact2").html(jsonData.userEmergencyContact.userEmergencyContact2);
             $("#userEmergencyContact3").html(jsonData.userEmergencyContact.userEmergencyContact3);
             $("#userEmergencyContact4").html(jsonData.userEmergencyContact.userEmergencyContact4);
+            $("#mark").html(jsonData.mark);
         	if(jsonData.status=="0"){
+        		$("#agreeLoan").show();
+        		$("#loanDenied").show();
+        	}else if(jsonData.status=="1"){
+        		 
+        	}else if(jsonData.status=="2"){
+           		$("#setLoaned").show();
+        	}else if(jsonData.status=="3"){
+        		$("#setLoaned").show();
+        	}else if(jsonData.status=="4"){
+        		 
+        	}
+          	if(jsonData.status=="-1"){
+        		$("#status").html("未申请资料");
+        	}else if(jsonData.status=="0"){
         		$("#status").html("申请中");
         	}else if(jsonData.status=="1"){
         		$("#status").html("审核不通过");
@@ -53,8 +70,9 @@ layui.use(["form", "layedit", "laydate","table","larryms"], function() {
         		$("#status").html("逾期未还");
         	}else if(jsonData.status=="4"){
         		$("#status").html("已还款");
-        	}
-        	//e.render();
+        	}else if(jsonData.status=="5"){
+        		$("#status").html("已放款，申请还款中...");
+        	}        	
         } 
 	});
 	
@@ -204,36 +222,55 @@ layui.use(["form", "layedit", "laydate","table","larryms"], function() {
     });
     
     $('#loanDenied').on('click', function() {
-    	//var curIfr = parent.layer.getFrameIndex(window.name);
-        //parent.layer.close(curIfr);
-
-		var result = null;
-        c.confirm('确认拒绝该贷款申请吗', {
-            icon: 3,
-            anim:false,
-            title: '申请拒绝'
-        }, function() {
-        	var loanDeniedObj = new Object();
-        	loanDeniedObj.id=$("#loanId").val();
-        	d.ajax({ 
-                type: "post", 
-                url: "/api/loanDenied", 
-                contentType:"application/json;charset=utf-8",
-                async:false, 
-                data:JSON.stringify(loanDeniedObj),
-                dataType: "json",
-                success: function(jsonData){ 
-                	result = jsonData;
-                } 
-        	});    
-            if(result){
-            	if(result.code=="0"){
-            		c.alert("操作成功！");
-            	}else{
-            		c.alert(result.reason);                  
-            	}                    	
-            }                    	
-        });
-	   	
+    	var i = $(this).data("url") + "?id=" + $("#loanId").val();
+		c.open({
+			type: 2,
+			skin: "larryms-navy",
+			title: "拒绝放款",
+			area: ["600px", "300px"],
+			shadeClose: true,
+			shade: .2,
+			offset: "20px",
+			maxmin: true,
+			btnAlign: "c",
+			content: i,
+			success: function(e, t) {}
+		})      
     });    
+    
+    $("#setLoaned").on('click',function(){
+					var result = null;
+                    c.confirm('确认已还款？', {
+                        icon: 3,
+                        skin:"larry-green",
+                        anim:false,
+                        title: '确认还款'
+                    }, function() {
+                    	var loanedObj = new Object();
+                    	loanedObj.id=$("#loanId").val();
+                    	$.ajax({ 
+                            type: "post", 
+                            url: "/api/confirmLoan", 
+                            contentType:"application/json;charset=utf-8",
+                            async:false, 
+                            data:JSON.stringify(loanedObj),
+                            dataType: "json",
+                            success: function(jsonData){ 
+                            	result = jsonData;
+                            } 
+                    	});    
+                        if(result){
+                        	if(result.code=="0"){
+                        		parent.table.reload("userLoanInfoPart",parent.getReloadOptions());	
+                        		c.alert("操作成功！",function(){
+						        	var curIfr = parent.layer.getFrameIndex(window.name);
+						            parent.layer.close(curIfr);                        		
+                        		});
+                        	}else{
+                        		c.alert(result.reason);                  
+                        	}                    	
+                        }                    	
+                    });
+    });
+    
 });

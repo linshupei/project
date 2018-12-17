@@ -26,7 +26,8 @@
 <![endif]-->
     <div class="layui-fluid">
         <div class="layui-row larryms-panel auth-user-add">
-                <input type="hidden" id="loanId" name="id" value="" />
+        		<input type="hidden" id="loanId" />
+                <label class="layui-table" style="font-size:25px" id="status"></label>
 				<table class="layui-table"   id="userLoanPart" lay-filter="userLoanPart">
 				   <tr>
 				   		<td align="right">账号</td><td><label id="userAccount"></label></td>
@@ -41,7 +42,7 @@
 				   		<td align="right">单位电话</td><td><label id="workUnitPhone"></label></td>
 				   </tr>				   
 				   <tr>
-				   		<td rowspan="3" align="center">负债信息</td>
+				   		<td rowspan="3" align="right">负债信息</td>
 				   		<td align="right">米房</td><td><label id="miFang"></label></td>
 				   		<td align="right">身份证</td><td><a data-url="imageViews.html" class="layui-table-link" id="idCardImage">点击预览</a></td>
 				   		<td align="center">申请贷款时间</td>
@@ -65,18 +66,25 @@
 				   		<td colspan="3" align="center"><a data-url="../appUserInfo/appUserContactInfoSinglePre.html" style="cursor:pointer;padding-right:10px" id="userContactInfoPre">点我预览通讯录</a><a data-url="../appUserInfo/appUserContactInfoSingle.html" class="layui-table-link"  id="userContactInfo" style="cursor:pointer">（点我查看和下载）</a></td>
 				   		<td colspan="3" align="center"><a data-url="../appUserInfo/appUserSmsRecordInfoSinglePre.html" style="cursor:pointer;padding-right:10px" id="userSmsInfoPre">点我预览短信</a><a data-url="../appUserInfo/appUserSmsRecordInfoSingle.html" class="layui-table-link"  id="userSmsInfo" style="cursor:pointer">（点我查看和下载）</a></td>
 				   		<td colspan="2" align="center"><a data-url="../appUserInfo/appUserCallRecordInfoSinglePre.html" style="cursor:pointer;padding-right:10px" id="userCallInfoPre">点我预览通话记录</a><a data-url="../appUserInfo/appUserCallRecordInfoSingle.html" class="layui-table-link"  id="userCallInfo" style="cursor:pointer">（点我查看和下载）</a></td>
+				   </tr>
+				   <tr>
+				   		<td align="right">备注</td>
+				   		<td colspan="7">
+				   			<label id="mark"></label>
+				   		</td>
 				   </tr>			   			   				
 				</table>				                          
         </div>
    		 <div >
                 <div class="larryms-layer-btn" align="center">
-                    <a class="layui-btn layui-btn layui-btn-sm left" data-url="agreeUserLoan.html" lay-filter="agreeLoan" id="agreeLoan">同意放款</a>
-                    <a class="layui-btn layui-btn layui-btn-sm left" lay-submit="" lay-filter="loanDenied" id="loanDenied">拒绝放款</a>
+                    <a class="layui-btn layui-btn layui-btn-sm left" style="display:none" data-url="agreeUserLoanPart.html" lay-filter="agreeLoan" id="agreeLoan">同意放款</a>
+                    <a class="layui-btn layui-btn layui-btn-sm left" style="display:none" data-url="deniedUserLoanPart.html" lay-filter="loanDenied" id="loanDenied">拒绝放款</a>
+                    <a class="layui-btn layui-btn layui-btn-sm left" style="display:none" data-url="setLoaned.html" lay-filter="setLoaned" id="setLoaned">确认还款</a>
                     <a class="layui-btn layui-btn layui-btn-sm  layui-btn-danger" id="closeAdd">关闭</a>
                 </div>    
    		 </div>        
 		<div style="height:520px">
-			<iframe frameborder="no" border="0" id="preIframe" src="../appUserInfo/appUserCallRecordInfoSinglePre.html" width="100%" height="100%"></iframe>
+			<iframe frameborder="no" border="0" id="preIframe" src="" width="100%" height="100%"></iframe>
 		</div>        
     	</div>
 
@@ -99,8 +107,8 @@
             larryms = layui.larryms,
             form = layui.form;
      
-        var curIfr = parent.layer.getFrameIndex(window.name);
         $('#closeAdd').on('click', function() {
+        var curIfr = parent.layer.getFrameIndex(window.name);
             parent.layer.close(curIfr);
         });
     });

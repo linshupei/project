@@ -43,7 +43,7 @@
                      <script type="text/html" id="userLoanInfoTpl">
 							{{#if(d.status=="0"){}}
 									<a class="layui-btn layui-btn-xs" lay-event="agreeLoan"  data-url="agreeUserLoan.html">同意放款</a>
-									<a class="layui-btn layui-btn-xs" lay-event="loanDenied">申请拒绝</a>
+									<a class="layui-btn layui-btn-xs" lay-event="loanDenied" data-url="/api/loanDenied">申请拒绝</a>
 							{{#}}}
 							{{#if(d.status=="1"){}}
 									<a class="layui-btn layui-btn-xs" lay-event="loanView" data-url="viewUserLoan.html">查看</a>
@@ -51,7 +51,7 @@
 							{{#if(d.status=="2"){}}
 									<a class="layui-btn layui-btn-xs" lay-event="loanView" data-url="viewUserLoan.html">查看</a>
 									<a class="layui-btn layui-btn-xs" lay-event="loanEdit" data-url="editUserLoan.html">编辑</a>
-									<a class="layui-btn layui-btn-xs" lay-event="setLoaned">标记已还款</a>
+									<a class="layui-btn layui-btn-xs" lay-event="setLoaned" data-url="setLoaned.html">标记已还款</a>
 							{{#}}}	
 							{{#if(d.status=="3"){}}
 									<a class="layui-btn layui-btn-xs" lay-event="loanView" data-url="viewUserLoan.html">查看</a>

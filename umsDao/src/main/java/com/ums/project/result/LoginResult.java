@@ -22,7 +22,16 @@ public class LoginResult extends BaseResultApi{
 	
 	private String loanInfoId="";
 	
+	private String applyId="";
 	
+	public String getApplyId() {
+		return applyId;
+	}
+
+	public void setApplyId(String applyId) {
+		this.applyId = applyId;
+	}
+
 	public String getLoanInfoId() {
 		return loanInfoId;
 	}

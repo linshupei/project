@@ -45,6 +45,7 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 /*				toolbar: '<div id="exportExcel" class="layui-table-tool-self"><div class="layui-inline" title="导出到excel" lay-event="exportExcel"><i class="layui-icon layui-icon-export"></i></div></div>',
 				defaultToolbar:['filter'],*/
 				title: "APP用户短信记录查询",
+				where:getReloadOptions().where,
 				page:true,
 				cols: [
 					[{

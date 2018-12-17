@@ -62,6 +62,7 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 				defaultToolbar:['filter'],
 				title: "APP用户短信记录查询",
 				page:false,
+				limit:2147483647,
 				cols: [
 					[{
 						field: "id",

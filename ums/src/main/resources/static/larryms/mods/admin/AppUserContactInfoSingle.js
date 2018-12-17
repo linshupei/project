@@ -61,7 +61,8 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 				defaultToolbar:['filter'],
 				title: "APP用户通讯录",
 				page:false,
-				where:getReloadOptions().where,
+				limit:2147483647,
+				//where:getReloadOptions().where,
 				cols: [
 					[{
 						field: "id",

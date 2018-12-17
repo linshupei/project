@@ -57,6 +57,9 @@ public interface UserLoanInfoRepository  extends JpaRepository<UserLoanInfo,Stri
 
 	@Query("select ui from UserLoanInfo ui where ui.userInfo.id=:userInfoId")	
 	public UserLoanInfo findByUserInfo(@Param("userInfoId") String userInfoId);
+	
+	@Query("select ui from UserLoanInfo ui where ui.id=:id")	
+	public UserLoanInfo queryById(@Param("id") String id);
 
 	@Modifying
 	@Query("delete from UserLoanInfo  where userInfo.id=:userInfoId")	
@@ -64,4 +67,8 @@ public interface UserLoanInfoRepository  extends JpaRepository<UserLoanInfo,Stri
 	
 	@Query("select count(*) from UserLoanInfo where userAccount=:userAccount and status='1'")	
 	public Long findDeniedApplayNum(@Param("userAccount") String userAccount);
+
+	 @Modifying
+	 @Query("update UserLoanInfo set status='1',mark=:mark where id = :id")
+	public void loanDenied(@Param("id") String id,@Param("mark") String mark);
 }

@@ -1,5 +1,7 @@
 package com.ums.project.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 
 import com.ums.project.entity.AppUserInfo;
@@ -14,6 +16,8 @@ public interface AppUserInfoService {
 
 	public AppUserInfo findByUserAccount(String userAccount);
 	
+	public List<AppUserInfo> findListByUserAccount(String userAccount);
+	
 	public AppUserInfo findByUserAccountAndPassword(String userAccount,String password);
 
 	public void save(AppUserInfo info);
@@ -23,4 +27,6 @@ public interface AppUserInfoService {
 	public void updateCallRecordUploadTime(String id, long currentTimeMillis);
 	
 	public void updateContactRecordUploadTime(String id, long currentTimeMillis);
+
+	public void updateLoanNum(String id, String loanNum);
 }

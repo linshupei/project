@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
-
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
@@ -12,6 +16,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -44,17 +49,30 @@ public class AppUserCallRecordServiceImpl implements AppUserCallRecordService {
 		
 		  AppUserInfoQueryBean appUserInfoQueryBean = new AppUserInfoQueryBean();
 		  appUserInfoQueryBean.setKey(queryBean.getKey());
-		  Page<AppUserInfo> userInfoPageData = appUserInfoService.userInfoPageData(appUserInfoQueryBean, page);
+			DataPage userInfopage = new DataPage();
+			userInfopage.setLimit(Integer.MAX_VALUE);
+			userInfopage.setPage(1);
+		  Page<AppUserInfo> userInfoPageData = appUserInfoService.userInfoPageData(appUserInfoQueryBean, userInfopage);
 		  List<String> appUserAccounts = new ArrayList<String>();
 		  for(AppUserInfo appUserInfo:userInfoPageData.getContent()) {
 			  appUserAccounts.add(appUserInfo.getUserAccount());
 		  }
-		  List<AppUserCallRecord> AppUserCallRecords = new ArrayList<AppUserCallRecord>();
 		  if(appUserAccounts.size()>0){
-			  AppUserCallRecords = appUserCallRecordRepository.queryAppUserCallRecords(appUserAccounts);
+              List<Predicate> list = new ArrayList<>();
+			  Specification<AppUserCallRecord> specification = new Specification<AppUserCallRecord>() {
+				@Override
+				public Predicate toPredicate(Root<AppUserCallRecord> root, CriteriaQuery<?> query,
+						CriteriaBuilder cb) {
+	                Expression<String> exp = root.<String>get("userAccount");
+	                list.add(exp.in(appUserAccounts)); // 往in中添加所有id 实现in 查询
+	                
+                    return cb.and(list.toArray( new Predicate[list.size()]));
+				}
+			  };
+			  return appUserCallRecordRepository.findAll(specification,pageable);
+		  }else {
+			  return  new PageImpl(new ArrayList<AppUserCallRecord>(0),pageable,userInfoPageData.getNumber());
 		  }
-		  
-		return  new PageImpl(AppUserCallRecords,pageable,userInfoPageData.getNumber());
 	}
 
 	public void save(List<AppUserCallRecord> saveDatas){

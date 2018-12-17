@@ -135,8 +135,7 @@ public class UserLoanInfoServiceImpl implements UserLoanInfoService {
 
 	@Override
 	public UserLoanInfo findById(String id) {
-		Optional<UserLoanInfo> findById = userLoanInfoRepository.findById(id);
-		return findById.get();
+		return userLoanInfoRepository.queryById(id);
 	}
 
 	@Override
@@ -255,5 +254,12 @@ public class UserLoanInfoServiceImpl implements UserLoanInfoService {
 	@Override
 	public long findDeniedApplayNum(String userAccount) {
 		return userLoanInfoRepository.findDeniedApplayNum(userAccount);
+	}
+
+
+
+	@Override
+	public void loanDenied(String id, String mark) {
+		userLoanInfoRepository.loanDenied(id,mark);
 	}
 }

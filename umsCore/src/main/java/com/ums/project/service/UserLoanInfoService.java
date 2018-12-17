@@ -31,6 +31,14 @@ public interface UserLoanInfoService {
 	 * @param payDate
 	 */
 	public void loanDenied(String id);
+	
+	/**
+	 *	 拒绝放款
+	 * @param id
+	 * @param makeLoansLimit
+	 * @param payDate
+	 */
+	public void loanDenied(String id,String mark);	
 
 	/**
 	 * 	确认还款操作

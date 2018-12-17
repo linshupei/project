@@ -54,6 +54,9 @@ public class UserLoanInfo  implements Serializable{
 
     @Column(name = "user_account") 
     private String userAccount;
+
+    @Column(name = "mark") 
+    private String mark;    
     
 	public String getId() {
 		return id;
@@ -126,6 +129,14 @@ public class UserLoanInfo  implements Serializable{
 
 	public void setUserAccount(String userAccount) {
 		this.userAccount = userAccount;
+	}
+
+	public String getMark() {
+		return mark;
+	}
+
+	public void setMark(String mark) {
+		this.mark = mark;
 	}
 
 	public static long getSerialversionuid() {

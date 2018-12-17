@@ -61,6 +61,7 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 				title: "APP用户通话记录查询",
 				where:getReloadOptions().where,
 				page:false,
+				limit:2147483647,
 				cols: [
 					[{
 						field: "id",

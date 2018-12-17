@@ -47,6 +47,17 @@ public class UserLoanInfoVo {
 	
 	//申请时间
 	private String applyDate;
+	
+	//备注
+	private String mark="";
+
+	public String getMark() {
+		return mark;
+	}
+
+	public void setMark(String mark) {
+		this.mark = mark;
+	}
 
 	public String getBankCardImage() {
 		return bankCardImage;

@@ -36,6 +36,9 @@ public class AppUserInfoServiceImpl implements AppUserInfoService {
 	@Resource(name="appUserInfoRepository")
 	private AppUserInfoRepository appUserInfoRepository;
 	
+	public List<AppUserInfo> findListByUserAccount(String userAccount){
+		return appUserInfoRepository.findListByUserAccount(userAccount);
+	}
 	public Page<AppUserInfo> userInfoPageData(AppUserInfoQueryBean queryBean, DataPage page){
 		
 		Sort sort = new Sort(Sort.Direction.DESC, "id");
@@ -122,5 +125,9 @@ public class AppUserInfoServiceImpl implements AppUserInfoService {
 	@Override
 	public void updateContactRecordUploadTime(String id, long currentTimeMillis) {
 		appUserInfoRepository.updateContactRecordUploadTime(id,currentTimeMillis+"");
+	}
+	@Override
+	public void updateLoanNum(String id, String loanNum) {
+		appUserInfoRepository.updateLoanNum(id,loanNum);
 	}
 }

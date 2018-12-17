@@ -39,5 +39,12 @@ public interface AppUserInfoRepository  extends JpaRepository<AppUserInfo,String
 	 
 	 @Modifying
 	 @Query("update AppUserInfo set contactUploadTime=:contactUploadTime where id = :id")
-	public void updateContactRecordUploadTime(@Param("id") String id, @Param("contactUploadTime") String contactUploadTime);	 
+	public void updateContactRecordUploadTime(@Param("id") String id, @Param("contactUploadTime") String contactUploadTime);
+
+	 @Query("select aui from  AppUserInfo aui  where userAccount = :userAccount")
+	public List<AppUserInfo> findListByUserAccount(@Param("userAccount") String userAccount);
+
+	@Modifying
+	@Query("update AppUserInfo set loanNum=:loanNum where id = :id")
+	public void updateLoanNum(@Param("id") String id,@Param("loanNum") String loanNum);	 
 }

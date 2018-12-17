@@ -83,6 +83,7 @@ public class UserLoanInfoController {
 			vo.setPayDate(info.getPayDate());
 			vo.setApplyDate(info.getApplyTime());			
 			vo.setBankCardImage(info.getUserInfo().getBankCardImage());
+			vo.setMark(info.getMark());
 			userInfos.add(vo);
 		}
 		
@@ -210,7 +211,7 @@ public class UserLoanInfoController {
 			obj.put("bankCardImage", userLoanInfo.getUserInfo().getBankCardImage());
 			obj.put("bankCard", userLoanInfo.getUserInfo().getBankCard());
 			obj.put("status",userLoanInfo.getStatus());
-			
+			obj.put("mark",userLoanInfo.getMark());
 		return obj;
 	}	
 	
@@ -257,7 +258,7 @@ public class UserLoanInfoController {
 	@RequestMapping("/api/loanDenied")
 	public BaseResult loanDenied(@RequestBody UserLoanInfoVo vo) {
 		
-		userLoanInfoService.loanDenied(vo.getId());
+		userLoanInfoService.loanDenied(vo.getId(),vo.getMark());
 		BaseResult  result = new BaseResult();
 		result.setCode("0");
 		result.setReason("");

@@ -113,6 +113,7 @@ public class AppUserInfoController {
 				result.setPayDate(loanInfo.getPayDate());
 				result.setUserStatus("1");		
 				result.setLoanInfoId(loanInfo.getId());
+				result.setApplyId("-1".equals(loanInfo.getStatus())?loanInfo.getId():"");
 			}
 				result.setToken(UUIDGeneratorUtil.generateUUID());
 				memcachedConfiguration.add(result.getToken(), info);
@@ -158,6 +159,7 @@ public class AppUserInfoController {
 			result.setPayDate(loanInfo.getPayDate());
 			result.setLoanInfoId(loanInfo.getId());
 			result.setUserStatus("1");			
+			result.setApplyId("-1".equals(loanInfo.getStatus())?loanInfo.getId():"");
 		}
 
 		result.setCode("0");
