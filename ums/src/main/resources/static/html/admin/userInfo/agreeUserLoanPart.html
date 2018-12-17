@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>编辑</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="Author" content="larry" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="../../../larryms/layui/css/layui.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../../../larryms/css/admin/base.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../../../larryms/css/admin/admin.css" media="all">
+     <link rel="stylesheet" type="text/css" href="../../../larryms/css/admin/userLoanInfo/agreeUserLoanInfo.css" media="all">
+</head>
+
+<body class="larryms-system larryms-system-add-edit">
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+    <div class="layui-fluid">
+        <div class="layui-row larryms-panel auth-user-add">
+            <form action="/api/agreeUserLoanInfo" class="layui-form" method="post" id="userAgreeLoanForm">
+                <input type="hidden" id="loanId" name="id" value="" />
+                <div class="layui-form-item">
+                    <label class="layui-form-label">申请贷款金额：</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="loanLimit" name="loanLimit" value="" lay-verify="required|number|positiveMoney" placeholder="申请贷款金额" class="layui-input larry-input" autocomplete="off">
+                    </div>
+                </div>             
+                <div class="layui-form-item">
+                    <label class="layui-form-label">收款银行卡账户：</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="bankCard" value="" disabled="disabled" placeholder="收款银行账户" class="layui-input larry-input" autocomplete="off">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">放款金额：</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="makeLoansLimit" name="makeLoansLimit" value="" lay-verify="required|number|positiveMoney" placeholder="放款金额" class="layui-input larry-input" autocomplete="off">
+                    </div>
+                </div>                                
+                 <div class="layui-form-item">
+                    <label class="layui-form-label">还款日期：</label>
+                    <div class="layui-input-block">
+                         <input type="text" name="payDate" id="payDate" lay-verify="required|date" placeholder="还款日期" autocomplete="off" class="layui-input">
+                    </div>
+                </div>   
+                 <div class="layui-form-item">
+                    <label class="layui-form-label">状态：</label>
+                    <div class="layui-input-block">
+                    		 <label  id="status"></label>
+                        <!--  <input type="text" id="status" disabled="disabled" placeholder="状态" autocomplete="off" class="layui-input"> -->
+                    </div>
+                </div>                            
+                <div class="larryms-layer-btn">
+                    <a class="layui-btn layui-btn layui-btn-sm left" lay-submit="" lay-filter="confEdit" id="confEdit">确认放款</a>
+                    <a class="layui-btn layui-btn layui-btn-sm  layui-btn-danger" id="closeAdd">关闭</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- 加载js文件-->
+    <script type="text/javascript" src="../../../larryms/layui/layui.js"></script>
+    <script type="text/javascript">
+
+    layui.cache.page = 'agreeUserLoanPart';
+    layui.config({
+        version: "2.0.8",
+        base: '../../../larryms/', //实际使用时，建议改成绝对路径
+        identified: 'userList',
+        layertype: 2, //iframe内层弹窗类型不显示返回首页
+        rightMenu: true // false关闭，设置为custom时使用自定义，不使用默认menu
+    }).extend({
+        larry: 'js/base'
+    }).use(['larry', 'table','form','jquery'], function() {
+        var $ = layui.jquery,
+            larry = layui.larry,
+            larryms = layui.larryms,
+            form = layui.form;
+        $.extend(form.config.verify,
+        		{
+        			positiveMoney: function(e) {if (!e || isNaN(e) || e<=0) return "金额不能为0"}
+        		});
+        var curIfr = parent.layer.getFrameIndex(window.name);
+         var parentCurIfr = parent.parent.layer.getFrameIndex(parent.window.name);
+        $('#closeAdd').on('click', function() {
+            parent.layer.close(curIfr);
+        });
+
+        form.on('submit(confEdit)', function(data) {
+			$.ajax({ 
+		        type: "post", 
+		        url: data.form.action, 
+		        async:false,
+		        data:JSON.stringify(data.field),
+		        contentType:"application/json;charset=utf-8",
+		        dataType: "json",
+		        success: function(jsonData){ 
+	                if (jsonData.code == 0) {
+	                    larryms.alert("操作成功！",function(){
+	                    	parent.layer.close(curIfr); 
+	                    	parent.parent.layer.close(parentCurIfr); 
+	                    });
+						 parent.parent.table.reload("userLoanInfoPart",parent.parent.getReloadOptions());	                    
+	                } else{
+	                    larryms.msg(jsonData.reason);
+	                }   
+		        } 
+			});			
+
+            return false;
+        });
+
+    });
+    </script>
+</body>
+
+</html>
