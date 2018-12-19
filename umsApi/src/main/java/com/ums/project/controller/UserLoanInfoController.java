@@ -7,6 +7,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpRequest;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ums.project.entity.AppUserInfo;
 import com.ums.project.entity.LiabilitiesPlatformInfo;
 import com.ums.project.entity.SystemMsgInfo;
@@ -75,6 +79,7 @@ public class UserLoanInfoController {
 	@Resource(name="memcachedConfiguration")
 	private MemcachedConfiguration memcachedConfiguration;
 
+	private static final Logger log = LoggerFactory.getLogger(UserLoanInfoController.class);	
 	
 	private boolean tokenTimeOut(HttpServletRequest request, Header header) {
 		Object tokenInfo = memcachedConfiguration.get(header.getToken());
@@ -93,12 +98,20 @@ public class UserLoanInfoController {
 	 */
 	@RequestMapping("/api/validApply")
 	public BaseResultApi validApply(@RequestBody ValidApplyRequestData validApplyRequestData) {
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest(); 		
+		try {
+			String url = request.getRequestURL().toString();
+			 ObjectMapper mapper = new ObjectMapper();
+			 String json = mapper.writeValueAsString(validApplyRequestData);
+			log.info(url+" "+json);				
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}			
 		
 		ApplyValidResult result = new ApplyValidResult();
 		result.setTime(System.currentTimeMillis());
 		
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-		HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		boolean tokenTimeOut = tokenTimeOut( request,validApplyRequestData.getHeader());
 		if(tokenTimeOut) {
 			result.setResult("003");
@@ -130,11 +143,19 @@ public class UserLoanInfoController {
 	 */
 	@RequestMapping("/api/applyRepayment")
 	public ApplyRepaymentResult applyRepayment(@RequestBody ApplyRepaymentRequestMapping requestData) {
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest(); 		
+		try {
+			String url = request.getRequestURL().toString();
+			 ObjectMapper mapper = new ObjectMapper();
+			 String json = mapper.writeValueAsString(requestData);
+			log.info(url+" "+json);				
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}	
 		
 		ApplyRepaymentResult result = new ApplyRepaymentResult();
 		result.setTime(System.currentTimeMillis());
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-		HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		boolean tokenTimeOut = tokenTimeOut( request,requestData.getHeader());
 		if(tokenTimeOut) {
 			result.setResult("003");
@@ -166,12 +187,20 @@ public class UserLoanInfoController {
 	 */
 	@RequestMapping("/api/validMsg")
 	public ValidMsgResult validMsg(@RequestBody ValidMsgRequestData ValidMsgRequestData) {
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest(); 		
+		try {
+			String url = request.getRequestURL().toString();
+			 ObjectMapper mapper = new ObjectMapper();
+			 String json = mapper.writeValueAsString(ValidMsgRequestData);
+			log.info(url+" "+json);				
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 		
 		ValidMsgResult result = new ValidMsgResult();
 		result.setTime(System.currentTimeMillis());
 		
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-		HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		boolean tokenTimeOut = tokenTimeOut( request,ValidMsgRequestData.getHeader());
 		if(tokenTimeOut) {
 			result.setResult("003");
@@ -204,12 +233,20 @@ public class UserLoanInfoController {
 	 */
 	@RequestMapping("/api/userLoan/info")
 	public ApplyLoanResult inputApplyLoanInfo(@RequestBody AplayLoanRequestData AplayLoanRequestData) {
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest(); 		
+		try {
+			String url = request.getRequestURL().toString();
+			 ObjectMapper mapper = new ObjectMapper();
+			 String json = mapper.writeValueAsString(AplayLoanRequestData);
+			log.info(url+" "+json);				
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 		
 		ApplyLoanResult result = new ApplyLoanResult();
 		result.setTime(System.currentTimeMillis());
 		
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-		HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		boolean tokenTimeOut = tokenTimeOut( request,AplayLoanRequestData.getHeader());
 		if(tokenTimeOut) {
 			result.setResult("003");
@@ -369,12 +406,20 @@ public class UserLoanInfoController {
 	 */
 	@RequestMapping("/api/userLoan/applyConfirm")
 	public ApplyLoanResult applyConfirm(@RequestBody AplayLoanRequestData AplayLoanRequestData) {
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest(); 		
+		try {
+			String url = request.getRequestURL().toString();
+			 ObjectMapper mapper = new ObjectMapper();
+			 String json = mapper.writeValueAsString(AplayLoanRequestData);
+			log.info(url+" "+json);				
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 		
 		ApplyLoanResult result = new ApplyLoanResult();
 		result.setTime(System.currentTimeMillis());
 		result.setCode("0");
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-		HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		boolean tokenTimeOut = tokenTimeOut( request,AplayLoanRequestData.getHeader());
 		if(tokenTimeOut) {
 			result.setResult("003");
@@ -435,12 +480,19 @@ public class UserLoanInfoController {
 	 */
 	@RequestMapping("/api/userLoan/apply")
 	public ApplyLoanResult applyLoan(@RequestBody AplayLoanRequestData AplayLoanRequestData) {
-		
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest(); 		
+		try {
+			String url = request.getRequestURL().toString();
+			 ObjectMapper mapper = new ObjectMapper();
+			 String json = mapper.writeValueAsString(AplayLoanRequestData);
+			log.info(url+" "+json);				
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}		
 		ApplyLoanResult result = new ApplyLoanResult();
 		result.setTime(System.currentTimeMillis());
 		
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-		HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		boolean tokenTimeOut = tokenTimeOut( request,AplayLoanRequestData.getHeader());
 		if(tokenTimeOut) {
 			result.setResult("003");

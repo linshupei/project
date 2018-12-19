@@ -7,12 +7,16 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ums.project.entity.AppUserCallRecord;
 import com.ums.project.entity.AppUserContactInfo;
 import com.ums.project.entity.AppUserInfo;
@@ -46,14 +50,25 @@ public class ContactRecordController {
 	
 	@Resource(name="memcachedConfiguration")
 	MemcachedConfiguration memcachedConfiguration;
+
+	private static final Logger log = LoggerFactory.getLogger(ContactRecordController.class);	
 	
 	@RequestMapping("/api/contactInfo")
 	public ContactRecordResult callRecord(@RequestBody ContactRecordRequestData apiRequestContactRecord){
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest(); 		
+		try {
+			String url = request.getRequestURL().toString();
+			 ObjectMapper mapper = new ObjectMapper();
+			 String json = mapper.writeValueAsString(apiRequestContactRecord);
+			log.info(url+" "+json);				
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}	
+		
 		ContactRecordResult result = new ContactRecordResult();
 		result.setTime(System.currentTimeMillis());
 		
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-		HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		boolean tokenTimeOut = tokenTimeOut( request,apiRequestContactRecord.getHeader());
 		if(tokenTimeOut) {
 			result.setResult("003");

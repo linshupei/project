@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ums.project.entity.AppUserInfo;
 import com.ums.project.entity.UserLoanInfo;
 import com.ums.project.jsonMapping.common.Header;
@@ -43,12 +47,24 @@ public class AppUserInfoController {
 	@Resource(name="memcachedConfiguration")
 	MemcachedConfiguration memcachedConfiguration;
 	
+	private static final Logger log = LoggerFactory.getLogger(AppUserInfoController.class);
+	
 	/**
 	 * APP用户注册接口
 	 * @return
 	 */
 	@RequestMapping("/api/appUser")
 	public AppRegisterResult appUserRegister(@RequestBody LoginRequestData apiRequestDat) {
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest(); 		
+		try {
+			String url = request.getRequestURL().toString();
+			 ObjectMapper mapper = new ObjectMapper();
+			 String json = mapper.writeValueAsString(apiRequestDat);
+			log.info(url+" "+json);				
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}		
 		
 		String userAccount = apiRequestDat.getBody().getUserAccount();
 		String password = apiRequestDat.getBody().getPassword();
@@ -91,6 +107,17 @@ public class AppUserInfoController {
 	 */
 	@RequestMapping("/api/appUser/login")
 	public LoginResult appUserLogin(@RequestBody LoginRequestData apiRequestData) {
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest(); 		
+		try {
+			String url = request.getRequestURL().toString();
+			 ObjectMapper mapper = new ObjectMapper();
+			 String json = mapper.writeValueAsString(apiRequestData);
+			log.info(url+" "+json);				
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}	
+		
 		LoginResult result = new LoginResult();
 		result.setTime(System.currentTimeMillis());
 		AppUserInfo info = appUserInfoService.findByUserAccountAndPassword(apiRequestData.getBody().getUserAccount(),apiRequestData.getBody().getPassword());
@@ -134,11 +161,20 @@ public class AppUserInfoController {
 	 */
 	@RequestMapping("/api/appUser/query")
 	public LoginResult queryAppUserInfo(@RequestBody LoginRequestData apiRequestData) {
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest(); 		
+		try {
+			String url = request.getRequestURL().toString();
+			 ObjectMapper mapper = new ObjectMapper();
+			 String json = mapper.writeValueAsString(apiRequestData);
+			log.info(url+" "+json);				
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}	
+		
 		LoginResult result = new LoginResult();
 		result.setTime(System.currentTimeMillis());
 		
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-		HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		boolean tokenTimeOut = tokenTimeOut( request,apiRequestData.getHeader());
 		if(tokenTimeOut) {
 			result.setResult("003");

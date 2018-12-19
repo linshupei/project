@@ -6,12 +6,16 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ums.project.entity.AppUserInfo;
 import com.ums.project.entity.AppUserSmsRecord;
 import com.ums.project.jsonMapping.common.Header;
@@ -39,15 +43,27 @@ public class SmsRecordController {
 	private AppUserInfoService appUserInfoService;
 	
 	@Resource(name="memcachedConfiguration")
-	MemcachedConfiguration memcachedConfiguration;
+	private MemcachedConfiguration memcachedConfiguration;
+	
+	private static final Logger log = LoggerFactory.getLogger(SmsRecordController.class);	
+	
 	
 	@RequestMapping("/api/smsRecord")
 	public SmsRecordUploadResult smsRecord(@RequestBody SmsRecordRequestData apiRequestsmsRecord){
+		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = servletRequestAttributes.getRequest(); 		
+		try {
+			String url = request.getRequestURL().toString();
+			 ObjectMapper mapper = new ObjectMapper();
+			 String json = mapper.writeValueAsString(apiRequestsmsRecord);
+			log.info(url+" "+json);				
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}		
+		
 		SmsRecordUploadResult result = new SmsRecordUploadResult();
 		result.setTime(System.currentTimeMillis());
 		
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-		HttpServletRequest request = servletRequestAttributes.getRequest(); 
 		boolean tokenTimeOut = tokenTimeOut( request,apiRequestsmsRecord.getHeader());
 		if(tokenTimeOut) {
 			result.setResult("003");
