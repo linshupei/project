@@ -228,12 +228,15 @@ public class UserLoanInfoController {
 			if(!StringUtils.isEmpty(applyLoanInfo.getApplyId())){
 				//首次填写信息
 				UserLoanInfo userLoanInfo = userLoanInfoService.findById(applyLoanInfo.getApplyId());
-				if(!"-1".equals(userLoanInfo.getStatus())){
+				if(userLoanInfo==null ||!"-1".equals(userLoanInfo.getStatus())){
 					//新增操作
 					result =addApplyInfo(AplayLoanRequestData, appUserInfo);
 				}else{
 					//删除旧的
-					deleteOutDateApplyInfo(userLoanInfo);
+					if(userLoanInfo.getUserInfo().getName().equals(applyLoanInfo.getName())){
+						//同个人信息填写，删除旧信息
+						deleteOutDateApplyInfo(userLoanInfo);
+					}
 					//新增操作
 					result =addApplyInfo(AplayLoanRequestData, appUserInfo);
 				}
@@ -258,6 +261,7 @@ public class UserLoanInfoController {
 		 userEmergencyContactService.deleteByUserInfo(userLoanInfo.getUserInfo().getId());
 		 userLiabilitiesInfoService.deleteByUserInfo(userLoanInfo.getUserInfo().getId());
 		 userWorkUnitInfoService.deleteByUserInfo(userLoanInfo.getUserInfo().getId());
+		 systemMsgInfoService.deleteByUserLoanInfoId(userLoanInfo.getId());
 	}
 
 

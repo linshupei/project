@@ -8,21 +8,28 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.data.domain.Page;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ums.project.entity.UserEmergencyContact;
-import com.ums.project.entity.UserInfo;
 import com.ums.project.entity.UserLiabilitiesInfo;
 import com.ums.project.entity.UserLoanInfo;
+import com.ums.project.queryBean.UserInfoQueryBean;
 import com.ums.project.queryBean.UserLoanInfoQueryBean;
 import com.ums.project.result.BaseResult;
 import com.ums.project.result.DataPage;
 import com.ums.project.result.TableData;
+import com.ums.project.service.AppUserInfoService;
+import com.ums.project.service.LiabilitiesPlatformInfoService;
+import com.ums.project.service.SystemMsgInfoService;
+import com.ums.project.service.UserEmergencyContactService;
+import com.ums.project.service.UserInfoService;
 import com.ums.project.service.UserLiabilitiesInfoService;
 import com.ums.project.service.UserLoanInfoService;
+import com.ums.project.service.UserWorkUnitInfoService;
 import com.ums.project.vo.UserLoanInfoVo;
 
 /**
@@ -36,8 +43,50 @@ public class UserLoanInfoController {
 	@Resource(name="userLoanInfoService")
 	private UserLoanInfoService userLoanInfoService;
 	
+	@Resource(name="userInfoService")
+	private UserInfoService userInfoService;
+	
+	@Resource(name="systemMsgInfoService")
+	private SystemMsgInfoService systemMsgInfoService;
+	
+	@Resource(name="appUserInfoService")
+	private AppUserInfoService appUserInfoService;
+	
+	@Resource(name="userWorkUnitInfoService")
+	private UserWorkUnitInfoService userWorkUnitInfoService;
+	
+	@Resource(name="userEmergencyContactService")
+	private UserEmergencyContactService userEmergencyContactService;
+
 	@Resource(name="userLiabilitiesInfoService")
-	private UserLiabilitiesInfoService userLiabilitiesInfoService;
+	private UserLiabilitiesInfoService  userLiabilitiesInfoService;
+	
+	@Resource(name="liabilitiesPlatformInfoService")
+	private LiabilitiesPlatformInfoService liabilitiesPlatformInfoService;
+	
+	@RequestMapping("/api/deleteUserLoanInfo")
+	public BaseResult deleteUserInfo(@RequestBody UserInfoQueryBean bean){
+		
+		BaseResult result = new BaseResult();
+		result.setCode("0");
+		result.setTime(System.currentTimeMillis());
+		result.setReason("ok");
+		UserLoanInfo userLoanInfo= userLoanInfoService.getById(bean.getId());
+		if(!"-1".equals(userLoanInfo.getStatus())
+				&&!"1".equals(userLoanInfo.getStatus())
+				&&!"4".equals(userLoanInfo.getStatus())){//存在未完成贷款
+			result.setCode("1");
+			result.setReason("存在未完成贷款信息，无法删除。");
+		}else{
+			userInfoService.removeById(userLoanInfo.getUserInfo().getId());
+			userLoanInfoService.deleteByUserInfo(userLoanInfo.getUserInfo().getId());
+			userWorkUnitInfoService.deleteByUserInfo(userLoanInfo.getUserInfo().getId());
+			userEmergencyContactService.deleteByUserInfo(userLoanInfo.getUserInfo().getId());
+			userLiabilitiesInfoService.deleteByUserInfo(userLoanInfo.getUserInfo().getId());
+			systemMsgInfoService.deleteByUserLoanInfoId(userLoanInfo.getId());
+		}
+		return result;
+	}
 	
 	
 	/**
@@ -196,11 +245,11 @@ public class UserLoanInfoController {
 			obj.put("mobile", userLoanInfo.getUserInfo().getMobile());
 			obj.put("zhiMaFen", userLoanInfo.getUserInfo().getZhiMaFen());
 			obj.put("huaBei", userLoanInfo.getUserInfo().getHuaBei());
-			obj.put("workUnitPhone", userLoanInfo.getUserInfo().getUserWorkUnitInfo().getWorkUnitPhone());
+			obj.put("workUnitPhone", userLoanInfo.getUserInfo().getUserWorkUnitInfo()!=null?userLoanInfo.getUserInfo().getUserWorkUnitInfo().getWorkUnitPhone():"");
 			obj.put("miFang", miFang);
 			obj.put("idCardImage", idCardImage);
 			obj.put("applyTime", userLoanInfo.getApplyTime());
-			obj.put("workUnitAddress", userLoanInfo.getUserInfo().getUserWorkUnitInfo().getWorkUnitAddress());
+			obj.put("workUnitAddress", userLoanInfo.getUserInfo().getUserWorkUnitInfo()!=null?userLoanInfo.getUserInfo().getUserWorkUnitInfo().getWorkUnitAddress():"");
 			obj.put("jieDaiBao", jieDaiBao);
 			obj.put("userEmergencyContact", userEmergencyContactMap);
 			obj.put("voucher", voucher);

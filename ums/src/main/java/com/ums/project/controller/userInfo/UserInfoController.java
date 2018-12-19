@@ -70,7 +70,8 @@ public class UserInfoController {
 		result.setReason("ok");
 		UserInfo userInfo= userInfoService.getById(bean.getId());
 		UserLoanInfo userLoanInfo = userLoanInfoService.findbyUserInfo(userInfo.getId());
-		if(!"1".equals(userLoanInfo.getStatus())
+		if(!"-1".equals(userLoanInfo.getStatus())
+				&&!"1".equals(userLoanInfo.getStatus())
 				&&!"4".equals(userLoanInfo.getStatus())){//存在未完成贷款
 			result.setCode("1");
 			result.setReason("存在未完成贷款信息，无法删除。");

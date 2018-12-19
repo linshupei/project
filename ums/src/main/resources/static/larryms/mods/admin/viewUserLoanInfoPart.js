@@ -57,6 +57,8 @@ layui.use(["form", "layedit", "laydate","table","larryms"], function() {
         		$("#setLoaned").show();
         	}else if(jsonData.status=="4"){
         		 
+        	}else if(jsonData.status=="5"){
+        		$("#setLoaned").show();
         	}
           	if(jsonData.status=="-1"){
         		$("#status").html("未申请资料");

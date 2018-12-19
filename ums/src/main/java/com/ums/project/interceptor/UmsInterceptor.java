@@ -75,7 +75,7 @@ public class UmsInterceptor extends HandlerInterceptorAdapter{
 			throws Exception {
 		if(response.getStatus()==404){
 			response.sendRedirect("/html/404.html");
-			return;
+			//return;
 		}
 		super.afterCompletion(request, response, handler, ex);
 	}

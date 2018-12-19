@@ -103,11 +103,6 @@ function(t) {
         func: function() {
             top.document.getElementById("clearCached").click()
         }
-    }], [{
-        text: "访问larryMS官网",
-        func: function() {
-            top.window.open("https://www.larryms.com")
-        }
     }]];
     var c = new Function;
     c.prototype.tab = {
@@ -189,7 +184,7 @@ function(t) {
             }
         });
         if (layui.cache.rightMenu !== false && layui.cache.rightMenu !== "custom") {
-            i.tab.rightMenu(l)
+           // i.tab.rightMenu(l)
         } else if (layui.cache.rightMenu === false) {
             o.remove();
             o = null;
@@ -204,11 +199,7 @@ function(t) {
     };
     if (window.top !== window.self) {
         if (!layui.cache.layertype) {
-           /** r.utils.fixbar({
-                bar1: true,
-                bgcolor: "#009688",
-                custom: 'larry-tab="iframe" data-group="0" data-id="1701" fresh="1" data-url="userInfo.html"'
-            })**/
+
         }
         //a.fixbar()
     }
