@@ -271,11 +271,14 @@ public class UserLoanInfoController {
 				}else{
 					//删除旧的
 					if(userLoanInfo.getUserInfo().getName().equals(applyLoanInfo.getName())){
-						//同个人信息填写，删除旧信息
+						//删除旧信息
 						deleteOutDateApplyInfo(userLoanInfo);
+						//更新操作
+						result =updateApplyInfo(AplayLoanRequestData, appUserInfo,userLoanInfo.getUserInfo(),userLoanInfo);						
+					}else{
+						//新增操作
+						result =addApplyInfo(AplayLoanRequestData, appUserInfo);
 					}
-					//新增操作
-					result =addApplyInfo(AplayLoanRequestData, appUserInfo);
 				}
 			}else{
 				//新增信息操作
@@ -293,14 +296,103 @@ public class UserLoanInfoController {
 	}	
 	
 	private void deleteOutDateApplyInfo(UserLoanInfo userLoanInfo) {
-		 userInfoService.removeById(userLoanInfo.getUserInfo().getId());
-		 userLoanInfoService.deleteByUserInfo(userLoanInfo.getUserInfo().getId());
+		// userInfoService.removeById(userLoanInfo.getUserInfo().getId());
+		// userLoanInfoService.deleteByUserInfo(userLoanInfo.getUserInfo().getId());
 		 userEmergencyContactService.deleteByUserInfo(userLoanInfo.getUserInfo().getId());
 		 userLiabilitiesInfoService.deleteByUserInfo(userLoanInfo.getUserInfo().getId());
 		 userWorkUnitInfoService.deleteByUserInfo(userLoanInfo.getUserInfo().getId());
-		 systemMsgInfoService.deleteByUserLoanInfoId(userLoanInfo.getId());
+		 //systemMsgInfoService.deleteByUserLoanInfoId(userLoanInfo.getId());
 	}
 
+	private ApplyLoanResult  updateApplyInfo(AplayLoanRequestData AplayLoanRequestData,AppUserInfo appUserInfo,UserInfo userInfo,UserLoanInfo userLoanInfo) {
+		ApplyLoanResult result = new ApplyLoanResult();
+		result.setTime(System.currentTimeMillis());
+		
+		ApplyLoanInfo applyLoanInfo = AplayLoanRequestData.getBody();
+
+		
+		userInfo.setAlipayAccount(applyLoanInfo.getAlipayAccount());
+		userInfo.setBankCard(applyLoanInfo.getBankCard());
+		userInfo.setBankCardImage(applyLoanInfo.getImages().getBankCardImage());
+		userInfo.setHuaBei(applyLoanInfo.getHuaBei());
+		userInfo.setHuaBeiImage(applyLoanInfo.getImages().getHuaBeiImage());
+		userInfo.setIdCard(applyLoanInfo.getIdCard());
+		userInfo.setIdCardHand(applyLoanInfo.getImages().getIdCardHand());
+		userInfo.setIdCardOtherSize(applyLoanInfo.getImages().getIdCardOtherSize());
+		userInfo.setIdCardPositive(applyLoanInfo.getImages().getIdCardPositive());
+		userInfo.setMobile(applyLoanInfo.getUserAccount());
+		userInfo.setMobileRealNameTime(applyLoanInfo.getMobileRealNameTime());
+		userInfo.setMobileServicePassword(applyLoanInfo.getMobileServicePassword());
+		userInfo.setName(applyLoanInfo.getName());
+		userInfo.setUserAccount(applyLoanInfo.getUserAccount());
+		userInfo.setZhiMaFen(applyLoanInfo.getZhiMaFen());
+		userInfo.setZhiMaFenImage(applyLoanInfo.getImages().getZhiMaFenImage());
+		userInfo.setAppUserInfo(appUserInfo);
+		userLoanInfo.setAllInstalment("1");
+		userLoanInfo.setApplyTime(DateUtil.getDateFormat("yyyy-MM-dd HH:mm:ss", new Date()));
+		userLoanInfo.setLoanLimit("0");
+		userLoanInfo.setMakeLoansLimit("0");
+		userLoanInfo.setPayDate("");
+		userLoanInfo.setStatus("-1");
+		userLoanInfo.setUserAccount(applyLoanInfo.getUserAccount());
+		
+		userInfoService.save(userInfo);
+		userLoanInfoService.save(userLoanInfo);
+		
+		result.setCode("0");
+		result.setReason("");
+		result.setLoanInfoId(userLoanInfo.getId());
+		
+		List<Contact> emergencyContacts = AplayLoanRequestData.getBody().getEmergencyContacts();
+		List<UserEmergencyContact> saveContacts = new ArrayList<UserEmergencyContact>();
+		for(Contact contact:emergencyContacts){
+			UserEmergencyContact ec = new UserEmergencyContact();
+			ec.setMobile(contact.getMobile());
+			ec.setName(contact.getName());
+			ec.setUserAccount(userInfo.getUserAccount());
+			ec.setUserInfo(userInfo);
+			saveContacts.add(ec);
+			userEmergencyContactService.save(saveContacts);
+		}
+		
+		
+		String miFang = AplayLoanRequestData.getBody().getMiFang();
+		String jieDaiBao = AplayLoanRequestData.getBody().getJieDaiBao();
+		String voucher = AplayLoanRequestData.getBody().getVoucher();
+		List<LiabilitiesPlatformInfo> findAll = liabilitiesPlatformInfoService.findAll();
+		List<UserLiabilitiesInfo> savePData = new ArrayList<UserLiabilitiesInfo>();
+		for(LiabilitiesPlatformInfo pl:findAll){
+			UserLiabilitiesInfo uil = new UserLiabilitiesInfo();
+			uil.setUserAccount(userInfo.getUserAccount());
+			uil.setUserInfo(userInfo);
+			if("miFang".equals(pl.getLiabilitiesPlatform())){
+				uil.setLiabilitiesAmount(miFang);
+				uil.setLiabilitiesPlatformInfo(pl);					
+			}
+			if("jieDaiBao".equals(pl.getLiabilitiesPlatform())){
+				uil.setLiabilitiesAmount(jieDaiBao);
+				uil.setLiabilitiesPlatformInfo(pl);					
+			}
+			if("voucher".equals(pl.getLiabilitiesPlatform())){
+				uil.setLiabilitiesAmount(voucher);
+				uil.setLiabilitiesPlatformInfo(pl);					
+			}				
+			savePData.add(uil);
+		}
+		userLiabilitiesInfoService.saveAll(savePData);
+
+		UserWorkUnitInfo workInfo = new UserWorkUnitInfo();
+		String workUnitAddress = AplayLoanRequestData.getBody().getWorkUnitAddress();
+		String workUnitPhone = AplayLoanRequestData.getBody().getWorkUnitPhone();
+		
+		workInfo.setUserAccount(userInfo.getUserAccount());
+		workInfo.setUserInfo(userInfo);
+		workInfo.setWorkUnitAddress(workUnitAddress);
+		workInfo.setWorkUnitPhone(workUnitPhone);
+		userWorkUnitInfoService.save(workInfo);
+
+		return result;
+	}
 
 	private ApplyLoanResult  addApplyInfo(AplayLoanRequestData AplayLoanRequestData,AppUserInfo appUserInfo) {
 		ApplyLoanResult result = new ApplyLoanResult();
