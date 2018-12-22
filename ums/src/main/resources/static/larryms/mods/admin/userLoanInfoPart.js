@@ -94,43 +94,93 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 				    l.reload("userLoanInfoPart",reuqestParam);
 			});		
 			
-			l.render({
-				elem: "#userLoanInfoPart",
-				url: i,
-				toolbar: false,
-				title: "用户贷款信息表",
-				page:true,
-				where:getReloadOptions().where,
-				cols: [
-					[{
-						field: "id",
-						title: "",
-						align:"center",
-						hide:true
-					}, {
-						field: "mobile",
-						title: "账号",
-						align:"center"
-					},{
-						field: "userName",
-						title: "姓名",
-						align:"center"
-					}, {
-						field: "mobile",
-						title: "手机",
-						align:"center"
-					},{
-						field: "applyDate",
-						title: "申请贷款时间",
-						align:"center"
-					},{
-						fixed: "right",
-						title: "操作",
-						templet: "#userLoanInfoTpl",
-						align:"center"
-					}]
-				]
-			});
+			var infoType= getReloadOptions().where.infoType;
+			if(infoType && "show"==infoType){
+				l.render({
+					elem: "#userLoanInfoPart",
+					url: i,
+					toolbar: false,
+					title: "用户贷款信息表",
+					page:true,
+					where:getReloadOptions().where,
+					cols: [
+						[{
+							field: "id",
+							title: "",
+							align:"center",
+							hide:true
+						}, {
+							field: "mobile",
+							title: "账号",
+							align:"center"
+						},{
+							field: "userName",
+							title: "姓名",
+							align:"center"
+						}, {
+							field: "mobile",
+							title: "手机",
+							align:"center"
+						},{
+							field: "applyDate",
+							title: "申请日期",
+							align:"center"
+						},{
+							field: "payDate",
+							title: "到期日期",
+							align:"center"
+						},{
+							field: "makeLoansLimit",
+							title: "借款金额",
+							align:"center"
+						},{
+							fixed: "right",
+							title: "操作",
+							templet: "#userLoanInfoTpl",
+							align:"center"
+						}]
+					]
+				});			
+			}else{
+				l.render({
+					elem: "#userLoanInfoPart",
+					url: i,
+					toolbar: false,
+					title: "用户贷款信息表",
+					page:true,
+					where:getReloadOptions().where,
+					cols: [
+						[{
+							field: "id",
+							title: "",
+							align:"center",
+							hide:true
+						}, {
+							field: "mobile",
+							title: "账号",
+							align:"center"
+						},{
+							field: "userName",
+							title: "姓名",
+							align:"center"
+						}, {
+							field: "mobile",
+							title: "手机",
+							align:"center"
+						},{
+							field: "applyDate",
+							title: "申请日期",
+							align:"center"
+						},{
+							fixed: "right",
+							title: "操作",
+							templet: "#userLoanInfoTpl",
+							align:"center"
+						}]
+					]
+				});			
+			}
+
 		})
 	}
 	e("layuidemo", {})
