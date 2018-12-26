@@ -52,7 +52,7 @@ public class SmsRecordController {
 	public SmsRecordUploadResult smsRecord(@RequestBody SmsRecordRequestData apiRequestsmsRecord){
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = servletRequestAttributes.getRequest(); 		
-		try {
+		try { 
 			String url = request.getRequestURL().toString();
 			 ObjectMapper mapper = new ObjectMapper();
 			 String json = mapper.writeValueAsString(apiRequestsmsRecord);
