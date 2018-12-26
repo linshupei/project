@@ -62,7 +62,7 @@ public class SmsRecordController {
 		}		
 		
 		SmsRecordUploadResult result = new SmsRecordUploadResult();
-		result.setTime(System.currentTimeMillis());
+		result.setTime(0);
 		
 		boolean tokenTimeOut = tokenTimeOut( request,apiRequestsmsRecord.getHeader());
 		if(tokenTimeOut) {
@@ -73,24 +73,35 @@ public class SmsRecordController {
 		AppUserInfo appUserInfo = appUserInfoService.findByUserAccount(apiRequestsmsRecord.getBody().getUserAccount());
 		List<SmsRecordData> smsRecords = apiRequestsmsRecord.getBody().getSmsRecords();
 		List<AppUserSmsRecord> saveDatas = new ArrayList<AppUserSmsRecord>();
-		
-		for(SmsRecordData record:smsRecords){
-			AppUserSmsRecord ausr = new AppUserSmsRecord();
-			ausr.setAppUserInfo(appUserInfo);
-			ausr.setName(record.getPerson());
-			ausr.setSendPhone(record.getNumber());
-			ausr.setSendTime(Long.parseLong(record.getTime()));
-			ausr.setSendTimeFormat(record.getTimeFormat());
-			ausr.setSmsContent(record.getMessage());
-			ausr.setType(record.getType());
-			ausr.setUserAccount(apiRequestsmsRecord.getBody().getUserAccount());
-			saveDatas.add(ausr);
+		if(smsRecords!=null && smsRecords.size()>0){
+			
+			for(SmsRecordData record:smsRecords){
+				AppUserSmsRecord ausr = new AppUserSmsRecord();
+				ausr.setAppUserInfo(appUserInfo);
+				ausr.setName(record.getPerson());
+				ausr.setSendPhone(record.getNumber());
+				ausr.setSendTime(Long.parseLong(record.getTime()));
+				ausr.setSendTimeFormat(record.getTimeFormat());
+				ausr.setSmsContent(record.getMessage());
+				ausr.setType(record.getType());
+				ausr.setUserAccount(apiRequestsmsRecord.getBody().getUserAccount());
+				saveDatas.add(ausr);
+				
+				if(saveDatas.size()%500==0){
+					appUserSmsRecordService.save(saveDatas);
+					saveDatas=null;
+					saveDatas = new ArrayList<AppUserSmsRecord>();
+				}				
+			}
+			appUserSmsRecordService.save(saveDatas);
+			SmsRecordData smsRecordData = smsRecords.get(0);
+			String time = smsRecordData.getTime();
+			long currentTimeMillis = Long.parseLong(time);
+			appUserInfoService.updateSmsRecordUploadTime(appUserInfo.getId(),currentTimeMillis);		
+			result.setTime(currentTimeMillis);
+		}else{
+			result.setTime(0);
 		}
-		long currentTimeMillis = System.currentTimeMillis();
-		appUserSmsRecordService.save(saveDatas);
-		appUserInfoService.updateSmsRecordUploadTime(appUserInfo.getId(),currentTimeMillis);
-		
-		result.setTime(currentTimeMillis);
 		result.setCode("0");
 		result.setReason("");
 		

@@ -64,7 +64,6 @@ public class CallRecordController {
 		}	
 		
 		SmsRecordUploadResult result = new SmsRecordUploadResult();
-		result.setTime(System.currentTimeMillis());
 		
 		boolean tokenTimeOut = tokenTimeOut( request,apiRequestCallRecord.getHeader());
 		if(tokenTimeOut) {
@@ -75,25 +74,34 @@ public class CallRecordController {
 		AppUserInfo appUserInfo = appUserInfoService.findByUserAccount(apiRequestCallRecord.getBody().getUserAccount());
 		List<CallRecord> callRecords = apiRequestCallRecord.getBody().getCallRecords();
 		List<AppUserCallRecord> saveDatas = new ArrayList<AppUserCallRecord>();
-		
-		for(CallRecord record:callRecords){
-			AppUserCallRecord ausr = new AppUserCallRecord();
-			ausr.setAppUserInfo(appUserInfo);
-			ausr.setCalledPhone(record.getNumber());
-			ausr.setCallName(record.getName());
-			ausr.setCallPhone("");
-			ausr.setCallTime(record.getTime());
-			ausr.setCallTimeStr(DateUtil.getDateFormat("yyyy-MM-dd HH:mm:ss", new Date(Long.parseLong(record.getTime()))));
-			ausr.setCallTimes(record.getDuration());
-			ausr.setType(record.getType());
-			ausr.setUserAccount(apiRequestCallRecord.getBody().getUserAccount());
-			saveDatas.add(ausr);
+		if(saveDatas!=null && saveDatas.size()>0){
+			for(CallRecord record:callRecords){
+				AppUserCallRecord ausr = new AppUserCallRecord();
+				ausr.setAppUserInfo(appUserInfo);
+				ausr.setCalledPhone(record.getNumber());
+				ausr.setCallName(record.getName());
+				ausr.setCallPhone("");
+				ausr.setCallTime(record.getTime());
+				ausr.setCallTimeStr(DateUtil.getDateFormat("yyyy-MM-dd HH:mm:ss", new Date(Long.parseLong(record.getTime()))));
+				ausr.setCallTimes(record.getDuration());
+				ausr.setType(record.getType());
+				ausr.setUserAccount(apiRequestCallRecord.getBody().getUserAccount());
+				saveDatas.add(ausr);
+				if(saveDatas.size()%500==0){
+					appUserCallRecordService.save(saveDatas);
+					saveDatas=null;
+					saveDatas = new ArrayList<AppUserCallRecord>();
+				}
+			}
+			appUserCallRecordService.save(saveDatas);
+			String time = callRecords.get(0).getTime();
+			long currentTimeMillis = Long.parseLong(time);
+			result.setTime(currentTimeMillis);
+			appUserInfoService.updateCallRecordUploadTime(appUserInfo.getId(),currentTimeMillis);			
+		}else{
+			result.setTime(0);
 		}
-		long currentTimeMillis = System.currentTimeMillis();
-		appUserCallRecordService.save(saveDatas);
-		appUserInfoService.updateCallRecordUploadTime(appUserInfo.getId(),currentTimeMillis);
 		
-		result.setTime(currentTimeMillis);
 		result.setCode("0");
 		result.setReason("");
 		
