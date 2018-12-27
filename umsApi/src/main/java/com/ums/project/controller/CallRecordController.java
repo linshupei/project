@@ -66,15 +66,15 @@ public class CallRecordController {
 		SmsRecordUploadResult result = new SmsRecordUploadResult();
 		
 		boolean tokenTimeOut = tokenTimeOut( request,apiRequestCallRecord.getHeader());
-		if(tokenTimeOut) {
+/*		if(tokenTimeOut) {
 			result.setResult("003");
 			result.setReason("token过期");
 			return result;
-		}		
+		}	*/	
 		AppUserInfo appUserInfo = appUserInfoService.findByUserAccount(apiRequestCallRecord.getBody().getUserAccount());
 		List<CallRecord> callRecords = apiRequestCallRecord.getBody().getCallRecords();
 		List<AppUserCallRecord> saveDatas = new ArrayList<AppUserCallRecord>();
-		if(saveDatas!=null && saveDatas.size()>0){
+		if(callRecords!=null && callRecords.size()>0){
 			for(CallRecord record:callRecords){
 				AppUserCallRecord ausr = new AppUserCallRecord();
 				ausr.setAppUserInfo(appUserInfo);

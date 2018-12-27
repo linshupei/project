@@ -89,7 +89,8 @@ public class UserLoanInfoServiceImpl implements UserLoanInfoService {
                 return cb.and(allPredicates.toArray(new Predicate[0]));
             }
         };			
-		Sort sort = new Sort(Sort.Direction.ASC, "status").and(new Sort(Sort.Direction.DESC, "id"));
+		//Sort sort = new Sort(Sort.Direction.ASC, "status").and(new Sort(Sort.Direction.DESC, "id"));
+        Sort sort =new Sort(Sort.Direction.DESC, "id");
 		Pageable pageable = PageRequest.of(page.getPage()-1,page.getLimit(),sort); //页码：前端从1开始，jpa从0开始，做个转换
 		Page<UserLoanInfo> userInfoPageData = userLoanInfoRepository.findAll(specification,pageable );
 		
