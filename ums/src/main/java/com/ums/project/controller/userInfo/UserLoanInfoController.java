@@ -72,19 +72,19 @@ public class UserLoanInfoController {
 		result.setTime(System.currentTimeMillis());
 		result.setReason("ok");
 		UserLoanInfo userLoanInfo= userLoanInfoService.getById(bean.getId());
-		if(!"-1".equals(userLoanInfo.getStatus())
+/*		if(!"-1".equals(userLoanInfo.getStatus())
 				&&!"1".equals(userLoanInfo.getStatus())
 				&&!"4".equals(userLoanInfo.getStatus())){//存在未完成贷款
 			result.setCode("1");
 			result.setReason("存在未完成贷款信息，无法删除。");
-		}else{
+		}else{*/
 			userInfoService.removeById(userLoanInfo.getUserInfo().getId());
 			userLoanInfoService.deleteByUserInfo(userLoanInfo.getUserInfo().getId());
 			userWorkUnitInfoService.deleteByUserInfo(userLoanInfo.getUserInfo().getId());
 			userEmergencyContactService.deleteByUserInfo(userLoanInfo.getUserInfo().getId());
 			userLiabilitiesInfoService.deleteByUserInfo(userLoanInfo.getUserInfo().getId());
 			systemMsgInfoService.deleteByUserLoanInfoId(userLoanInfo.getId());
-		}
+		//}
 		return result;
 	}
 	
@@ -349,4 +349,21 @@ public class UserLoanInfoController {
 		return result;
 	}			
 
+	
+	/**
+	 * 	延长还款日期
+	 * @param vo
+	 * @return
+	 */
+	@RequestMapping("/api/updatePayDate")
+	public BaseResult updatePayDate(@RequestBody UserLoanInfoVo vo) {
+		UserLoanInfo userLoanInfo = userLoanInfoService.getById(vo.getId());
+		userLoanInfoService.updateUserLoanInfo(vo.getId(),userLoanInfo.getLoanLimit(),userLoanInfo.getMakeLoansLimit(),vo.getPayDate());
+		
+		BaseResult  result = new BaseResult();
+		result.setCode("0");
+		result.setReason("");
+		result.setTime(System.currentTimeMillis());
+		return result;
+	}		
 }
