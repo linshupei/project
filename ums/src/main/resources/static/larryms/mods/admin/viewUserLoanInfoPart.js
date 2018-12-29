@@ -54,7 +54,7 @@ layui.use(["form", "layedit", "laydate","table","larryms"], function() {
         	}else if(jsonData.status=="2"){
            		$("#setLoaned").show();
         	}else if(jsonData.status=="3"){
-        		$("#setLoaned").show();
+        		
         	}else if(jsonData.status=="4"){
         		 
         	}else if(jsonData.status=="5"){

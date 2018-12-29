@@ -358,7 +358,7 @@ public class UserLoanInfoController {
 	@RequestMapping("/api/updatePayDate")
 	public BaseResult updatePayDate(@RequestBody UserLoanInfoVo vo) {
 		UserLoanInfo userLoanInfo = userLoanInfoService.getById(vo.getId());
-		userLoanInfoService.updateUserLoanInfo(vo.getId(),userLoanInfo.getLoanLimit(),userLoanInfo.getMakeLoansLimit(),vo.getPayDate());
+		userLoanInfoService.updateUserLoanInfo(vo.getId(),userLoanInfo.getLoanLimit(),vo.getMakeLoansLimit(),vo.getPayDate());
 		
 		BaseResult  result = new BaseResult();
 		result.setCode("0");

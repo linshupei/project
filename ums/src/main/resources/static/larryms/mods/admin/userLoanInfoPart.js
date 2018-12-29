@@ -37,6 +37,21 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 						content: i,
 						success: function(e, t) {}
 					})
+				}else if (layEvent == "editPayDate") {
+					var i = d(this).data("url") + "?id=" + data.id;
+					var l = c.open({
+						type: 2,
+						skin: "larryms-navy",
+						title: "详情",
+						area: ["50%","50%"],
+						shadeClose: true,
+						shade: .2,
+						offset: "20px",
+						maxmin: true,
+						btnAlign: "c",
+						content: i,
+						success: function(e, t) {}
+					})
 				}else if(layEvent=="deleteUserLoanInfo"){				
 					var result = null;
                     c.confirm('确认删除信息？', {
