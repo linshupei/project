@@ -43,7 +43,7 @@ layui.define(["jquery", "code", "element", "slider", "rate","larryms","laytpl","
 						type: 2,
 						skin: "larryms-navy",
 						title: "详情",
-						area: ["50%","50%"],
+						area: ["30%","40%"],
 						shadeClose: true,
 						shade: .2,
 						offset: "20px",
