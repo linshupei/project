@@ -63,7 +63,7 @@ public class UserLoanInfoController {
 	
 	@Resource(name="appUserInfoService")
 	private AppUserInfoService appUserInfoService;
-	
+	 
 	@Resource(name="userWorkUnitInfoService")
 	private UserWorkUnitInfoService userWorkUnitInfoService;
 	
