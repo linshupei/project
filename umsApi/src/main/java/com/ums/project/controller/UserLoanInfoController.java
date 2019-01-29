@@ -519,52 +519,143 @@ public class UserLoanInfoController {
 			return result;
 		}
 		
-		ApplyLoanInfo applyLoanInfo = AplayLoanRequestData.getBody();
-		AppUserInfo appUserInfo = appUserInfoService.findByUserAccount(applyLoanInfo.getUserAccount());
+		ApplyLoanInfo applyLoanInfoRequestData = AplayLoanRequestData.getBody();
+		AppUserInfo appUserInfo = appUserInfoService.findByUserAccount(applyLoanInfoRequestData.getUserAccount());
 		if(appUserInfo==null) {
 			result.setResult("003");
 			result.setReason("token过期");
 		}else {
-/*			UserLoanInfo loanInfo = userLoanInfoService.findRecentLoanInfo(applyLoanInfo.getUserAccount());
-			if(loanInfo!=null && !"1".equals(loanInfo.getStatus()) && !"4".equals(loanInfo.getStatus())) {
-				result.setCode("1");
-				result.setReason("存在未完成贷款，无法申请");
-			}else {
-				if("-1".equals(loanInfo.getStatus())){
-					userLoanInfoService.updateStatus(loanInfo.getId(), "0");
-					if("".equals(appUserInfo.getLoanNum())){
-						appUserInfo.setLoanNum("1");
-					}else{
-						appUserInfo.setLoanNum((Integer.parseInt(appUserInfo.getLoanNum())+1)+"");
-					}
-					appUserInfoService.updateLoanNum(appUserInfo.getId(),appUserInfo.getLoanNum());					
-				}
-			}*/			
-			UserLoanInfo loanInfo = userLoanInfoService.getById(applyLoanInfo.getApplyId());
-			if("-1".equals(loanInfo.getStatus())){
-				result.setLoanInfoId(loanInfo.getId());
-				userLoanInfoService.updateStatus(loanInfo.getId(), "0");
-				if("".equals(appUserInfo.getLoanNum())){
-					appUserInfo.setLoanNum("1");
-				}else{
-					appUserInfo.setLoanNum((Integer.parseInt(appUserInfo.getLoanNum())+1)+"");
-				}
-				appUserInfoService.updateLoanNum(appUserInfo.getId(),appUserInfo.getLoanNum());		
-				SystemMsgInfo msg = new SystemMsgInfo();
-				msg.setMsgContent("您有一笔贷款申请需要处理，申请人："+loanInfo.getUserInfo().getName());
-				msg.setMsgTime(DateUtil.getDateFormat("yyyy-MM-dd HH:mm:ss", new Date()));
-				msg.setMsgType("1");
-				msg.setReadStatus("0");
-				msg.setTipStatus("0");
-				msg.setUserLoanInfo(loanInfo);
-				
-				systemMsgInfoService.save(msg);				
+			UserLoanInfo applyLoanInfo = userLoanInfoService.getById(applyLoanInfoRequestData.getApplyId());
+			UserLoanInfo findRecentSuccessLoanInfo = userLoanInfoService.findRecentSuccessLoanInfo(applyLoanInfoRequestData.getUserAccount());
+			if(findRecentSuccessLoanInfo!=null){
+				//有贷款成功记录，获取旧记录存储新数据
+				UserInfo userInfo = findRecentSuccessLoanInfo.getUserInfo();
+				newApplyLoan(result, userInfo, appUserInfo,AplayLoanRequestData);
+			}else{
+				userOldLoanData(result,applyLoanInfoRequestData, findRecentSuccessLoanInfo, appUserInfo,AplayLoanRequestData);
 			}
-					
 		}
 		return result;
 	}
 	
+
+	private void newApplyLoan(ApplyLoanResult result,UserInfo lastUserInfo,AppUserInfo appUserInfo,AplayLoanRequestData a) {
+		UserInfo userInfo = new UserInfo();
+		UserLoanInfo userLoanInfo = new UserLoanInfo();
+		userLoanInfo.setUserInfo(userInfo);
+		
+		userInfo.setAlipayAccount(lastUserInfo.getAlipayAccount());
+		userInfo.setBankCard(lastUserInfo.getBankCard());
+		userInfo.setBankCardImage(lastUserInfo.getBankCardImage());
+		userInfo.setHuaBei(lastUserInfo.getHuaBei());
+		userInfo.setHuaBeiImage(lastUserInfo.getHuaBeiImage());
+		userInfo.setIdCard(lastUserInfo.getIdCard());
+		userInfo.setIdCardHand(lastUserInfo.getIdCardHand());
+		userInfo.setIdCardOtherSize(lastUserInfo.getIdCardOtherSize());
+		userInfo.setIdCardPositive(lastUserInfo.getIdCardPositive());
+		userInfo.setMobile(lastUserInfo.getUserAccount());
+		userInfo.setMobileRealNameTime(lastUserInfo.getMobileRealNameTime());
+		userInfo.setMobileServicePassword(lastUserInfo.getMobileServicePassword());
+		userInfo.setName(lastUserInfo.getName());
+		userInfo.setUserAccount(lastUserInfo.getUserAccount());
+		userInfo.setZhiMaFen(lastUserInfo.getZhiMaFen());
+		userInfo.setZhiMaFenImage(lastUserInfo.getZhiMaFenImage());
+		userInfo.setAppUserInfo(appUserInfo);
+		userLoanInfo.setAllInstalment("1");
+		userLoanInfo.setApplyTime(DateUtil.getDateFormat("yyyy-MM-dd HH:mm:ss", new Date()));
+		userLoanInfo.setLoanLimit("0");
+		userLoanInfo.setMakeLoansLimit("0");
+		userLoanInfo.setPayDate("");
+		userLoanInfo.setStatus("0");
+		userLoanInfo.setUserAccount(lastUserInfo.getUserAccount());
+		
+		userInfoService.save(userInfo);
+		userLoanInfoService.save(userLoanInfo);
+		
+		SystemMsgInfo msg = new SystemMsgInfo();
+		msg.setMsgContent("您有一笔贷款申请需要处理，申请人："+userInfo.getName());
+		msg.setMsgTime(DateUtil.getDateFormat("yyyy-MM-dd HH:mm:ss", new Date()));
+		msg.setMsgType("1");
+		msg.setReadStatus("0");
+		msg.setTipStatus("0");
+		msg.setUserLoanInfo(userLoanInfo);
+		
+		systemMsgInfoService.save(msg);
+		
+		result.setCode("0");
+		result.setReason("");
+		result.setLoanInfoId(userLoanInfo.getId());
+		List<UserEmergencyContact> emergencyContacts = lastUserInfo.getUserEmergencyContact();
+		List<UserEmergencyContact> saveContacts = new ArrayList<UserEmergencyContact>();
+		for(UserEmergencyContact contact:emergencyContacts){
+			UserEmergencyContact ec = new UserEmergencyContact();
+			ec.setMobile(contact.getMobile());
+			ec.setName(contact.getName());
+			ec.setUserAccount(userInfo.getUserAccount());
+			ec.setUserInfo(userInfo);
+			saveContacts.add(ec);
+			userEmergencyContactService.save(saveContacts);
+		}
+		
+		
+		List<UserLiabilitiesInfo> userLiabilitiesInfo = lastUserInfo.getUserLiabilitiesInfo();
+		List<UserLiabilitiesInfo> savePData = new ArrayList<UserLiabilitiesInfo>();
+		for(UserLiabilitiesInfo pl:userLiabilitiesInfo){
+			UserLiabilitiesInfo uil = new UserLiabilitiesInfo();
+			uil.setUserAccount(userInfo.getUserAccount());
+			uil.setUserInfo(userInfo);
+			uil.setLiabilitiesAmount(pl.getLiabilitiesAmount());
+			uil.setLiabilitiesPlatformInfo(pl.getLiabilitiesPlatformInfo());			
+			savePData.add(uil);
+		}
+		userLiabilitiesInfoService.saveAll(savePData);
+
+		UserWorkUnitInfo workInfo = new UserWorkUnitInfo();
+		UserWorkUnitInfo userWorkUnitInfo = lastUserInfo.getUserWorkUnitInfo();
+		String workUnitAddress = userWorkUnitInfo.getWorkUnitAddress();
+		String workUnitPhone = userWorkUnitInfo.getWorkUnitPhone();
+		
+		workInfo.setUserAccount(userInfo.getUserAccount());
+		workInfo.setUserInfo(userInfo);
+		workInfo.setWorkUnitAddress(workUnitAddress);
+		workInfo.setWorkUnitPhone(workUnitPhone);
+		userWorkUnitInfoService.save(workInfo);
+		
+		if("".equals(appUserInfo.getLoanNum())){
+			appUserInfo.setLoanNum("1");
+		}else{
+			appUserInfo.setLoanNum((Integer.parseInt(appUserInfo.getLoanNum())+1)+"");
+		}
+		
+	}
+
+
+	private void userOldLoanData(ApplyLoanResult result, ApplyLoanInfo applyLoanInfo,
+			UserLoanInfo findRecentSuccessLoanInfo, AppUserInfo appUserInfo,
+			AplayLoanRequestData aplayLoanRequestData) {
+		UserLoanInfo loanInfo = userLoanInfoService.getById(applyLoanInfo.getApplyId());
+		if("-1".equals(loanInfo.getStatus())){
+			result.setLoanInfoId(loanInfo.getId());
+			userLoanInfoService.updateStatus(loanInfo.getId(), "0");
+			if("".equals(appUserInfo.getLoanNum())){
+				appUserInfo.setLoanNum("1");
+			}else{
+				appUserInfo.setLoanNum((Integer.parseInt(appUserInfo.getLoanNum())+1)+"");
+			}
+			appUserInfoService.updateLoanNum(appUserInfo.getId(),appUserInfo.getLoanNum());		
+			SystemMsgInfo msg = new SystemMsgInfo();
+			msg.setMsgContent("您有一笔贷款申请需要处理，申请人："+loanInfo.getUserInfo().getName());
+			msg.setMsgTime(DateUtil.getDateFormat("yyyy-MM-dd HH:mm:ss", new Date()));
+			msg.setMsgType("1");
+			msg.setReadStatus("0");
+			msg.setTipStatus("0");
+			msg.setUserLoanInfo(loanInfo);
+			
+			systemMsgInfoService.save(msg);				
+		}
+	}
+
+
 	/**
 	 *       用户申请贷款 1.0版本
 	 * @param applyLoanInfo

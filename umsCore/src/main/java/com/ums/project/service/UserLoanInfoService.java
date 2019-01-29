@@ -77,4 +77,6 @@ public interface UserLoanInfoService {
 
 	public long findDeniedApplayNum(String userAccount);
 
+	public UserLoanInfo findRecentSuccessLoanInfo(String userAccount);
+
 }

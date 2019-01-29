@@ -237,7 +237,7 @@ public class UserLoanInfoController {
 		idCardImage.put("idCardPositive", userLoanInfo.getUserInfo().getIdCardPositive());
 		idCardImage.put("idCardOtherSize", userLoanInfo.getUserInfo().getIdCardOtherSize());
 		idCardImage.put("idCardHand", userLoanInfo.getUserInfo().getIdCardHand());
-			
+			obj.put("name", userLoanInfo.getUserInfo().getName());
 			obj.put("userAccount", userLoanInfo.getUserInfo().getUserAccount());
 			obj.put("mobileRealNameTime", userLoanInfo.getUserInfo().getMobileRealNameTime());
 			obj.put("mobileServicePassword", userLoanInfo.getUserInfo().getMobileServicePassword());

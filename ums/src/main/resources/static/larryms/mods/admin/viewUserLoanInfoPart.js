@@ -22,7 +22,7 @@ layui.use(["form", "layedit", "laydate","table","larryms"], function() {
         dataType: "json",
         success: function(jsonData){ 
         	$("#loanId").val(requestParam["id"]);
-        	$("#userAccount").html(jsonData.userAccount);  
+        	$("#userAccount").html(jsonData.name+"（"+jsonData.userAccount+"）");  
             $("#mobileRealNameTime").html(jsonData.mobileRealNameTime);
             $("#mobileServicePassword").html(jsonData.mobileServicePassword);
             $("#alipayAccount").html(jsonData.alipayAccount);

@@ -142,6 +142,11 @@ public class AppUserInfoController {
 				result.setLoanInfoId(loanInfo.getId());
 				result.setApplyId("-1".equals(loanInfo.getStatus())?loanInfo.getId():"");
 			}
+			
+			UserLoanInfo findRecentSuccessLoanInfo = userLoanInfoService.findRecentSuccessLoanInfo(apiRequestData.getBody().getUserAccount());
+			if(findRecentSuccessLoanInfo!=null){
+				result.setInputFlag("0");
+			}
 				result.setToken(UUIDGeneratorUtil.generateUUID());
 				memcachedConfiguration.add(result.getToken(), info);
 /*				
@@ -197,7 +202,10 @@ public class AppUserInfoController {
 			result.setUserStatus("1");			
 			result.setApplyId("-1".equals(loanInfo.getStatus())?loanInfo.getId():"");
 		}
-
+		UserLoanInfo findRecentSuccessLoanInfo = userLoanInfoService.findRecentSuccessLoanInfo(apiRequestData.getBody().getUserAccount());
+		if(findRecentSuccessLoanInfo!=null){
+			result.setInputFlag("0");
+		}
 		result.setCode("0");
 		result.setReason("");
 		return result;

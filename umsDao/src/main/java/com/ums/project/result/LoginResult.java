@@ -24,6 +24,17 @@ public class LoginResult extends BaseResultApi{
 	
 	private String applyId="";
 	
+	private String inputFlag="1";
+	
+	
+	public String getInputFlag() {
+		return inputFlag;
+	}
+
+	public void setInputFlag(String inputFlag) {
+		this.inputFlag = inputFlag;
+	}
+
 	public String getApplyId() {
 		return applyId;
 	}

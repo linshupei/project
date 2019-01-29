@@ -263,4 +263,25 @@ public class UserLoanInfoServiceImpl implements UserLoanInfoService {
 	public void loanDenied(String id, String mark) {
 		userLoanInfoRepository.loanDenied(id,mark);
 	}
+	
+	@Override
+	public UserLoanInfo findRecentSuccessLoanInfo(String userAccount){
+	      //规格定义
+      Specification<UserLoanInfo> specification = new Specification<UserLoanInfo>() {
+          @Override
+          public Predicate toPredicate(Root<UserLoanInfo> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+              Predicate equal = cb.equal(root.get("userAccount").as(String.class),userAccount);
+              Predicate equal2 = cb.equal(root.get("status").as(String.class),"4");
+              return cb.and(equal,equal2);
+          }
+      };			
+		Sort sort = new Sort(Sort.Direction.DESC, "id");
+		Pageable pageable = PageRequest.of(0,1,sort); //页码：前端从1开始，jpa从0开始，做个转换
+		Page<UserLoanInfo> userInfoPageData = userLoanInfoRepository.findAll(specification,pageable );
+		
+		if(userInfoPageData.getTotalElements()>0) {
+			return userInfoPageData.getContent().get(0);
+		}
+		return null;
+	}	
 }
